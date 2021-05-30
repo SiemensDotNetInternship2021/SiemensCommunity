@@ -7,7 +7,5 @@ namespace SiemensCommunity
 {
     public class TestAAA
     {
-        //test elena
-        //aaaaaa
     }
 }
