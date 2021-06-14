@@ -1,12 +1,13 @@
 ﻿using SiemensCommunity.Model.Entities;
+using SiemensCommunity.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SiemensCommunity.Model.Mocks
+namespace SiemensCommunity.Models.Mocks
 {
-    public class MockBookRepository
+    public class MockBookRepository : IBookRepository
     {
         public IEnumerable<Book> AllBooks =>
             new List<Book>

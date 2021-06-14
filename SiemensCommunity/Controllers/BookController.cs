@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SiemensCommunity.Model.Mocks;
+using SiemensCommunity.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +9,16 @@ namespace SiemensCommunity.Controllers
 {
     public class BookController : Controller
     {
-        MockBookRepository mockBookRepository = new MockBookRepository();
+        private readonly IBookRepository _bookRepository;
 
-        public BookController()
+        public BookController(IBookRepository bookRepository)
         {
-
+            _bookRepository = bookRepository;
         }
 
         public IActionResult BooksList()
         {
-            var bookList = mockBookRepository.AllBooks;
-
-            return View(bookList);
+            return View(_bookRepository.AllBooks);
         }
     }
 }
