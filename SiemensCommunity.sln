@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiemensCommunity", "SiemensCommunity\SiemensCommunity.csproj", "{945C8A41-8765-46F7-9BB6-C33B741A2F44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiemensCommunity.Api", "SiemensCommunity.Api\SiemensCommunity.Api.csproj", "{C67EAE88-D60E-4BD4-B47A-BB0E4A6CFCBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiemensCommunity.Domain", "SiemensCommunity.Domain\SiemensCommunity.Domain.csproj", "{B33166C7-B319-4D04-9545-46570919C79B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiemensCommunity.Persistence", "SiemensCommunity.Persistence\SiemensCommunity.Persistence.csproj", "{4CAFA0D2-11DB-403D-AE20-CA762A8A3842}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiemensCommunity.Services", "SiemensCommunity.Services\SiemensCommunity.Services.csproj", "{C40B0093-1250-40FF-B2A1-51E680FB321A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiemensCommunity.Common", "SiemensCommunity.Common\SiemensCommunity.Common.csproj", "{7BBD358D-1D91-4C2E-BEE5-97613DAD4E06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiemensCommunity.UI", "SiemensCommunity.UI\SiemensCommunity.UI.csproj", "{609FAE84-24A5-4CA4-9849-F60352A97210}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +21,30 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{945C8A41-8765-46F7-9BB6-C33B741A2F44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{945C8A41-8765-46F7-9BB6-C33B741A2F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{945C8A41-8765-46F7-9BB6-C33B741A2F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{945C8A41-8765-46F7-9BB6-C33B741A2F44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C67EAE88-D60E-4BD4-B47A-BB0E4A6CFCBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C67EAE88-D60E-4BD4-B47A-BB0E4A6CFCBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C67EAE88-D60E-4BD4-B47A-BB0E4A6CFCBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C67EAE88-D60E-4BD4-B47A-BB0E4A6CFCBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B33166C7-B319-4D04-9545-46570919C79B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33166C7-B319-4D04-9545-46570919C79B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33166C7-B319-4D04-9545-46570919C79B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33166C7-B319-4D04-9545-46570919C79B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CAFA0D2-11DB-403D-AE20-CA762A8A3842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CAFA0D2-11DB-403D-AE20-CA762A8A3842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CAFA0D2-11DB-403D-AE20-CA762A8A3842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CAFA0D2-11DB-403D-AE20-CA762A8A3842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C40B0093-1250-40FF-B2A1-51E680FB321A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C40B0093-1250-40FF-B2A1-51E680FB321A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C40B0093-1250-40FF-B2A1-51E680FB321A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C40B0093-1250-40FF-B2A1-51E680FB321A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BBD358D-1D91-4C2E-BEE5-97613DAD4E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BBD358D-1D91-4C2E-BEE5-97613DAD4E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BBD358D-1D91-4C2E-BEE5-97613DAD4E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BBD358D-1D91-4C2E-BEE5-97613DAD4E06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{609FAE84-24A5-4CA4-9849-F60352A97210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{609FAE84-24A5-4CA4-9849-F60352A97210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{609FAE84-24A5-4CA4-9849-F60352A97210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{609FAE84-24A5-4CA4-9849-F60352A97210}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
