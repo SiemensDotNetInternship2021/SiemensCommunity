@@ -5,13 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SiemensCommunity.Api\SiemensCommunity.Api.csproj" />
     <ProjectReference Include="..\SiemensCommunity.Common\SiemensCommunity.Common.csproj" />
-    <ProjectReference Include="..\SiemensCommunity.Domain\SiemensCommunity.Domain.csproj" />
   </ItemGroup>
 
 </Project>

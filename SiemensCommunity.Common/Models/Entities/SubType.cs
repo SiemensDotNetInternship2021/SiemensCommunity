@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SiemensCommunity.Domain.Models.Entities
+namespace SiemensCommunity.Common.Models.Entities
 {
-    public class FavoriteProduct
+    public class SubType
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public int ProductId { get; set; }
+        public int TypeId { get; set; }
+        public string Name { get; set; }
     }
 }

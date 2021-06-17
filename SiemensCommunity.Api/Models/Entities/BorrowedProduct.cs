@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SiemensCommunity.Domain.Models.Entities
+namespace SiemensCommunity.Api.Models.Entities
 {
     public class BorrowedProduct
     {

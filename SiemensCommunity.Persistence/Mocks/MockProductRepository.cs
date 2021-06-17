@@ -1,5 +1,5 @@
-﻿using SiemensCommunity.Domain.Contracts;
-using SiemensCommunity.Domain.Models.Entities;
+﻿using SiemensCommunity.Persistence.Contracts;
+using SiemensCommunity.Persistence.Models.Entities;
 using System.Collections.Generic;
 
 namespace SiemensCommunity.Domain.Mocks

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SiemensCommunity.Domain.Contracts;
+using SiemensCommunity.Persistence.Contracts;
 
 namespace SiemensCommunity.Api.Controllers
 {

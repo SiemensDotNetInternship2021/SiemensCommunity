@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SiemensCommunity.Domain.Contracts;
 using SiemensCommunity.Domain.Mocks;
+using SiemensCommunity.Persistence.Contracts;
 
 namespace SiemensCommunity.UI
 {

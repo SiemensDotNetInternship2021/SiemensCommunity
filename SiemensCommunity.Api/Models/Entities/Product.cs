@@ -1,4 +1,4 @@
-﻿namespace SiemensCommunity.Domain.Models.Entities
+﻿namespace SiemensCommunity.Api.Models.Entities
 {
     public class Product
     {
