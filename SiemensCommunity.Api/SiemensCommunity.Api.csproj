@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SiemensCommunity.Common\SiemensCommunity.Common.csproj" />
-    <ProjectReference Include="..\SiemensCommunity.Domain\SiemensCommunity.Domain.csproj" />
+    <ProjectReference Include="..\SiemensCommunity.Services\SiemensCommunity.Services.csproj" />
   </ItemGroup>
 
 </Project>

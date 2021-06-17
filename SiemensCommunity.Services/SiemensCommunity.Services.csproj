@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SiemensCommunity.Api\SiemensCommunity.Api.csproj" />
     <ProjectReference Include="..\SiemensCommunity.Common\SiemensCommunity.Common.csproj" />
+    <ProjectReference Include="..\SiemensCommunity.Persistence\SiemensCommunity.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
