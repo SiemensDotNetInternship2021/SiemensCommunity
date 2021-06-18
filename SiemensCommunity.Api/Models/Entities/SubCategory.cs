@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SiemensCommunity.Persistence.Models.Entities
+namespace SiemensCommunity.Api.Models.Entities
 {
-    public class SubType
+    public class SubCategory
     {
         public int Id { get; set; }
-        public int TypeId { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
     }
 }

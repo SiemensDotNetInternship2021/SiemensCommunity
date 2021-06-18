@@ -1,6 +1,6 @@
-﻿namespace SiemensCommunity.Api.Models.Entities
+﻿namespace SiemensCommunity.Persistence.Models.Entities
 {
-    public class Type
+    public class Category
     {
         public int Id { get; set; }
         public string Name { get; set; }
