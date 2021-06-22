@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SiemensCommunity.Persistence;
 
 namespace SiemensCommunity.Persistence.Migrations
 {
     [DbContext(typeof(SiemensCommunityDbContext))]
-    partial class SiemensCommunityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210618123516_BorrowedProductsMigration")]
+    partial class BorrowedProductsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,39 +176,6 @@ namespace SiemensCommunity.Persistence.Migrations
                     b.ToTable("BorrowedProducts");
                 });
 
-            modelBuilder.Entity("SiemensCommunity.Persistence.Models.Entities.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("SiemensCommunity.Persistence.Models.Entities.FavoriteProduct", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FavoriteProducts");
-                });
-
             modelBuilder.Entity("SiemensCommunity.Persistence.Models.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -235,24 +204,6 @@ namespace SiemensCommunity.Persistence.Migrations
                     b.HasIndex("UserId1");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("SiemensCommunity.Persistence.Models.Entities.SubCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("SiemensCommunity.Persistence.Models.Entities.User", b =>

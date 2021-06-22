@@ -10,8 +10,8 @@ using SiemensCommunity.Persistence;
 namespace SiemensCommunity.Persistence.Migrations
 {
     [DbContext(typeof(SiemensCommunityDbContext))]
-    [Migration("20210618123516_BorrowedProdcutsMigration")]
-    partial class BorrowedProdcutsMigration
+    [Migration("20210622095914_CategoriesMigration")]
+    partial class CategoriesMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,6 +174,21 @@ namespace SiemensCommunity.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BorrowedProducts");
+                });
+
+            modelBuilder.Entity("SiemensCommunity.Persistence.Models.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("SiemensCommunity.Persistence.Models.Entities.Product", b =>

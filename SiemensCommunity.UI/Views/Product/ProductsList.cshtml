@@ -1,9 +1,7 @@
-﻿@model IEnumerable<SiemensCommunity.Persistence.Models.Entities.Product>
+﻿@*@model IEnumerable<SiemensCommunity.Persistence.Models.Entities.Product>*@
+
+@model SiemensCommunity.Api.Models.Entities.Product
 
 <h1>Books List</h1>
-@foreach (var product in Model)
-            {
-                <div>
-                    <h3>@product.Name</h3>
-                </div>
-            }
+@Model.Name
+@Model.Details

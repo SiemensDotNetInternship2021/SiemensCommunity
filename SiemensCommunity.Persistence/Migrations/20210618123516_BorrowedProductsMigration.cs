@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SiemensCommunity.Persistence.Migrations
 {
-    public partial class BorrowedProdcutsMigration : Migration
+    public partial class BorrowedProductsMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

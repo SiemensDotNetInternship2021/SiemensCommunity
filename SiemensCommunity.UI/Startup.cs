@@ -27,6 +27,7 @@ namespace SiemensCommunity.UI
 
             services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddScoped<IProductRepository, MockProductRepository>();
         }
