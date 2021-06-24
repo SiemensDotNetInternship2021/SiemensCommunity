@@ -1,0 +1,112 @@
+﻿@model SiemensCommunity.Api.Models.Entities.UserRegistrationCredentials
+@addTagHelper *, Microsoft.AspNetCore.MVC.TagHelpers
+<h1>Register</h1>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+
+    <div>
+        @Html.LabelFor(m => m.Username)
+        @Html.TextBoxFor(m => m.Username)
+        @Html.ValidationMessageFor(m => m.Username)
+    </div>
+
+    @*    <div>
+            @Html.LabelFor(m => m.FirstName)
+            @Html.TextBoxFor(m => m.FirstName)
+            @Html.ValidationMessageFor(m => m.FirstName​​​)
+        </div>
+    *@ <div>
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.FirstName)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName)
+        @Html.ValidationMessageFor(m => m.LastName)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email)
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Phone)
+        @Html.TextBoxFor(m => m.Phone)
+        @Html.ValidationMessageFor(m => m.Phone)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Department)
+        @Html.TextBoxFor(m => m.Department)
+        @Html.ValidationMessageFor(m => m.Department)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.OfficeFloor)
+        @Html.TextBoxFor(m => m.OfficeFloor)
+        @Html.ValidationMessageFor(m => m.OfficeFloor)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Password)
+        @Html.TextBoxFor(m => m.Password, new {@type ="password"})
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.ConfirmPassword)
+        @Html.TextBoxFor(m => m.ConfirmPassword, new { @type = "password" })
+        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+    </div>
+
+
+    @*    <div>
+            <label asp-for="LastName">Last Name</label>
+            <input asp-for="LastName" />
+            <span asp-validation-for="LastName"></span>
+        </div>
+
+        <div>
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
+
+        <div>
+            <label asp-for="Phone">Phone</label>
+            <input asp-for="Phone" />
+            <span asp-validation-for="Phone"></span>
+        </div>
+
+        <div>
+            <label asp-for="Department">Department</label>
+            <input asp-for="Department" />
+            <span asp-validation-for="Department"></span>
+        </div>
+
+        <div>
+            <label asp-for="OfficeFloor">Office Floor</label>
+            <input asp-for="OfficeFloor" />
+            <span asp-validation-for="OfficeFloor"></span>
+        </div>
+
+        <div>
+            <label asp-for="Password">Password</label>
+            <input type="password" asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+
+        <div>
+            <label asp-for="ConfirmPassword">Confirm Password</label>
+            <input type="password" asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword"></span>
+        </div>*@
+
+    <div>
+        <input type="submit" value="Register" />
+    </div>
+}

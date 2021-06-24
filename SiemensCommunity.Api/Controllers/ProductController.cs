@@ -5,13 +5,12 @@ using SiemensCommunity.Api.Models.Entities;
 using SiemensCommunity.Persistence.Contracts;
 
 namespace SiemensCommunity.Api.Controllers
-{
+{   
     public class ProductController : Controller
     {
         private readonly IProductRepository _productRepository;
         private readonly ProductAdapter _productAdapter;
         
-
         public ProductController(IProductRepository bookRepository)
         {
             _productRepository = bookRepository;
