@@ -34,6 +34,7 @@ namespace SiemensCommunity.Api.Controllers
         }
 
         [HttpGet]
+        [Route("TestRoute")]
         public IActionResult Test()
         {
             return Ok();

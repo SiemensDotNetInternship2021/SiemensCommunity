@@ -30,7 +30,10 @@ namespace SiemensCommunity.UI
             services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddScoped<IProductRepository, MockProductRepository>();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "My API", Version = "v1"});
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +42,7 @@ namespace SiemensCommunity.UI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API Version 1");
             });
 
             if (env.IsDevelopment())
