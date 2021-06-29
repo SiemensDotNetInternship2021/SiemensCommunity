@@ -10,6 +10,9 @@ using Microsoft.OpenApi.Models;
 using Service.Contracts;
 using Service.Implementations;
 using Microsoft.EntityFrameworkCore;
+using Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
 
 namespace SiemensCommunity
 {
@@ -25,11 +28,25 @@ namespace SiemensCommunity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProjectDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+            
 
+            services.AddDbContext<ProjectDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductService, ProductService>();
 
+            services.AddSingleton<ISystemClock, SystemClock>();
+
+            services.AddIdentityCore<User>(options =>
+            {
+                options.Password.RequireDigit = true;
+            })
+                .AddRoles<AppRole>()
+                .AddRoleManager<RoleManager<AppRole>>()
+                .AddSignInManager<SignInManager<User>>()
+                .AddRoleValidator<RoleValidator<AppRole>>()
+                .AddEntityFrameworkStores<ProjectDbContext>();
+
+            services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -50,7 +67,8 @@ namespace SiemensCommunity
             //app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+            //auth
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

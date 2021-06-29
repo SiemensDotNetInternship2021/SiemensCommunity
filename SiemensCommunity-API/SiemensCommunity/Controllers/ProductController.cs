@@ -23,7 +23,7 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct([FromBody]Product product)
+        public async Task<IActionResult> Add([FromBody]Product product)
         {
             if (!(ModelState.IsValid))
             {
@@ -44,7 +44,7 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var success = await _productService.DeleteByIdAsync(id);
 
@@ -58,8 +58,8 @@ namespace SiemensCommunity.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProducts()
+        [HttpGet("get")]
+        public async Task<IActionResult> Get()
         {
             var productList = await _productService.GetAsync();
             return Ok(productList);
