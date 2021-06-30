@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './Pages/login-page/login-page.component';
 import { RegisterPageComponent } from './Pages/register-page/register-page.component';
 import { WelcomePageComponent } from './Pages/welcome-page/welcome-page.component';
+import { FormsModule } from '@angular/forms';
+import { HomePageComponent } from './Pages/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -13,11 +15,13 @@ import { WelcomePageComponent } from './Pages/welcome-page/welcome-page.componen
     WelcomePageComponent,
     RegisterPageComponent,
     LoginPageComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

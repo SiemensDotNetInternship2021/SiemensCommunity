@@ -1,1 +1,67 @@
-<p>register-page works!</p>
+    <form #registerForm = "ngForm" (ngSubmit)="register(registerForm)" autocomplete="off">
+        <p>Create new account</p>
+                <label>
+                    <p class="label-txt">Username</p>
+                    <input type="text" class="input" name="Username" [(ngModel)]="registerModel.Username" >
+                    <div class="line-box">
+                        <div class="line"></div>
+                    </div>
+                </label>
+        
+                <label>
+                    <p class="label-txt">Email</p>
+                    <input type="text" class="input" name="Email" [(ngModel)]="registerModel.Email">
+                    <div class="line-box">
+                        <div class="line"></div>
+                    </div>
+                </label>
+        
+                <label>
+                    <p class="label-txt">FirstName</p>
+                    <input type="text" class="input" name="FirstName" [(ngModel)]="registerModel.FirstName">
+                    <div class="line-box">
+                        <div class="line"></div>
+                    </div>
+                </label>
+        
+                <label>
+                    <p  class="label-txt">LastName</p>
+                    <input type="text" class="input" name="LastName" [(ngModel)]="registerModel.LastName">
+                    <div class="line-box">
+                        <div class="line"></div>
+                    </div>
+                </label>
+        
+                <label>
+                  <p class="label-txt">Department</p>  
+                  <input type="text" class="input" name="Department" [(ngModel)]="registerModel.Department">
+                  <div class="line-box">
+                    <div class="line"></div>
+                  </div>
+                </label>
+        
+                <label>
+                    <p class="label-txt">OfficeFloor</p>    
+                    <input type="text" class="input" name="OfficeFloor" [(ngModel)]="registerModel.OfficeFloor">
+                    <div class="line-box">
+                        <div class="line"></div>
+                    </div>
+                </label>
+        
+                <label>
+                    <p class="label-txt">PhoneNumber</p>
+                    <input type="text" class="input" name="PhoneNumber" [(ngModel)]="registerModel.PhoneNumber">
+                    <div class="line-box">
+                        <div class="line"></div>
+                    </div>
+                </label>
+        
+                <label >
+                    <p class="label-txt">Password</p>
+                    <input type="password" class="input" name="Password" [(ngModel)]="registerModel.Password">
+                    <div class="line-box">
+                        <div class="line"></div>
+                      </div>
+                </label>
+        <button class="btn btn-dark">Register</button>
+    </form>
