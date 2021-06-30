@@ -8,7 +8,6 @@ export class UserService {
 
   readonly rootUrl = 'http://localhost:52718/api';
   constructor(private http: HttpClient) { }
-
   register(formData : any) {
       return this.http.post(this.rootUrl + '/Account/register', formData);
   }

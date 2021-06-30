@@ -11,7 +11,7 @@ import { UserService } from 'src/app/Services/user.service';
 export class RegisterPageComponent implements OnInit {
 
  
-  registerModel = {
+  public registerModel = {
     Username : "",
     Email : "",
     FirstName : "",

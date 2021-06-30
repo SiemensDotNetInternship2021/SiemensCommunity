@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/Services/user.service';
 
 @Component({
   selector: 'app-login-page',
@@ -6,10 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
-
-  constructor() { }
+  
+  public loginModel = {
+    Email : "",
+    Password: "",
+  }
+  constructor(private service: UserService,
+    private router: Router ) { }
 
   ngOnInit(): void {
   }
 
+  login(registerForm : NgForm) {
+    this.service.register(registerForm.value).subscribe((res: any) => 
+    {
+      this.router.navigateByUrl('/home');
+    })
+  }
 }
