@@ -13,45 +13,30 @@ namespace Data.Implementations
     {
         private UserManager<User> _userManager;
 
-        public AccountRepository(ProjectDbContext context) : base(context)
+        public AccountRepository(ProjectDbContext context, UserManager<User> userManager) : base(context)
         {
-
+            _userManager =userManager;
         }
 
-        public Task<UserRegisterCredentials> AddAsync(UserRegisterCredentials entity)
+        public Task<User> AddAsync(User entity)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<User> RegisterAsync(UserRegisterCredentials userRegistration)
+        public async Task<User> RegisterAsync(User user, string password)
         {
-            var user = new User()
-            {
-                FirstName = userRegistration.FirstName,
-                LastName = userRegistration.LastName,
-                Department = userRegistration.Department,
-                OfficeFloor = userRegistration.OfficeFloor,
-                PhoneNumber = userRegistration.PhoneNumber,
-                Email = userRegistration.Email,
-            };
             try
             {
-                var result = await _userManager.CreateAsync(user, userRegistration.Password);
+                var result = await _userManager.CreateAsync(user, password);
+                return user;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-
-            return user;
         }
 
-        Task<IEnumerable<UserRegisterCredentials>> IGenericRepository<UserRegisterCredentials>.GetAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<UserRegisterCredentials> IAccountRepository.RegisterAsync(UserRegisterCredentials user)
+        Task<IEnumerable<User>> IGenericRepository<User>.GetAsync()
         {
             throw new NotImplementedException();
         }

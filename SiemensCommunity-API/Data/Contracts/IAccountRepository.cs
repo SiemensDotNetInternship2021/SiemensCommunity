@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Data.Contracts
 {
-    public interface IAccountRepository : IGenericRepository<UserRegisterCredentials>
+    public interface IAccountRepository : IGenericRepository<User>
     {
-        public Task<UserRegisterCredentials> RegisterAsync(UserRegisterCredentials user);
+        public Task<User> RegisterAsync(User user, string password);
 
     }
 }

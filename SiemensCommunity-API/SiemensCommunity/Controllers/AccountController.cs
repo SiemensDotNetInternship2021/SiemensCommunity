@@ -2,6 +2,7 @@
 using Service.Contracts;
 using SiemensCommunity.Adapters;
 using SiemensCommunity.Models;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace SiemensCommunity.Controllers
@@ -11,17 +12,32 @@ namespace SiemensCommunity.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
-        private readonly UserAdapter _accountAdapter = new UserAdapter();
+        private readonly UserAdapter _userAdapter = new UserAdapter();
 
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register(UserRegisterCredentials user)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserRegisterCredentials registerCredentials)
         {
-            return Ok(user);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                var responseRegister = await _accountService.RegisterAsync(_userAdapter.Adapt(registerCredentials));
+                if (responseRegister != null)
+                {
+                    return Ok(responseRegister);
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError);
+                }
+            }
         }
     }
 }

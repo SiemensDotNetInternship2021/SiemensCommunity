@@ -16,21 +16,38 @@ namespace Service.Adapters
         {
             var config = new MapperConfiguration(config =>
             {
-                config.CreateMap<UserRegisterCredentials, Data.Models.UserRegisterCredentials>();
-                config.CreateMap<Data.Models.UserRegisterCredentials, UserRegisterCredentials>();
+                /*                config.CreateMap<UserRegisterCredentials, Data.Models.UserRegisterCredentials>();
+                                config.CreateMap<Data.Models.UserRegisterCredentials, UserRegisterCredentials>();*/
+                config.CreateMap<UserRegisterCredentials, Data.Models.User>();
             });
 
             _userAdapter = config.CreateMapper();
         }
 
-        public Data.Models.UserRegisterCredentials Adapt(UserRegisterCredentials user)
+
+        //TO DO: resolve error
+        public UserRegisterCredentials AdaptFromUserIdentity(Data.Models.User user)
         {
-            return _userAdapter.Map<UserRegisterCredentials, Data.Models.UserRegisterCredentials>(user);
+            var returned = _userAdapter.Map<Data.Models.User, UserRegisterCredentials>(user);
+            return returned;
         }
 
-        public UserRegisterCredentials Adapt(Data.Models.UserRegisterCredentials user)
+        public Data.Models.User AdaptToUserIdentity(UserRegisterCredentials user)
         {
-            return _userAdapter.Map<Data.Models.UserRegisterCredentials, UserRegisterCredentials>(user);
+            return _userAdapter.Map<UserRegisterCredentials, Data.Models.User>(user);
         }
+
+        /*        public Data.Models.UserRegisterCredentials Adapt(UserRegisterCredentials user)
+                {
+                    return _userAdapter.Map<UserRegisterCredentials, Data.Models.UserRegisterCredentials>(user);
+                }
+
+                public UserRegisterCredentials Adapt(Data.Models.UserRegisterCredentials user)
+                {
+                    return _userAdapter.Map<Data.Models.UserRegisterCredentials, UserRegisterCredentials>(user);
+                }
+ */
+
+
     }
 }

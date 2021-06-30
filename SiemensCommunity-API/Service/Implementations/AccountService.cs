@@ -22,8 +22,8 @@ namespace Service.Implementations
 
         public async Task<UserRegisterCredentials> RegisterAsync(UserRegisterCredentials userCredentials)
         {
-            var returnedUser = await _accountReposistory.RegisterAsync(_userAdapter.Adapt(userCredentials));
-            return _userAdapter.Adapt(returnedUser);
+            var returnedUser = await _accountReposistory.RegisterAsync(_userAdapter.AdaptToUserIdentity(userCredentials), userCredentials.Password);
+            return _userAdapter.AdaptFromUserIdentity(returnedUser);
         }
     }
 }

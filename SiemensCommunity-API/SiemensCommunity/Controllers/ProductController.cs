@@ -15,7 +15,10 @@ namespace SiemensCommunity.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly IAccountService _accountService;
+
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
+        private readonly UserAdapter _userAdapter = new UserAdapter();
 
         public ProductController(IProductService productService)
         {
@@ -64,5 +67,6 @@ namespace SiemensCommunity.Controllers
             var productList = await _productService.GetAsync();
             return Ok(productList);
         }
+
     }
 }
