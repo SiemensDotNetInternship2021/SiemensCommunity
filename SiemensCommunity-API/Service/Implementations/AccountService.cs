@@ -25,5 +25,11 @@ namespace Service.Implementations
             var returnedUser = await _accountReposistory.RegisterAsync(_userAdapter.AdaptToUserIdentity(userCredentials), userCredentials.Password);
             return _userAdapter.AdaptFromUserIdentity(returnedUser);
         }
+
+        public async Task<bool> VerifyLoginAsync(UserLoginCredentials user)
+        {
+            var returned = await _accountReposistory.VerifyLoginAsync(_userAdapter.AdaptFromUserData(user));
+            return returned;
+        }
     }
 }

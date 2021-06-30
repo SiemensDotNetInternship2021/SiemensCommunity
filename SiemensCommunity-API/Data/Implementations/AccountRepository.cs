@@ -1,6 +1,7 @@
 ﻿using Data.Contracts;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,36 @@ namespace Data.Implementations
     public class AccountRepository : GenericRepository<User>, IAccountRepository
     {
         private UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AccountRepository(ProjectDbContext context, UserManager<User> userManager) : base(context)
+        public AccountRepository(ProjectDbContext context, UserManager<User> userManager, SignInManager<User> signInManager) : base(context)
         {
-            _userManager =userManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public Task<User> AddAsync(User entity)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> VerifyLoginAsync(UserLoginCredentials user)
+        {
+            var userDb = await _userManager.FindByNameAsync(user.Username);
+
+            if (user != null)
+            {
+                var verifyPassword = await _signInManager.CheckPasswordSignInAsync(userDb, user.Password, user.IsPersistent);
+                if (verifyPassword.Succeeded) { 
+                    await _signInManager.SignInAsync(userDb, user.IsPersistent);
+                    return true;
+                }
+                else
+                    //to do: return exception
+                    return false;
+            }
+            else
+                return false;
         }
 
         public async Task<User> RegisterAsync(User user, string password)
@@ -35,6 +57,7 @@ namespace Data.Implementations
                 throw ex;
             }
         }
+
 
         Task<IEnumerable<User>> IGenericRepository<User>.GetAsync()
         {

@@ -11,5 +11,6 @@ namespace Data.Contracts
     {
         public Task<User> RegisterAsync(User user, string password);
 
+        public Task<bool> VerifyLoginAsync(UserLoginCredentials userLoginCredentials);
     }
 }

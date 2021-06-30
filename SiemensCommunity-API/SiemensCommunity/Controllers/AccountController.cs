@@ -39,5 +39,22 @@ namespace SiemensCommunity.Controllers
                 }
             }
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(UserLoginCredentials userLoginCredentials)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                var responseLogin =await _accountService.VerifyLoginAsync(_userAdapter.Adapt(userLoginCredentials));
+
+                if (responseLogin)
+                    return Ok();
+                else return BadRequest();
+            }
+        }
     }
 }

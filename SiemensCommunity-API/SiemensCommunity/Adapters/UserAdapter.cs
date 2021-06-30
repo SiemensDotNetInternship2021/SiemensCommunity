@@ -17,6 +17,7 @@ namespace SiemensCommunity.Adapters
             {
                 config.CreateMap<UserRegisterCredentials, Service.Models.UserRegisterCredentials>();
                 config.CreateMap<Service.Models.UserRegisterCredentials, UserRegisterCredentials>();
+                config.CreateMap<UserLoginCredentials, Service.Models.UserLoginCredentials>();
             });
 
             _userAdapter = config.CreateMapper();
@@ -30,6 +31,11 @@ namespace SiemensCommunity.Adapters
         public UserRegisterCredentials Adapt(Service.Models.UserRegisterCredentials user)
         {
             return _userAdapter.Map<Service.Models.UserRegisterCredentials, UserRegisterCredentials>(user);
+        }
+
+        public Service.Models.UserLoginCredentials Adapt(UserLoginCredentials userLoginCredentials)
+        {
+            return _userAdapter.Map<UserLoginCredentials, Service.Models.UserLoginCredentials > (userLoginCredentials);
         }
     }
 }

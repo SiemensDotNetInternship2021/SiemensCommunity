@@ -10,5 +10,6 @@ namespace Service.Contracts
     public interface IAccountService
     {
         public Task<UserRegisterCredentials> RegisterAsync(UserRegisterCredentials userCredentials);
+        public Task<bool> VerifyLoginAsync(UserLoginCredentials user);
     }
 }

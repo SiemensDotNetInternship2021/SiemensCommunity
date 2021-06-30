@@ -16,9 +16,10 @@ namespace Service.Adapters
         {
             var config = new MapperConfiguration(config =>
             {
-                /*                config.CreateMap<UserRegisterCredentials, Data.Models.UserRegisterCredentials>();
-                                config.CreateMap<Data.Models.UserRegisterCredentials, UserRegisterCredentials>();*/
+                /*config.CreateMap<UserRegisterCredentials, Data.Models.UserRegisterCredentials>();
+                  config.CreateMap<Data.Models.UserRegisterCredentials, UserRegisterCredentials>();*/
                 config.CreateMap<UserRegisterCredentials, Data.Models.User>();
+                config.CreateMap<UserLoginCredentials, Data.Models.UserLoginCredentials>();
             });
 
             _userAdapter = config.CreateMapper();
@@ -46,8 +47,12 @@ namespace Service.Adapters
                 {
                     return _userAdapter.Map<Data.Models.UserRegisterCredentials, UserRegisterCredentials>(user);
                 }
- */
+        */
 
 
+        public Data.Models.UserLoginCredentials AdaptFromUserData(UserLoginCredentials userLoginCredentials)
+        {
+            return _userAdapter.Map<UserLoginCredentials, Data.Models.UserLoginCredentials> (userLoginCredentials);
+        }
     }
 }
