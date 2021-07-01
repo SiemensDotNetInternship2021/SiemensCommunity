@@ -9,7 +9,7 @@ namespace Data.Contracts
 {
     public interface IAccountRepository : IGenericRepository<User>
     {
-        public Task<User> RegisterAsync(User user, string password);
+        public Task<int> RegisterAsync(User user, string password);
 
         public Task<bool> VerifyLoginAsync(UserLoginCredentials userLoginCredentials);
     }

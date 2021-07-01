@@ -29,8 +29,7 @@ namespace Service.Adapters
         //TO DO: resolve error
         public UserRegisterCredentials AdaptFromUserIdentity(Data.Models.User user)
         {
-            var returned = _userAdapter.Map<Data.Models.User, UserRegisterCredentials>(user);
-            return returned;
+            return _userAdapter.Map<Data.Models.User, UserRegisterCredentials>(user);
         }
 
         public Data.Models.User AdaptToUserIdentity(UserRegisterCredentials user)

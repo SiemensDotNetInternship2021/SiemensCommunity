@@ -11,7 +11,7 @@ import { UserService } from 'src/app/Services/user.service';
 export class LoginPageComponent implements OnInit {
   
   public loginModel = {
-    Email : "",
+    UserName : "",
     Password: "",
   }
   constructor(private service: UserService,
@@ -21,7 +21,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   login(registerForm : NgForm) {
-    this.service.register(registerForm.value).subscribe((res: any) => 
+    this.service.login(registerForm.value).subscribe((res: any) => 
     {
       this.router.navigateByUrl('/home');
     })

@@ -28,12 +28,13 @@ namespace Data.Implementations
 
         public async Task<bool> VerifyLoginAsync(UserLoginCredentials user)
         {
-            var userDb = await _userManager.FindByNameAsync(user.Username);
+            var userDb = await _userManager.FindByNameAsync(user.UserName);
 
-            if (user != null)
+            if (userDb != null)
             {
                 var verifyPassword = await _signInManager.CheckPasswordSignInAsync(userDb, user.Password, user.IsPersistent);
-                if (verifyPassword.Succeeded) { 
+                if (verifyPassword.Succeeded) {
+                    user.IsPersistent = true;
                     await _signInManager.SignInAsync(userDb, user.IsPersistent);
                     return true;
                 }
@@ -45,12 +46,12 @@ namespace Data.Implementations
                 return false;
         }
 
-        public async Task<User> RegisterAsync(User user, string password)
+        public async Task<int> RegisterAsync(User user, string password)
         {
             try
             {
                 var result = await _userManager.CreateAsync(user, password);
-                return user;
+                return user.Id;
             }
             catch (Exception ex)
             {

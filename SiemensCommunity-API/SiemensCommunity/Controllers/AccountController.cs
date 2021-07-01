@@ -29,7 +29,7 @@ namespace SiemensCommunity.Controllers
             else
             {
                 var responseRegister = await _accountService.RegisterAsync(_userAdapter.Adapt(registerCredentials));
-                if (responseRegister != null)
+                if (responseRegister != 0)
                 {
                     return Ok(responseRegister);
                 }

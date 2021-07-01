@@ -20,10 +20,10 @@ namespace Service.Implementations
             _accountReposistory = accountReposistory;   
         }
 
-        public async Task<UserRegisterCredentials> RegisterAsync(UserRegisterCredentials userCredentials)
+        public async Task<int> RegisterAsync(UserRegisterCredentials userCredentials)
         {
             var returnedUser = await _accountReposistory.RegisterAsync(_userAdapter.AdaptToUserIdentity(userCredentials), userCredentials.Password);
-            return _userAdapter.AdaptFromUserIdentity(returnedUser);
+            return returnedUser;
         }
 
         public async Task<bool> VerifyLoginAsync(UserLoginCredentials user)

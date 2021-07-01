@@ -7,7 +7,7 @@ namespace SiemensCommunity.Models
 {
     public class UserRegisterCredentials
     {
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         public string Email { get; set; }
 
