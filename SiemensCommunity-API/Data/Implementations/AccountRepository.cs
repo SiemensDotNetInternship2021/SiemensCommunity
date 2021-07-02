@@ -1,11 +1,8 @@
 ﻿using Data.Contracts;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Implementations
@@ -28,14 +25,16 @@ namespace Data.Implementations
 
         public async Task<bool> VerifyLoginAsync(UserLoginCredentials user)
         {
-            var userDb = await _userManager.FindByNameAsync(user.UserName);
+            var userDb = await _userManager.FindByEmailAsync(user.Email);
 
-            if (userDb != null)
+            if (user != null)
             {
                 var verifyPassword = await _signInManager.CheckPasswordSignInAsync(userDb, user.Password, user.IsPersistent);
-                if (verifyPassword.Succeeded) {
-                    user.IsPersistent = true;
-                    await _signInManager.SignInAsync(userDb, user.IsPersistent);
+                if (verifyPassword.Succeeded) 
+                {
+                    //await _signInManager.SignInAsync(userDb, user.IsPersistent);
+
+                    //token configuration? what to send with the token.
                     return true;
                 }
                 else

@@ -59,29 +59,34 @@ namespace SiemensCommunity
 
           
             services.AddCors();
-            /*var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = false;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
-                };
-            });*/
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-            {
-                options.Cookie.Name = "MyCookieApplicaton";
-            });
+            /* var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
+             services.AddAuthentication(x =>
+             {
+                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+             }).AddJwtBearer(x =>
+             {
+                 x.RequireHttpsMetadata = false;
+                 x.SaveToken = false;
+                 x.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true,
+                     IssuerSigningKey = new SymmetricSecurityKey(key),
+                     ValidateIssuer = false,
+                     ValidateAudience = false,
+                     ClockSkew = TimeSpan.Zero
+                 };
+             });*/
+
+            /* services.AddAuthentication(options =>
+             {
+                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+             });*/
+            services.AddAuthentication();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
