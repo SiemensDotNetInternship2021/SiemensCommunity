@@ -8,6 +8,10 @@ import { RegisterPageComponent } from './Pages/register-page/register-page.compo
 import { WelcomePageComponent } from './Pages/welcome-page/welcome-page.component';
 import { FormsModule } from '@angular/forms';
 import { HomePageComponent } from './Pages/home-page/home-page.component';
+import { NavBarComponent } from './Shared/nav-bar/nav-bar.component';
+import { MycatalogPageComponent } from './Pages/mycatalog-page/mycatalog-page.component';
+import { BorrowedProductsPageComponent } from './Pages/borrowed-products-page/borrowed-products-page.component';
+import { LentProductsPageComponent } from './Pages/lent-products-page/lent-products-page.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +20,10 @@ import { HomePageComponent } from './Pages/home-page/home-page.component';
     RegisterPageComponent,
     LoginPageComponent,
     HomePageComponent,
+    NavBarComponent,
+    MycatalogPageComponent,
+    BorrowedProductsPageComponent,
+    LentProductsPageComponent,
   ],
   imports: [
     BrowserModule,

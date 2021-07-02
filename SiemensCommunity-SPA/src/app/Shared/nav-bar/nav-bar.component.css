@@ -1,0 +1,15 @@
+a {
+    display: inline;
+    font-size: 1.5em;
+    margin-left: 10px;
+}
+
+
+ul {
+    position: absolute;
+}
+
+h1 {
+    position: relative;
+    opacity: 0.5;
+}
