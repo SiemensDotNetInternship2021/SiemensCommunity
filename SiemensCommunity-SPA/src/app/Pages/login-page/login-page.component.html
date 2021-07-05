@@ -1,20 +1,23 @@
-<form #loginForm = "ngForm" (ngSubmit)="login(loginForm)" autocomplete="off">
+<form [formGroup] = "service.loginModel" (submit)="login()" autocomplete="off">
     <p>Login</p>
             <label>
                 <p class="label-txt">Email</p>
-                <input type="text" class="input" name="email" [(ngModel)]="loginModel.Email">
+                <input type="text" class="input" formControlName="Email">
                 <div class="line-box">
                     <div class="line"></div>
                 </div>
+                <label class="text-danger" *ngIf="service.loginModel.get('Email')?.touched && service.loginModel.get('Email')?.errors?.required">Email is required</label>
+                <label class="text-danger" *ngIf="service.loginModel.get('Email')?.touched && service.loginModel.get('Email')?.errors?.email">Invalid Email</label>
             </label>
 
             <label>
                 <p class="label-txt">Password</p>
-                <input type="password" class="input" name="password" [(ngModel)]="loginModel.Password" >
+                <input type="password" class="input" formControlName="Password">
                 <div class="line-box">
                     <div class="line"></div>
                 </div>
+                <label class="text-danger" *ngIf="service.loginModel.get('Password')?.touched && service.loginModel.get('Password')?.errors?.required">Password is required</label>
             </label>
-    <button class="btn btn-dark" >Login</button>
+    <button class="btn btn-dark" [disabled]="service.loginModel.invalid">Login</button>
     <button class="btn btn-dark" routerLink="/register">Register</button>
 </form>

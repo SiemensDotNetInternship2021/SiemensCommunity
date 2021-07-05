@@ -10,25 +10,13 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class RegisterPageComponent implements OnInit {
 
- 
-  public registerModel = {
-    Username : "",
-    Email : "",
-    FirstName : "",
-    LastName : "",
-    Department : "",
-    OfficeFloor : "",
-    PhoneNumber : "",
-    Password: "",
-  }
-
   constructor(public service: UserService,
     public router: Router) { }
   ngOnInit(): void {
   }
 
-  register(registerForm : NgForm) {
-    this.service.register(registerForm.value).subscribe((res: any) => 
+  register() {
+    this.service.register().subscribe((res: any) => 
     {
       this.router.navigateByUrl('/home');
     })

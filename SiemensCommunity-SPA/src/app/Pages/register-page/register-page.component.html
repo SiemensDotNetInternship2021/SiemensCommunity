@@ -1,68 +1,88 @@
-    <form #registerForm = "ngForm" (ngSubmit)="register(registerForm)" autocomplete="off">
+    <form [formGroup] = "service.registrationModel" (submit)="register()" autocomplete="off">
         <p>Create new account</p>
                 <label>
                     <p class="label-txt">Username</p>
-                    <input type="text" class="input" name="username" [(ngModel)]="registerModel.Username" >
+                    <input type="text" class="input" formControlName="Username" >
                     <div class="line-box">
                         <div class="line"></div>
                     </div>
+                    <label class="text-danger" *ngIf="service.registrationModel.get('Username')?.touched && service.registrationModel.get('Username')?.errors?.required">First Name is required</label>
                 </label>
         
                 <label>
                     <p class="label-txt">Email</p>
-                    <input type="text" class="input" name="Email" [(ngModel)]="registerModel.Email">
+                    <input type="text" class="input" formControlName="Email">
                     <div class="line-box">
                         <div class="line"></div>
                     </div>
+                    <label class="text-danger" *ngIf="service.registrationModel.get('Email')?.touched && service.registrationModel.get('Email')?.errors?.required">Email is required</label>
+                    <label class="text-danger" *ngIf="service.registrationModel.get('Email')?.touched && service.registrationModel.get('Email')?.errors?.email">Invalid Email</label>
                 </label>
         
                 <label>
                     <p class="label-txt">FirstName</p>
-                    <input type="text" class="input" name="FirstName" [(ngModel)]="registerModel.FirstName">
+                    <input type="text" class="input" formControlName="FirstName">
                     <div class="line-box">
                         <div class="line"></div>
                     </div>
+                    <label class="text-danger" *ngIf="service.registrationModel.get('FirstName')?.touched && service.registrationModel.get('FirstName')?.errors?.required">Firstname is required</label>
                 </label>
         
                 <label>
                     <p  class="label-txt">LastName</p>
-                    <input type="text" class="input" name="LastName" [(ngModel)]="registerModel.LastName">
+                    <input type="text" class="input" formControlName="LastName">
                     <div class="line-box">
                         <div class="line"></div>
                     </div>
+                    <label class="text-danger" *ngIf="service.registrationModel.get('LastName')?.touched && service.registrationModel.get('LastName')?.errors?.required">Lastname is required</label>
                 </label>
         
                 <label>
                   <p class="label-txt">Department</p>  
-                  <input type="text" class="input" name="Department" [(ngModel)]="registerModel.Department">
+                  <input type="text" class="input" formControlName="Department">
                   <div class="line-box">
                     <div class="line"></div>
                   </div>
+                  <label class="text-danger" *ngIf="service.registrationModel.get('Department')?.touched && service.registrationModel.get('Department')?.errors?.required">Department is required</label>
                 </label>
         
                 <label>
                     <p class="label-txt">OfficeFloor</p>    
-                    <input type="text" class="input" name="OfficeFloor" [(ngModel)]="registerModel.OfficeFloor">
+                    <input type="text" class="input" formControlName="OfficeFloor">
                     <div class="line-box">
                         <div class="line"></div>
                     </div>
+                    <label class="text-danger" *ngIf="service.registrationModel.get('OfficeFloor')?.touched && service.registrationModel.get('OfficeFloor')?.errors?.required">OfficeFloor is required</label>
                 </label>
         
                 <label>
                     <p class="label-txt">PhoneNumber</p>
-                    <input type="text" class="input" name="PhoneNumber" [(ngModel)]="registerModel.PhoneNumber">
+                    <input type="text" class="input" formControlName="PhoneNumber">
                     <div class="line-box">
                         <div class="line"></div>
                     </div>
+                    <label class="text-danger" *ngIf="service.registrationModel.get('PhoneNumber')?.touched && service.registrationModel.get('PhoneNumber')?.errors?.required">PhoneNumber is required</label>
                 </label>
         
-                <label >
-                    <p class="label-txt">Password</p>
-                    <input type="password" class="input" name="Password" [(ngModel)]="registerModel.Password">
-                    <div class="line-box">
-                        <div class="line"></div>
-                      </div>
-                </label>
-        <button class="btn btn-dark">Register</button>
+                <div formGroupName="passwords">
+                    <label >
+                        <p class="label-txt">Password</p>
+                        <input type="password" class="input" formControlName="Password">
+                        <div class="line-box">
+                            <div class="line"></div>
+                        </div>
+                        <label class="text-danger" *ngIf="service.registrationModel.get('Password')?.touched && service.registrationModel.get('Password')?.errors?.required">Password is required</label>
+                    </label>
+    
+                    <label >
+                        <p class="label-txt">Confirm Password</p>
+                        <input type="password" class="input" formControlName="ConfirmPassword">
+                        <div class="line-box">
+                            <div class="line"></div>
+                        </div>
+                    </label>
+                </div>
+
+        <button class="btn btn-dark" [disabled]="service.registrationModel.invalid">Register</button>
         <button class="btn btn-dark" routerLink="/login">Login</button>
     </form>

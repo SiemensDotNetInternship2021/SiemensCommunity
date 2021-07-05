@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './Pages/login-page/login-page.component';
 import { RegisterPageComponent } from './Pages/register-page/register-page.component';
 import { WelcomePageComponent } from './Pages/welcome-page/welcome-page.component';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomePageComponent } from './Pages/home-page/home-page.component';
 import { NavBarComponent } from './Shared/nav-bar/nav-bar.component';
 import { MycatalogPageComponent } from './Pages/mycatalog-page/mycatalog-page.component';
@@ -29,7 +29,8 @@ import { LentProductsPageComponent } from './Pages/lent-products-page/lent-produ
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

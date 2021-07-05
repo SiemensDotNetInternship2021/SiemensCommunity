@@ -79,12 +79,6 @@ namespace SiemensCommunity
                  };
              });*/
 
-            /* services.AddAuthentication(options =>
-             {
-                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-             });*/
             services.AddAuthentication();
 
             services.AddControllers();
@@ -103,7 +97,6 @@ namespace SiemensCommunity
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SiemensCommunity v1"));
             }
-
             //app.UseHttpsRedirection();
 
             app.UseRouting();

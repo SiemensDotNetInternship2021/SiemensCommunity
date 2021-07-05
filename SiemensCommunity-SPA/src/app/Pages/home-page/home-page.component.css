@@ -32,7 +32,7 @@ span.status {
     top: 5px;
     background-color: lightgreen;
     border-radius:10px;
-    font-size:15px;
+    font-size:10px;
 }
 
 span.status-unavailable {
