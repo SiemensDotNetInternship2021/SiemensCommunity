@@ -64,10 +64,9 @@
                     <label class="text-danger" *ngIf="service.registrationModel.get('PhoneNumber')?.touched && service.registrationModel.get('PhoneNumber')?.errors?.required">PhoneNumber is required</label>
                 </label>
         
-                <div formGroupName="passwords">
                     <label >
                         <p class="label-txt">Password</p>
-                        <input type="password" class="input" formControlName="Password">
+                        <input type="password" class="input" name="password"  formControlName="Password">
                         <div class="line-box">
                             <div class="line"></div>
                         </div>
@@ -76,12 +75,12 @@
     
                     <label >
                         <p class="label-txt">Confirm Password</p>
-                        <input type="password" class="input" formControlName="ConfirmPassword">
+                        <input type="password" class="input" name="passwordConfirm" formControlName="ConfirmPassword" compare="password">
                         <div class="line-box">
                             <div class="line"></div>
                         </div>
+                        <label class="text-danger" *ngIf="service.registrationModel.get('ConfirmPassword')?.touched && service.registrationModel.get('Password')?.value != service.registrationModel.get('ConfirmPassword')?.value">Password doesn`t match</label>
                     </label>
-                </div>
 
         <button class="btn btn-dark" [disabled]="service.registrationModel.invalid">Register</button>
         <button class="btn btn-dark" routerLink="/login">Login</button>

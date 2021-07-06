@@ -18,6 +18,7 @@ export class UserService {
       OfficeFloor : ['', Validators.required],
       PhoneNumber : ['', Validators.required],
       Password : ['', Validators.required],
+      ConfirmPassword : ['', Validators.required]
   });
 
   loginModel = this.form.group({
@@ -26,6 +27,8 @@ export class UserService {
   });
 
   constructor(private http: HttpClient, private form:FormBuilder) { }
+
+ 
 
   register() {
     var registerData = {
