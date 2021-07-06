@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IDepartment } from 'src/app/Models/IDepartment';
+import { DepartmentService } from 'src/app/Services/department-service/department.service';
 import { UserService } from 'src/app/Services/user.service';
+
 
 @Component({
   selector: 'app-register-page',
@@ -10,15 +13,27 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class RegisterPageComponent implements OnInit {
 
+  departments!: IDepartment[];
+
   constructor(public service: UserService,
+    public serviceDepartment: DepartmentService,
     public router: Router) { }
-  ngOnInit(): void {
-  }
+    
+
+    ngOnInit(): void {
+      this.getDepartments();
+    }
 
   register() {
     this.service.register().subscribe((res: any) => 
     {
       this.router.navigateByUrl('/home');
+    })
+  }
+
+  getDepartments() {
+    this.serviceDepartment.getDepartments().subscribe((department) => {
+      this.departments.push(department);
     })
   }
 

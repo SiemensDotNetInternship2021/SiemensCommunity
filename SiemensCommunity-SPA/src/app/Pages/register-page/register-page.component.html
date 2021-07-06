@@ -36,10 +36,21 @@
                     </div>
                     <label class="text-danger" *ngIf="service.registrationModel.get('LastName')?.touched && service.registrationModel.get('LastName')?.errors?.required">Lastname is required</label>
                 </label>
-        
+                
                 <label>
                   <p class="label-txt">Department</p>  
-                  <input type="text" class="input" formControlName="Department">
+                   <!-- <mat-form-field appearance="fill">
+                    <mat-label>Favorite food</mat-label>
+                    <mat-select>
+                      <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{food.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                  <select>
+                      <option *ngFor = "let department of departments">{{department.Name}}
+                      </option>
+                  </select>
                   <div class="line-box">
                     <div class="line"></div>
                   </div>

@@ -36,3 +36,4 @@ import { LentProductsPageComponent } from './Pages/lent-products-page/lent-produ
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
