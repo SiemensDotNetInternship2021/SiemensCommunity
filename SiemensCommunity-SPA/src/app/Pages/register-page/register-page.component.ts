@@ -33,7 +33,7 @@ export class RegisterPageComponent implements OnInit {
 
   getDepartments() {
     this.serviceDepartment.getDepartments().subscribe((department) => {
-      this.departments.push(department);
+     // this.departments.pipe(department);
     })
   }
 
