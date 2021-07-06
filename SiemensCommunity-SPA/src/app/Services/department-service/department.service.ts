@@ -12,6 +12,6 @@ export class DepartmentService {
   constructor(private http: HttpClient) { }
 
   getDepartments() {
-    return this.http.get<IDepartment>(this.rootUrl + '/Department/get')
+    return this.http.get<IDepartment[]>(this.rootUrl + '/Department/get')
   }
 }

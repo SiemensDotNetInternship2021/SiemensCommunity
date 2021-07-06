@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { pipe } from 'rxjs';
 import { IDepartment } from 'src/app/Models/IDepartment';
 import { DepartmentService } from 'src/app/Services/department-service/department.service';
 import { UserService } from 'src/app/Services/user.service';
@@ -13,11 +14,13 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class RegisterPageComponent implements OnInit {
 
-  departments!: IDepartment[];
+  departments : IDepartment[] = [];
 
   constructor(public service: UserService,
     public serviceDepartment: DepartmentService,
-    public router: Router) { }
+    public router: Router) { 
+      this.departments = [];
+    }
     
 
     ngOnInit(): void {
@@ -33,7 +36,7 @@ export class RegisterPageComponent implements OnInit {
 
   getDepartments() {
     this.serviceDepartment.getDepartments().subscribe((department) => {
-     // this.departments.pipe(department);
+      department.forEach(value => this.departments.push(value));
     })
   }
 
