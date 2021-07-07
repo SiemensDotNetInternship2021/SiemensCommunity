@@ -83,3 +83,15 @@ body {
     font-size: 1em;
     margin-top: 0;
   }
+
+  .custom-select {
+    border: none;
+    padding: 5px 0px;
+    color: black;
+    background: #efefef;
+    padding-left: 12px;
+    padding-top: 12px;
+    outline: none;
+    font-size: 1em;
+    box-shadow: none;
+  }

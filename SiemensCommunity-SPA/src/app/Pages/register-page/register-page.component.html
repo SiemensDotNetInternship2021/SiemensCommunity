@@ -6,7 +6,7 @@
                     <div class="line-box">
                         <div class="line"></div>
                     </div>
-                    <label class="text-danger" *ngIf="service.registrationModel.get('Username')?.touched && service.registrationModel.get('Username')?.errors?.required">First Name is required</label>
+                    <label class="text-danger" *ngIf="service.registrationModel.get('Username')?.touched && service.registrationModel.get('Username')?.errors?.required">Username is required</label>
                 </label>
         
                 <label>
@@ -37,24 +37,16 @@
                     <label class="text-danger" *ngIf="service.registrationModel.get('LastName')?.touched && service.registrationModel.get('LastName')?.errors?.required">Lastname is required</label>
                 </label>
                 
-                <label>
-                  <p class="label-txt">Department</p>  
-                   <!-- <mat-form-field appearance="fill">
-                    <mat-label>Favorite food</mat-label>
-                    <mat-select>
-                      <mat-option *ngFor="let food of foods" [value]="food.value">
-                        {{food.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field> -->
-                  <select>
-                      <option *ngFor = "let department of departments">{{department.name}}
-                      </option>
-                  </select>
-                  <div class="line-box">
-                    <div class="line"></div>
-                  </div>
-                  <label class="text-danger" *ngIf="service.registrationModel.get('Department')?.touched && service.registrationModel.get('Department')?.errors?.required">Department is required</label>
+                <label>                      
+                    <p class="label-txt">Department</p>
+                    <select class="form-control custom-select" formControlName="Department">
+                        <option class="option-display" selected="selected" hidden>Select an option:</option>
+                        <option *ngFor = "let department of departments">{{department.name}}</option>
+                    </select> 
+                    <div class="line-box">
+                        <div class="line"></div>
+                    </div>                                                                
+                    <label class="text-danger" *ngIf="service.registrationModel.get('Department')?.touched && service.registrationModel.get('Department')?.errors?.required">Department is required</label>
                 </label>
         
                 <label>
