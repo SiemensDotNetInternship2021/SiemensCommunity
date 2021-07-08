@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using SiemensCommunity.Adapters;
 using SiemensCommunity.Models;
@@ -13,6 +14,7 @@ namespace SiemensCommunity.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly UserAdapter _userAdapter = new UserAdapter();
+        private readonly ForgotPasswordAdapter _forgotPasswordAdapter = new ForgotPasswordAdapter();
 
         public AccountController(IAccountService accountService)
         {
@@ -56,5 +58,20 @@ namespace SiemensCommunity.Controllers
                 else return BadRequest();
             }
         }
+
+        [HttpPost("forgotPassword")]
+        public async Task<IActionResult> ForgotPassword(ForgotPassword forgotPassword)
+        {
+            var result = await _accountService.ForgotPasswordAsync(_forgotPasswordAdapter.Adapt(forgotPassword));
+            if (result == true)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

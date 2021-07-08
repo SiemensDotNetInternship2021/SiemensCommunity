@@ -1,23 +1,19 @@
 using Data;
 using Data.Contracts;
 using Data.Implementations;
+using Data.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Service.Contracts;
 using Service.Implementations;
-using Microsoft.EntityFrameworkCore;
-using Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Service.Models;
 
 namespace SiemensCommunity
 {
@@ -33,7 +29,7 @@ namespace SiemensCommunity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.Configure<EmailConfiguration>(Configuration.GetSection("EmailConfiguration"));
 
             services.AddDbContext<ProjectDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
             services.AddScoped<IProductRepository, ProductRepository>();
@@ -41,6 +37,7 @@ namespace SiemensCommunity
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
 
             services.AddSingleton<ISystemClock, SystemClock>();
@@ -57,9 +54,10 @@ namespace SiemensCommunity
                 .AddRoleManager<RoleManager<AppRole>>()
                 .AddSignInManager<SignInManager<User>>()
                 .AddRoleValidator<RoleValidator<AppRole>>()
-                .AddEntityFrameworkStores<ProjectDbContext>();
+                .AddEntityFrameworkStores<ProjectDbContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
 
-          
+
             services.AddCors();
             /* var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
              services.AddAuthentication(x =>

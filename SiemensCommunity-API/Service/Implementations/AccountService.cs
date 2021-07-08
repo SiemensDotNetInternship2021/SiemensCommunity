@@ -1,4 +1,5 @@
 ﻿using Data.Contracts;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
@@ -14,10 +15,13 @@ namespace Service.Implementations
     {
         private readonly IAccountRepository _accountReposistory;
         private readonly UserAdapter _userAdapter = new UserAdapter();
+        private readonly ForgotPasswordAdapter _forgotPasswordAdapter = new ForgotPasswordAdapter();
+        private readonly IEmailService _emailService;
 
-        public AccountService(IAccountRepository accountReposistory)
+        public AccountService(IAccountRepository accountReposistory, IEmailService emailService)
         {
-            _accountReposistory = accountReposistory;   
+            _accountReposistory = accountReposistory;
+            _emailService = emailService;
         }
 
         public async Task<int> RegisterAsync(UserRegisterCredentials userCredentials)
@@ -30,6 +34,22 @@ namespace Service.Implementations
         {
             var returned = await _accountReposistory.VerifyLoginAsync(_userAdapter.AdaptFromUserData(user));
             return returned;
+        }
+
+        public async Task<bool> ForgotPasswordAsync(ForgotPassword forgotPassword)
+        {
+            var token = await _accountReposistory.ForgotPasswordAsync(_forgotPasswordAdapter.Adapt(forgotPassword));
+            var url = "http://localhost:port/account/resetpassword?token=" + token + "&email=" + forgotPassword.Email;
+            var emailBody= "Copy link to reset password: " + url;
+            var message = new EmailData
+            {
+                EmailBody = emailBody,
+                EmailSubject = "Recover password",
+                EmailToId = forgotPassword.Email,
+                EmailToName = forgotPassword.Email
+            };
+            var result = _emailService.SendEmail(message);
+            return result;
         }
     }
 }

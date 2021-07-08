@@ -12,6 +12,7 @@ import { NavBarComponent } from './Shared/nav-bar/nav-bar.component';
 import { MycatalogPageComponent } from './Pages/mycatalog-page/mycatalog-page.component';
 import { BorrowedProductsPageComponent } from './Pages/borrowed-products-page/borrowed-products-page.component';
 import { LentProductsPageComponent } from './Pages/lent-products-page/lent-products-page.component';
+import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LentProductsPageComponent } from './Pages/lent-products-page/lent-produ
     MycatalogPageComponent,
     BorrowedProductsPageComponent,
     LentProductsPageComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BorrowedProductsPageComponent } from './Pages/borrowed-products-page/borrowed-products-page.component';
+import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password.component';
 import { HomePageComponent } from './Pages/home-page/home-page.component';
 import { LentProductsPageComponent } from './Pages/lent-products-page/lent-products-page.component';
 import { LoginPageComponent } from './Pages/login-page/login-page.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'lent', component: LentProductsPageComponent},
   {path: 'borrowed', component: BorrowedProductsPageComponent},
   {path: 'mycatalog', component: MycatalogPageComponent},
+  {path: 'forgotpassword', component: ForgotPasswordComponent}
 ];
 
 @NgModule({

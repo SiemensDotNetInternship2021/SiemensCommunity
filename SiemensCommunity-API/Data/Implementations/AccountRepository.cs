@@ -1,6 +1,7 @@
 ﻿using Data.Contracts;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -64,5 +65,16 @@ namespace Data.Implementations
             throw new NotImplementedException();
         }
 
+        public async Task<string> ForgotPasswordAsync(ForgotPassword forgotPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
+
+          /*  if (user == null)
+
+                 return error; */
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            return token;
+        }
     }
 }
