@@ -15,10 +15,5 @@ namespace Data.Implementations
         {
             
         }
-
-       /* public async Task<IEnumerable<Department>> GetAsync()
-        {
-            return await Context.Departments.ToListAsync();
-        }*/
     }
 }

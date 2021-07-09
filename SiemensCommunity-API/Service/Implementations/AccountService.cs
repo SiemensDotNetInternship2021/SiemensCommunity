@@ -26,8 +26,8 @@ namespace Service.Implementations
 
         public async Task<int> RegisterAsync(UserRegisterCredentials userCredentials)
         {
-            var returnedUser = await _accountReposistory.RegisterAsync(_userAdapter.AdaptToUserIdentity(userCredentials), userCredentials.Password);
-            return returnedUser;
+            var returnedUserId = await _accountReposistory.RegisterAsync(_userAdapter.AdaptToUserIdentity(userCredentials), userCredentials.Password);
+            return returnedUserId;
         }
 
         public async Task<bool> VerifyLoginAsync(UserLoginCredentials user)
@@ -36,17 +36,17 @@ namespace Service.Implementations
             return returned;
         }
 
-        public async Task<bool> ForgotPasswordAsync(ForgotPassword forgotPassword)
+        public async Task<bool> ForgotPasswordAsync(string email)
         {
-            var token = await _accountReposistory.ForgotPasswordAsync(_forgotPasswordAdapter.Adapt(forgotPassword));
-            var url = "http://localhost:port/account/resetpassword?token=" + token + "&email=" + forgotPassword.Email;
+            var token = await _accountReposistory.ForgotPasswordAsync(email);
+            var url = "http://localhost:port/account/resetpassword?token=" + token + "&email=" + email;
             var emailBody= "Copy link to reset password: " + url;
             var message = new EmailData
             {
                 EmailBody = emailBody,
                 EmailSubject = "Recover password",
-                EmailToId = forgotPassword.Email,
-                EmailToName = forgotPassword.Email
+                EmailToId = email,
+                EmailToName = email
             };
             var result = _emailService.SendEmail(message);
             return result;

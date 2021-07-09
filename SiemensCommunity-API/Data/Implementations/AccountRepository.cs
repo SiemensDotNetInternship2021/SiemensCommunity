@@ -65,9 +65,9 @@ namespace Data.Implementations
             throw new NotImplementedException();
         }
 
-        public async Task<string> ForgotPasswordAsync(ForgotPassword forgotPassword)
+        public async Task<string> ForgotPasswordAsync(string email)
         {
-            var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
+            var user = await _userManager.FindByEmailAsync(email);
 
           /*  if (user == null)
 

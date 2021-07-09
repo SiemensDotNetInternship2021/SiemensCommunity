@@ -11,6 +11,6 @@ namespace Service.Contracts
     {
         public Task<int> RegisterAsync(UserRegisterCredentials userCredentials);
         public Task<bool> VerifyLoginAsync(UserLoginCredentials user);
-        public Task<bool> ForgotPasswordAsync(ForgotPassword forgotPassword);
+        public Task<bool> ForgotPasswordAsync(string email);
     }
 }

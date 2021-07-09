@@ -14,7 +14,6 @@ namespace SiemensCommunity.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly UserAdapter _userAdapter = new UserAdapter();
-        private readonly ForgotPasswordAdapter _forgotPasswordAdapter = new ForgotPasswordAdapter();
 
         public AccountController(IAccountService accountService)
         {
@@ -30,10 +29,10 @@ namespace SiemensCommunity.Controllers
             }
             else
             {
-                var responseRegister = await _accountService.RegisterAsync(_userAdapter.Adapt(registerCredentials));
-                if (responseRegister != 0)
+                var returnedUserId = await _accountService.RegisterAsync(_userAdapter.Adapt(registerCredentials));
+                if (returnedUserId != 0)
                 {
-                    return Ok(responseRegister);
+                    return Ok(returnedUserId);
                 }
                 else
                 {
@@ -60,9 +59,9 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpPost("forgotPassword")]
-        public async Task<IActionResult> ForgotPassword(ForgotPassword forgotPassword)
+        public async Task<IActionResult> ForgotPassword(string email)
         {
-            var result = await _accountService.ForgotPasswordAsync(_forgotPasswordAdapter.Adapt(forgotPassword));
+            var result = await _accountService.ForgotPasswordAsync(email);
             if (result == true)
             {
                 return Ok();
