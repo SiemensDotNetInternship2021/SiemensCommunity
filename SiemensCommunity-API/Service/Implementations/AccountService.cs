@@ -15,7 +15,6 @@ namespace Service.Implementations
     {
         private readonly IAccountRepository _accountReposistory;
         private readonly UserAdapter _userAdapter = new UserAdapter();
-        private readonly ForgotPasswordAdapter _forgotPasswordAdapter = new ForgotPasswordAdapter();
         private readonly IEmailService _emailService;
 
         public AccountService(IAccountRepository accountReposistory, IEmailService emailService)

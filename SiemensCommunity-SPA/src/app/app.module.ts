@@ -13,6 +13,7 @@ import { MycatalogPageComponent } from './Pages/mycatalog-page/mycatalog-page.co
 import { BorrowedProductsPageComponent } from './Pages/borrowed-products-page/borrowed-products-page.component';
 import { LentProductsPageComponent } from './Pages/lent-products-page/lent-products-page.component';
 import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './Pages/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password
     BorrowedProductsPageComponent,
     LentProductsPageComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
