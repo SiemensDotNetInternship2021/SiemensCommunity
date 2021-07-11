@@ -1,0 +1,45 @@
+p.title {
+    font-size: 3.5em;
+    text-align: center;
+}
+
+div.card {
+    margin-top: 50px;
+}
+
+div.container {
+  text-align: center;
+  height: 100%;
+}
+
+div.card {
+    align-items: center;
+    justify-content: center;
+}
+
+div.row.justify-content-center.align-items-center {
+    height: 100%;
+    min-height: 100%
+}
+
+img {
+    position: relative;
+}
+
+span.status-borrowed {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background-color: lightgreen;
+    border-radius:10px;
+    font-size:15px;
+}
+
+span.status-lent {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background-color: red;
+    border-radius:10px;
+    font-size:15px;
+}
