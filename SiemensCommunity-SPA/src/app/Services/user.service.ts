@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 export class UserService {
 
   readonly rootUrl = 'http://localhost:52718/api';
+  email: string = "";
+  token: string= "";
 
   registrationModel = this.form.group({
       FirstName: ['', Validators.required],
@@ -30,7 +33,14 @@ export class UserService {
     Email: ['', [Validators.required, Validators.email]]
   });
 
-  constructor(private http: HttpClient, private form:FormBuilder) { }
+  resetPasswordModel = this.form.group({
+    Password: ['', Validators.required],
+    ConfirmPassword: ['', Validators.required],
+  })
+
+  constructor(private http: HttpClient, private form:FormBuilder, private route: ActivatedRoute) {
+
+   }
 
  
 
@@ -61,6 +71,16 @@ export class UserService {
     var recoverData = {
       Email: this.forgotPasswordModel.value.Email
     }
-    return this.http.post(this.rootUrl + '/Account/forgotPassword', recoverData);
+    return this.http.get(this.rootUrl + '/Account/forgotPassword?email='+ recoverData.Email);
+  }
+
+  resetPassword(){
+    var resetPassworData = {
+      Password: this.resetPasswordModel.value.Password,
+      Email: this.route.snapshot.queryParamMap.get('email'),
+      Token: this.route.snapshot.queryParamMap.get('token'),
+    }
+    console.log(resetPassworData.Email);
+    return this.http.post(this.rootUrl + '/Account/resetpassword', resetPassworData);
   }
 }
