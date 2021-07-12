@@ -4,14 +4,16 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210712110835_AddedSubCategoryFKInProduct")]
+    partial class AddedSubCategoryFKInProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,18 +79,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Books"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Decorative objects"
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.Department", b =>
@@ -104,23 +94,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "HR"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Marketing"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "IT"
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.Product", b =>
@@ -161,68 +134,6 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book SF",
-                            Rating = 3,
-                            SubCategoryId = 1,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book Poems",
-                            Rating = 3,
-                            SubCategoryId = 2,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book Poems",
-                            Rating = 4,
-                            SubCategoryId = 2,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book SF",
-                            Rating = 5,
-                            SubCategoryId = 1,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 2,
-                            IsAvailable = false,
-                            Name = "Decorative Object",
-                            Rating = 5,
-                            SubCategoryId = 3,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 2,
-                            IsAvailable = false,
-                            Name = "Decorative Object",
-                            Rating = 5,
-                            SubCategoryId = 3,
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.SubCategory", b =>
@@ -242,26 +153,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            Name = "SF"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            Name = "Poems"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 2,
-                            Name = "Desk"
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>
