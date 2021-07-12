@@ -14,6 +14,7 @@ namespace SiemensCommunity.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly UserAdapter _userAdapter = new UserAdapter();
+        private readonly ResetPasswordAdapter _resetPasswordAdapter = new ResetPasswordAdapter();
 
         public AccountController(IAccountService accountService)
         {
@@ -58,7 +59,7 @@ namespace SiemensCommunity.Controllers
             }
         }
 
-        [HttpPost("forgotPassword")]
+        [HttpGet("forgotPassword")]
         public async Task<IActionResult> ForgotPassword(string email)
         {
             var result = await _accountService.ForgotPasswordAsync(email);
@@ -72,5 +73,17 @@ namespace SiemensCommunity.Controllers
             }
         }
 
+        [HttpPost("resetpassword")]
+        public async Task<IActionResult> ResetPassword(ResetPassword resetPassword)
+        {
+            var adapt = _resetPasswordAdapter.Adapt(resetPassword);
+
+            var result = await _accountService.ResetPasswordAsync(adapt);
+
+            if (result == false)
+                return BadRequest();
+
+            return Ok();
+        }
     }
 }

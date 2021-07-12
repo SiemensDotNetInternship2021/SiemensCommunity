@@ -8,15 +8,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Service.Implementations
 {
     public class AccountService : IAccountService
     {
-        private readonly IAccountRepository _accountReposistory;
         private readonly UserAdapter _userAdapter = new UserAdapter();
-        private readonly IEmailService _emailService;
+        private readonly ResetPasswordAdapter _resetPasswordAdapter = new ResetPasswordAdapter();
 
+        private readonly IAccountRepository _accountReposistory;
+        private readonly IEmailService _emailService;
         public AccountService(IAccountRepository accountReposistory, IEmailService emailService)
         {
             _accountReposistory = accountReposistory;
@@ -38,7 +40,8 @@ namespace Service.Implementations
         public async Task<bool> ForgotPasswordAsync(string email)
         {
             var token = await _accountReposistory.ForgotPasswordAsync(email);
-            var url = "http://localhost:port/account/resetpassword?token=" + token + "&email=" + email;
+            var ulrEncodeToken = Uri.EscapeDataString(token);
+            var url = "http://localhost:4200/resetpassword?token=" + ulrEncodeToken + "&email=" + email;
             var emailBody= "Copy link to reset password: " + url;
             var message = new EmailData
             {
@@ -50,6 +53,13 @@ namespace Service.Implementations
             var result = _emailService.SendEmail(message);
             return result;
         }
+
+        public async Task<bool> ResetPasswordAsync(ResetPassword resetPassword)
+        {
+            var resultResetPassword = await _accountReposistory.ResetPasswordAsync(_resetPasswordAdapter.Adapt(resetPassword));
+            return resultResetPassword;
+        }
+
     }
 }
 
