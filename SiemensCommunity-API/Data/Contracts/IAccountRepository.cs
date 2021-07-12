@@ -14,5 +14,6 @@ namespace Data.Contracts
         public Task<bool> VerifyLoginAsync(UserLoginCredentials userLoginCredentials);
 
         public Task<string> ForgotPasswordAsync(string email);
+        public Task<bool> ResetPasswordAsync(ResetPassword resetPassword);
     }
 }

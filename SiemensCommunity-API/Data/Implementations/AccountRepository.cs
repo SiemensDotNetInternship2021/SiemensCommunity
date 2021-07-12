@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Data.Implementations
 {
@@ -75,6 +76,20 @@ namespace Data.Implementations
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             return token;
+        }
+
+        public async Task<bool> ResetPasswordAsync(ResetPassword resetPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+            if (user == null)
+                return false;
+
+            var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
+
+            if (resetPassResult.Succeeded)
+                return true;
+            
+            return false;
         }
     }
 }

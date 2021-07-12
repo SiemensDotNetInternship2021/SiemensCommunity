@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Service.Contracts;
 using Service.Implementations;
 using Service.Models;
+using System;
 
 namespace SiemensCommunity
 {
@@ -56,7 +57,8 @@ namespace SiemensCommunity
                 .AddRoleValidator<RoleValidator<AppRole>>()
                 .AddEntityFrameworkStores<ProjectDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
-
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+                    opt.TokenLifespan = TimeSpan.FromHours(2));
 
             services.AddCors();
             /* var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
