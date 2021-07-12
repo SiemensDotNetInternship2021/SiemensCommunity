@@ -14,6 +14,7 @@ import { BorrowedProductsPageComponent } from './Pages/borrowed-products-page/bo
 import { LentProductsPageComponent } from './Pages/lent-products-page/lent-products-page.component';
 import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './Pages/reset-password/reset-password.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ResetPasswordComponent } from './Pages/reset-password/reset-password.co
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
