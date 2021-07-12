@@ -23,7 +23,11 @@ export class UserService {
 
   loginModel = this.form.group({
     Email: ['', [Validators.required, Validators.email]],
-    Password: ['', Validators.required],
+    Password: ['', Validators.required]
+  });
+
+  forgotPasswordModel = this.form.group({
+    Email: ['', [Validators.required, Validators.email]]
   });
 
   constructor(private http: HttpClient, private form:FormBuilder) { }
@@ -51,5 +55,12 @@ export class UserService {
       Password: this.loginModel.value.Password,
     }
     return this.http.post(this.rootUrl + '/Account/login', loginData);
+  }
+
+  recoverPassword(){
+    var recoverData = {
+      Email: this.forgotPasswordModel.value.Email
+    }
+    return this.http.post(this.rootUrl + '/Account/forgotPassword', recoverData);
   }
 }
