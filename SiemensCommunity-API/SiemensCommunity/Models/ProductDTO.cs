@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SiemensCommunity.Models
 {
-    public class Product
+    public class ProductDTO
     {
         public int Id { get; set; }
 

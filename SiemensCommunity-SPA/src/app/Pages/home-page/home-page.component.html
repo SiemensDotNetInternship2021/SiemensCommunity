@@ -1,120 +1,39 @@
 <app-nav-bar></app-nav-bar>
 <div class="container h-100">
-
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status">Available</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-              <div class="card-body">
-                <button class="btn btn-primary">Borrow</button>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-unavailable">Unavailable</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-unavailable">Unavailable</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
-    </div>
-  
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-unavailable">Unavailable</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3 align-item-center">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status">Available</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-              <div class="card-body">
-                <button class="btn btn-primary">Borrow</button>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-unavailable">Unavailable</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
-    </div>
-  
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status">Available</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-              <div class="card-body">
-                <button class="btn btn-primary">Borrow</button>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status">Available</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-              <div class="card-body">
-                <button class="btn btn-primary">Borrow</button>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top">
-              <span class="status-unavailable">Unavailable</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
-    </div>
+  <div class="row justify-content-center align-items-center">
+   <div class="col-md-3">
+    <select class="form-control custom-select" >
+      <option class="option-display" selected="selected" hidden>Category</option>
+      <option>Books</option>
+      <option>Decorative</option>
+      <option>AnotherCategory</option>
+      <option>AnotherCategory</option>
+    </select> 
+   </div>
+   <div class="col-md-3">
+    <label class="option"> Available
+      <input type="checkbox">
+    </label>
+    <label class="option"> All
+      <input type="checkbox">
+    </label>
+   </div>
   </div>
+  <div class="row justify-content-center align-items-center">
+    <div *ngFor="let product of products" class="col-md-3">
+        <div  *ngIf="product.isAvailable == true" class="card" style="width: 18rem;">
+            <img src="{{product.imagePath}}" class="card-img-top" >
+            <div class="card-body">
+              <h5 class="card-title">Title: {{product.name}}</h5>
+              <p class="card-text">Type: {{product.subCategoryName}}</p>
+              <p class="card-text">Owner: {{product.user}}</p>
+              <p class="card-text">Details: {{product.details}}</p>
+            </div>
+            <div class="card-body">
+              <button class="btn btn-primary">Borrow</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ 
