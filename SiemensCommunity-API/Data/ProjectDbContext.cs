@@ -25,12 +25,12 @@ namespace Data
                                                   new SubCategory { Id = 2, CategoryId = 1, Name = "Poems" },
                                                   new SubCategory { Id = 3, CategoryId = 2, Name = "Desk" });
 
-            builder.Entity<Product>().HasData(new Product { Id = 1, Name = "Book SF", CategoryId = 1, SubCategoryId = 1, IsAvailable = true, Rating = 3, UserId = 2 },
-                                            new Product { Id = 2, Name = "Book Poems", CategoryId = 1, SubCategoryId = 2, IsAvailable = true, Rating = 3, UserId = 2 },
-                                            new Product { Id = 3, Name = "Book Poems", CategoryId = 1, SubCategoryId = 2, IsAvailable = true, Rating = 4, UserId = 2 },
-                                            new Product { Id = 4, Name = "Book SF", CategoryId = 1, SubCategoryId = 1, IsAvailable = true, Rating = 5, UserId = 2 },
-                                            new Product { Id = 5, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 2 },
-                                            new Product { Id = 6, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 2 });
+            builder.Entity<Product>().HasData(new Product { Id = 1, Name = "Book SF", CategoryId = 1, SubCategoryId = 1, IsAvailable = true, Rating = 3, UserId = 2, Details = "Here is something random for the moment bla bla bla", ImagePath= "assets/unnamed.png" },
+                                            new Product { Id = 2, Name = "Book Poems", CategoryId = 1, SubCategoryId = 2, IsAvailable = true, Rating = 3, UserId = 3, Details = "Here is something random for the moment bla bla bla", ImagePath = "assets/glasses.png" },
+                                            new Product { Id = 3, Name = "Book Poems", CategoryId = 1, SubCategoryId = 2, IsAvailable = true, Rating = 4, UserId = 2, Details = "Here is something random for the moment bla bla bla", ImagePath = "assets/minion.png" },
+                                            new Product { Id = 4, Name = "Book SF", CategoryId = 1, SubCategoryId = 1, IsAvailable = true, Rating = 5, UserId = 3, Details = "Here is something random for the moment bla bla bla", ImagePath = "assets/star.png" },
+                                            new Product { Id = 5, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 1, Details = "Here is something random for the moment bla bla bla", ImagePath = "assets/unnamed.png" },
+                                            new Product { Id = 6, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 3, Details = "Here is something random for the moment bla bla bla", ImagePath = "assets/unnamed.png" });
 
             base.OnModelCreating(builder);
 

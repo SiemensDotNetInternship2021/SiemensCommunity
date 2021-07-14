@@ -64,8 +64,8 @@ namespace SiemensCommunity.Controllers
         [HttpGet("get")]
         public async Task<IActionResult> Get()
         {
-            var productList = await _productService.GetAsync();
-            return Ok(productList);
+            var products = await _productService.GetProducts();
+            return Ok(products);
         }
 
     }

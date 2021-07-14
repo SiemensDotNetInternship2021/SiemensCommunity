@@ -4,14 +4,16 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210713125134_ChangedProductsDetailsColumn")]
+    partial class ChangedProductsDetailsColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,30 +63,6 @@ namespace Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-                });
-
-            modelBuilder.Entity("Data.Models.BorrowedProduct", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BorrowedProducts");
                 });
 
             modelBuilder.Entity("Data.Models.Category", b =>
@@ -194,7 +172,6 @@ namespace Data.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Details = "Here is something random for the moment bla bla bla",
-                            ImagePath = "assets/unnamed.png",
                             IsAvailable = true,
                             Name = "Book SF",
                             Rating = 3,
@@ -206,7 +183,6 @@ namespace Data.Migrations
                             Id = 2,
                             CategoryId = 1,
                             Details = "Here is something random for the moment bla bla bla",
-                            ImagePath = "assets/glasses.png",
                             IsAvailable = true,
                             Name = "Book Poems",
                             Rating = 3,
@@ -218,7 +194,6 @@ namespace Data.Migrations
                             Id = 3,
                             CategoryId = 1,
                             Details = "Here is something random for the moment bla bla bla",
-                            ImagePath = "assets/minion.png",
                             IsAvailable = true,
                             Name = "Book Poems",
                             Rating = 4,
@@ -230,7 +205,6 @@ namespace Data.Migrations
                             Id = 4,
                             CategoryId = 1,
                             Details = "Here is something random for the moment bla bla bla",
-                            ImagePath = "assets/star.png",
                             IsAvailable = true,
                             Name = "Book SF",
                             Rating = 5,
@@ -242,7 +216,6 @@ namespace Data.Migrations
                             Id = 5,
                             CategoryId = 2,
                             Details = "Here is something random for the moment bla bla bla",
-                            ImagePath = "assets/unnamed.png",
                             IsAvailable = false,
                             Name = "Decorative Object",
                             Rating = 5,
@@ -254,7 +227,6 @@ namespace Data.Migrations
                             Id = 6,
                             CategoryId = 2,
                             Details = "Here is something random for the moment bla bla bla",
-                            ImagePath = "assets/unnamed.png",
                             IsAvailable = false,
                             Name = "Decorative Object",
                             Rating = 5,
