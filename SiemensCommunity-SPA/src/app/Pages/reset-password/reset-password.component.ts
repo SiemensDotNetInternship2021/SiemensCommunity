@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/Services/user.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(public service: UserService,
     public router: Router,
-    public route: ActivatedRoute) { }
+    public route: ActivatedRoute,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     console.log(this.route.snapshot.queryParamMap.get('email'));
@@ -21,6 +23,9 @@ export class ResetPasswordComponent implements OnInit {
   resetPassword(){
     this.service.resetPassword().subscribe((res: any)=>{
       this.router.navigateByUrl('/home');
-    })
+    },
+    err=>{
+      this.toastr.error('Invalid request');
+    });
   }
 }

@@ -15,6 +15,8 @@ import { LentProductsPageComponent } from './Pages/lent-products-page/lent-produ
 import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './Pages/reset-password/reset-password.component';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import { RouterModule } from '@angular/router';
     BorrowedProductsPageComponent,
     LentProductsPageComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,9 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

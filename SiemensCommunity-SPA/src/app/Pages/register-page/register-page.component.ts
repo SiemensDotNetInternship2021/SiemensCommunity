@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { pipe } from 'rxjs';
 import { IDepartment } from 'src/app/Models/IDepartment';
 import { DepartmentService } from 'src/app/Services/department-service/department.service';
@@ -18,7 +19,8 @@ export class RegisterPageComponent implements OnInit {
 
   constructor(public service: UserService,
     public serviceDepartment: DepartmentService,
-    public router: Router) { 
+    public router: Router,
+    private toastr: ToastrService) { 
       this.departments = [];
     }
     
@@ -31,7 +33,10 @@ export class RegisterPageComponent implements OnInit {
     this.service.register().subscribe((res: any) => 
     {
       this.router.navigateByUrl('/home');
-    })
+    },
+    err=>{
+      this.toastr.error("Invalid credentials.");
+    });
   }
 
   getDepartments() {

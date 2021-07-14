@@ -82,6 +82,7 @@ body {
     text-align: left;
     font-size: 1em;
     margin-top: 0;
+    margin-bottom: 10px;
   }
 
   .custom-select {

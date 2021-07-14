@@ -74,6 +74,8 @@
                             <div class="line"></div>
                         </div>
                         <label class="text-danger" *ngIf="service.registrationModel.get('Password')?.touched && service.registrationModel.get('Password')?.errors?.required">Password is required</label>
+                        <label class="text-danger" *ngIf="service.registrationModel.get('Password')?.touched && service.registrationModel.get('Password')?.errors?.pattern">Password must contain at least one digit</label>
+                        <label class="text-danger" *ngIf="service.registrationModel.get('Password')?.touched && service.registrationModel.get('Password')?.errors?.minlength">Password must contain at least 6 characters</label>
                     </label>
     
                     <label >
@@ -85,7 +87,7 @@
                         <label class="text-danger" *ngIf="service.registrationModel.get('ConfirmPassword')?.touched && service.registrationModel.get('Password')?.value != service.registrationModel.get('ConfirmPassword')?.value">Password doesn`t match</label>
                     </label>
 
-        <button class="btn btn-dark" [disabled]="service.registrationModel.invalid">Register</button>
+        <button class="btn btn-dark" [disabled] = "service.registrationModel.invalid || service.registrationModel.get('Password')?.value != service.registrationModel.get('ConfirmPassword')?.value">Register</button>
         <button type="button" class="btn btn-dark" routerLink="/login">Login</button>
     </form>
     <!--test-->

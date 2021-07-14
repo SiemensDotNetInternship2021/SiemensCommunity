@@ -20,7 +20,7 @@ export class UserService {
       Department : ['', Validators.required],
       OfficeFloor : ['', Validators.required],
       PhoneNumber : ['', Validators.required],
-      Password : ['', Validators.required],
+      Password : ['', [Validators.required, Validators.minLength(6), Validators.pattern(".*[0-9].*")]],
       ConfirmPassword : ['', Validators.required]
   });
 
@@ -34,7 +34,7 @@ export class UserService {
   });
 
   resetPasswordModel = this.form.group({
-    Password: ['', Validators.required],
+    Password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(".*[0-9].*")]],
     ConfirmPassword: ['', Validators.required],
   })
 

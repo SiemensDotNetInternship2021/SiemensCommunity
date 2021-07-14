@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/Services/user.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class LoginPageComponent implements OnInit {
   
  
   constructor(public service: UserService,
-    private router: Router ) { }
+    private router: Router,
+    private toastr: ToastrService ) { }
 
   ngOnInit(): void {
   }
@@ -21,6 +23,9 @@ export class LoginPageComponent implements OnInit {
     this.service.login().subscribe((res: any) => 
     {
       this.router.navigateByUrl('/home');
-    })
+    },
+    err=>{
+      this.toastr.error("Invalid credentials");
+    });
   }
 }
