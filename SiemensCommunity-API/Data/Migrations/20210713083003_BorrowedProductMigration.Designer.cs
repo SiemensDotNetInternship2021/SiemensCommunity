@@ -4,14 +4,16 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210713083003_BorrowedProductMigration")]
+    partial class BorrowedProductMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,24 +72,14 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-<<<<<<< Updated upstream
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-=======
                     b.Property<string>("EndDate")
                         .HasColumnType("nvarchar(max)");
->>>>>>> Stashed changes
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-<<<<<<< Updated upstream
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-=======
                     b.Property<string>("StartDate")
                         .HasColumnType("nvarchar(max)");
->>>>>>> Stashed changes
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -95,8 +87,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BorrowedProducts");
-<<<<<<< Updated upstream
-=======
 
                     b.HasData(
                         new
@@ -115,7 +105,6 @@ namespace Data.Migrations
                             StartDate = "2021/7/13",
                             UserId = 2
                         });
->>>>>>> Stashed changes
                 });
 
             modelBuilder.Entity("Data.Models.Category", b =>

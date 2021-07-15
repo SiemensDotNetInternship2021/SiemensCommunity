@@ -67,6 +67,5 @@ namespace SiemensCommunity.Controllers
             var productList = await _productService.GetAsync();
             return Ok(productList);
         }
-
     }
 }
