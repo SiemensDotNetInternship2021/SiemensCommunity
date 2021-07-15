@@ -26,7 +26,7 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody]Product product)
+        public async Task<IActionResult> Add([FromBody] Product product)
         {
             if (!(ModelState.IsValid))
             {
@@ -41,7 +41,7 @@ namespace SiemensCommunity.Controllers
                 }
                 else
                 {
-                    return StatusCode((int) HttpStatusCode.InternalServerError);
+                    return StatusCode((int)HttpStatusCode.InternalServerError);
                 }
             }
         }
@@ -61,10 +61,10 @@ namespace SiemensCommunity.Controllers
             }
         }
 
-        [HttpGet("get")]
-        public async Task<IActionResult> Get()
+        [HttpGet("{selectedValue}")]
+        public async Task<IActionResult> Get([FromRoute] int selectedValue)
         {
-            var products = await _productService.GetProducts();
+            var products = await _productService.GetProducts(selectedValue);
             return Ok(products);
         }
 

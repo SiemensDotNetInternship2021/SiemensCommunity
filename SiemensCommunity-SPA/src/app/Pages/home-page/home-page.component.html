@@ -2,26 +2,25 @@
 <div class="container h-100">
   <div class="row justify-content-center align-items-center">
    <div class="col-md-3">
-    <select class="form-control custom-select" >
-      <option class="option-display" selected="selected" hidden>Category</option>
-      <option>Books</option>
-      <option>Decorative</option>
-      <option>AnotherCategory</option>
-      <option>AnotherCategory</option>
+    <select class="form-control custom-select" [(ngModel)]="mySelect" (change)="getSelected()">
+      <option class="option-display" selected="selected" value=0 >All Products</option>
+      <option value="{{category.id}}" *ngFor = "let category of categories">{{category.name}}</option>
     </select> 
    </div>
    <div class="col-md-3">
-    <label class="option"> Available
-      <input type="checkbox">
-    </label>
-    <label class="option"> All
-      <input type="checkbox">
-    </label>
+     <form>
+      <label class="option"> Available
+        <input value="1" name = "option" (change) = "checkboxChange($event)" type="radio">
+      </label>
+      <label class="option"> All
+        <input value="2" [checked]="true" name = "option" (change) = "checkboxChange($event)" type="radio">
+      </label>
+     </form>
    </div>
   </div>
   <div class="row justify-content-center align-items-center">
     <div *ngFor="let product of products" class="col-md-3">
-        <div  *ngIf="product.isAvailable == true" class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;">
             <img src="{{product.imagePath}}" class="card-img-top" >
             <div class="card-body">
               <h5 class="card-title">Title: {{product.name}}</h5>

@@ -16,22 +16,44 @@ namespace Data.Implementations
            
         }
 
-        public async Task<List<ProductDTO>> GetProducts()
+        public async Task<List<ProductDTO>> GetProducts(int selectedValue)
         {
-            var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory)
-                .Select(x => new ProductDTO
-                {
-                    Id = x.Id,
-                    Details = x.Details,
-                    IsAvailable = x.IsAvailable,
-                    Name = x.Name,
-                    Rating = x.Rating,
-                    User = x.User.UserName,
-                    CategoryName = x.Category.Name,
-                    SubCategoryName = x.SubCategory.Name,
-                    ImagePath = x.ImagePath
-                });
-            return await product.ToListAsync();
+            if(selectedValue == 0)
+            {
+                var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory)
+               .Select(x => new ProductDTO
+               {
+                   Id = x.Id,
+                   Details = x.Details,
+                   IsAvailable = x.IsAvailable,
+                   Name = x.Name,
+                   Rating = x.Rating,
+                   User = x.User.UserName,
+                   CategoryName = x.Category.Name,
+                   SubCategoryName = x.SubCategory.Name,
+                   ImagePath = x.ImagePath
+               });
+               return await product.ToListAsync();
+            }
+            else
+            {
+               var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.CategoryId == selectedValue)
+              .Select(x => new ProductDTO
+              {
+                  Id = x.Id,
+                  Details = x.Details,
+                  IsAvailable = x.IsAvailable,
+                  Name = x.Name,
+                  Rating = x.Rating,
+                  User = x.User.UserName,
+                  CategoryName = x.Category.Name,
+                  SubCategoryName = x.SubCategory.Name,
+                  ImagePath = x.ImagePath
+              });
+              return await product.ToListAsync();
+            }
+          
+           
         }
     }
 }

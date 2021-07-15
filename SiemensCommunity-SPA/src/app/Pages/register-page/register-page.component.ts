@@ -26,6 +26,7 @@ export class RegisterPageComponent implements OnInit {
     
 
     ngOnInit(): void {
+      this.service.registrationModel.reset();
       this.getDepartments();
     }
 

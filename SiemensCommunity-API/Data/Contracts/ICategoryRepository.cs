@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Contracts
 {
-    public interface IProductRepository : IGenericRepository<Product>
+    public interface ICategoryRepository : IGenericRepository<Category>
     {
-        public Task<List<ProductDTO>> GetProducts(int selectedValue);
+        
     }
 }
