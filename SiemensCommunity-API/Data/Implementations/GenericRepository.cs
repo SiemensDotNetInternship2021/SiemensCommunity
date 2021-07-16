@@ -18,7 +18,7 @@ namespace Data.Implementations
 
         public virtual async Task<T> AddAsync(T entity)
         {
-            Context.Set<T>().Add(entity);
+            var result = Context.Set<T>().Add(entity);
             await Context.SaveChangesAsync();
             return entity;
         }

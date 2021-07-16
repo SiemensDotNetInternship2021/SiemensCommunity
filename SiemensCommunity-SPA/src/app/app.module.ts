@@ -17,6 +17,7 @@ import { ResetPasswordComponent } from './Pages/reset-password/reset-password.co
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AddProductComponent } from './Pages/add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ToastrModule } from 'ngx-toastr';
     BorrowedProductsPageComponent,
     LentProductsPageComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

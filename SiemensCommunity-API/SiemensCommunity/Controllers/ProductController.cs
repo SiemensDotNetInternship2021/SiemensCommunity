@@ -25,7 +25,7 @@ namespace SiemensCommunity.Controllers
             _productService = productService;
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody]Product product)
         {
             if (!(ModelState.IsValid))
