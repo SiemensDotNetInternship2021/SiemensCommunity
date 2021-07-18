@@ -15,9 +15,11 @@ namespace Data.Models
 
         [ForeignKey("User")]
         public int UserId { get; set; }
+        [ForeignKey("Photo")]
+        public int PhotoId { get; set; }
+        public Photo Photo { get; set; }
         public string Name { get; set; }
         public bool IsAvailable { get; set; }
-        public string ImagePath { get; set; }
         public int Rating { get; set; }
         public string Details { get; set; }
     }

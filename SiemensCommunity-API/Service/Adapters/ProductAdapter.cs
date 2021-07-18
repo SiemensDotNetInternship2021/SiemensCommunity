@@ -16,8 +16,14 @@ namespace Service.Adapters
         {
             var config = new MapperConfiguration(config =>
             {
-                config.CreateMap<Product, Data.Models.Product>();
-                config.CreateMap<Data.Models.Product, Product>();
+                config.CreateMap<Photo, Data.Models.Photo>();
+                config.CreateMap<Data.Models.Photo, Photo>();
+                config.CreateMap<Product, Data.Models.Product>()
+                    .ForMember(dest => dest.Photo, act => act.MapFrom(src => src.Photo));
+                config.CreateMap<Data.Models.Product, Product>()
+                    .ForMember(dest => dest.Photo, act => act.MapFrom(src => src.Photo));
+                config.CreateMap<Data.Models.Product, AddProduct>();
+                config.CreateMap<AddProduct, Data.Models.Product>();
             });
 
             _productAdapter = config.CreateMapper();
@@ -31,6 +37,11 @@ namespace Service.Adapters
         public Product Adapt(Data.Models.Product product)
         {
             return _productAdapter.Map<Data.Models.Product, Product>(product);
+        }
+        public Data.Models.Product AdaptAddProductToProduct(AddProduct product)
+        {
+            var result = _productAdapter.Map<AddProduct, Data.Models.Product>(product);
+            return result;
         }
 
         public IEnumerable<Product> AdaptList(IEnumerable<Data.Models.Product> products)

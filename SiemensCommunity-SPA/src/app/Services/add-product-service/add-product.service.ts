@@ -18,7 +18,7 @@ export class AddProductService {
     Name: ['', Validators.required],
     Category: ['', Validators.required],
     SubCategory : ['', Validators.required],
-    ImagePath : ['',  Validators.required],
+    Image : ['',  Validators.required],
     Details : ['', Validators.required]
 });
   addProduct() {
@@ -27,14 +27,17 @@ export class AddProductService {
       Name: this.addProductModel.value.Name,
       CategoryId: this.addProductModel.value.Category,
       SubCategoryId: this.addProductModel.value.SubCategory,
-      ImagePath: this.addProductModel.value.ImagePath,
+      Image: this.addProductModel.value.Image,
       Details: this.addProductModel.value.Details,
       UserId: 1
     }
-    console.log(addProductData);
+    console.log(addProductData.Image);
+    console.log("product id" + addProductData.Id);
     if(addProductData.Id == 0){
+      console.log("in");
         return this.http.post(this.rootUrl + '/Product/add', addProductData);
     }else{
+      console.log("out");
       return this.http.post(this.rootUrl+'/Product/update',  addProductData);
     }
   }

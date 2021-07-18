@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using SiemensCommunity.Adapters;
 using SiemensCommunity.Models;
@@ -19,6 +20,7 @@ namespace SiemensCommunity.Controllers
 
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
         private readonly UserAdapter _userAdapter = new UserAdapter();
+        private readonly AddProductAdapter _addProductAdapter = new AddProductAdapter();
 
         public ProductController(IProductService productService)
         {
@@ -26,7 +28,7 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody]Product product)
+        public async Task<IActionResult> Add(AddProduct addProduct)
         {
             if (!(ModelState.IsValid))
             {
@@ -34,7 +36,7 @@ namespace SiemensCommunity.Controllers
             }
             else
             {
-                var returnedProduct = await _productService.AddAsync(_productAdapter.Adapt(product));
+                var returnedProduct = await _productService.AddAsync(_addProductAdapter.Adapt(addProduct));
                 if (returnedProduct != null)
                 {
                     return Ok(_productAdapter.Adapt(returnedProduct));

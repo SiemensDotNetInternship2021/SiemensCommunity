@@ -45,11 +45,11 @@
 
             <label>
                 <p class="label-txt">Product image</p>
-                <input type="file" class="input" rows="3" formControlName="ImagePath"/>
+                <input type="file" class="input" rows="3" formControlName="Image"/>
                 <div class="line-box">
                     <div class="line"></div>
                 </div>
-                <label class="text-danger"  *ngIf="service.addProductModel.get('ImagePath')?.touched && service.addProductModel.get('ImagePath')?.errors?.required">An image is required</label>
+                <label class="text-danger"  *ngIf="service.addProductModel.get('Image')?.touched && service.addProductModel.get('Image')?.errors?.required">An image is required</label>
             </label>
 
     <button class="btn btn-dark" [disabled]="service.addProductModel.invalid">Submit</button>

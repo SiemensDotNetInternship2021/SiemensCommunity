@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20210712111304_SeedDatabase")]
-    partial class SeedDatabase
+    [Migration("20210717151829_AddedPhotosTable")]
+    partial class AddedPhotosTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,6 +63,30 @@ namespace Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Data.Models.BorrowedProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BorrowedProducts");
                 });
 
             modelBuilder.Entity("Data.Models.Category", b =>
@@ -125,6 +149,27 @@ namespace Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Data.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("Data.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -138,14 +183,14 @@ namespace Data.Migrations
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PhotoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -160,6 +205,8 @@ namespace Data.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("PhotoId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
@@ -171,9 +218,10 @@ namespace Data.Migrations
                             CategoryId = 1,
                             IsAvailable = true,
                             Name = "Book SF",
+                            PhotoId = 0,
                             Rating = 3,
                             SubCategoryId = 1,
-                            UserId = 2
+                            UserId = 1
                         },
                         new
                         {
@@ -181,9 +229,10 @@ namespace Data.Migrations
                             CategoryId = 1,
                             IsAvailable = true,
                             Name = "Book Poems",
+                            PhotoId = 0,
                             Rating = 3,
                             SubCategoryId = 2,
-                            UserId = 2
+                            UserId = 1
                         },
                         new
                         {
@@ -191,9 +240,10 @@ namespace Data.Migrations
                             CategoryId = 1,
                             IsAvailable = true,
                             Name = "Book Poems",
+                            PhotoId = 0,
                             Rating = 4,
                             SubCategoryId = 2,
-                            UserId = 2
+                            UserId = 1
                         },
                         new
                         {
@@ -201,9 +251,10 @@ namespace Data.Migrations
                             CategoryId = 1,
                             IsAvailable = true,
                             Name = "Book SF",
+                            PhotoId = 0,
                             Rating = 5,
                             SubCategoryId = 1,
-                            UserId = 2
+                            UserId = 1
                         },
                         new
                         {
@@ -211,9 +262,10 @@ namespace Data.Migrations
                             CategoryId = 2,
                             IsAvailable = false,
                             Name = "Decorative Object",
+                            PhotoId = 0,
                             Rating = 5,
                             SubCategoryId = 3,
-                            UserId = 2
+                            UserId = 1
                         },
                         new
                         {
@@ -221,9 +273,10 @@ namespace Data.Migrations
                             CategoryId = 2,
                             IsAvailable = false,
                             Name = "Decorative Object",
+                            PhotoId = 0,
                             Rating = 5,
                             SubCategoryId = 3,
-                            UserId = 2
+                            UserId = 1
                         });
                 });
 
@@ -458,11 +511,19 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Models.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Models.User", null)
                         .WithMany("Products")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Photo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

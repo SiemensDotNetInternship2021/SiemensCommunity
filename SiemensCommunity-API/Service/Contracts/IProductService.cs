@@ -9,7 +9,7 @@ namespace Service.Contracts
 {
     public interface IProductService 
     {
-        public Task<Product> AddAsync(Product product);
+        public Task<Product> AddAsync(AddProduct product);
         public Task<bool> DeleteByIdAsync(int id);
         public Task<IEnumerable<Product>> GetAsync();
     }

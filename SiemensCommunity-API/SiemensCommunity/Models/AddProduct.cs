@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SiemensCommunity.Models
 {
-    public class Product
+    public class AddProduct
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }
@@ -13,6 +14,6 @@ namespace SiemensCommunity.Models
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
-        public Photo Photo{ get; set; }
+        public IFormFile Image { get; set; }
     }
 }

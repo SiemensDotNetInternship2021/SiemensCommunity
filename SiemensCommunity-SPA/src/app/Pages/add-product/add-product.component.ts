@@ -47,18 +47,16 @@ export class AddProductComponent implements OnInit {
       this.router.navigateByUrl('/home');
     },
     err =>{
-      this.toastr.error("Invalid credentials.");
+      this.toastr.error(err);
     });
   }
+
   onCategoryChanged(selectedCategoryId: any){
     this.selectedCategory = selectedCategoryId;
-    console.log(this.selectedCategory);
   }
 
   onSubCategoryChanged(selectedSubCategoryId: any){
-    console.log("aaaaaa");
     this.selectedSubCategory = selectedSubCategoryId;
-    console.log(this.selectedSubCategory);
   }
 
 }

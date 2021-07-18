@@ -15,8 +15,12 @@ namespace SiemensCommunity.Adapters
         {
             var config = new MapperConfiguration(config =>
             {
-                config.CreateMap<Product, Service.Models.Product>();
-                config.CreateMap<Service.Models.Product, Product>();
+                config.CreateMap<Photo, Service.Models.Photo>();
+                config.CreateMap<Service.Models.Photo, Photo>();
+                config.CreateMap<Product, Service.Models.Product>()
+                    .ForMember(dest => dest.Photo, act => act.MapFrom(src => src.Photo));
+                config.CreateMap<Service.Models.Product, Product>()
+                    .ForMember(dest => dest.Photo, act => act.MapFrom(src => src.Photo));
             });
 
             _productAdapter = config.CreateMapper();

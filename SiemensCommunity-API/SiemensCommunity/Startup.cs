@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Service.Contracts;
+using Service.Helpers;
 using Service.Implementations;
 using Service.Models;
 using System;
@@ -30,6 +31,8 @@ namespace SiemensCommunity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CloudinaryConfiguration>(Configuration.GetSection("CloudinarySettings"));
+
             services.Configure<EmailConfiguration>(Configuration.GetSection("EmailConfiguration"));
 
             services.AddDbContext<ProjectDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
@@ -38,6 +41,7 @@ namespace SiemensCommunity
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAccountService, AccountService>();
@@ -45,6 +49,7 @@ namespace SiemensCommunity
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ISubCategoryService, SubCategoryService>();
+            services.AddScoped<IPhotoService, PhotoService>();
 
             services.AddSingleton<ISystemClock, SystemClock>();
 
