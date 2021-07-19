@@ -14,7 +14,7 @@ namespace Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Department>().HasData(new Department { Id = 1, Name = "HR" },
+        /*    builder.Entity<Department>().HasData(new Department { Id = 1, Name = "HR" },
                                                  new Department { Id = 2, Name = "Marketing" },
                                                  new Department { Id = 3, Name = "IT" });
 
@@ -31,7 +31,7 @@ namespace Data
                                             new Product { Id = 4, Name = "Book SF", CategoryId = 1, SubCategoryId = 1, IsAvailable = true, Rating = 5, UserId = 3, Details = "Here is something random for the moment bla bla bla", ImagePath = "assets/star.png" },
                                             new Product { Id = 5, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 1, Details = "Here is something random for the moment bla bla bla", ImagePath = "assets/unnamed.png" },
                                             new Product { Id = 6, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 3, Details = "Here is something random for the moment bla bla bla", ImagePath = "assets/unnamed.png" });
-
+*/
             base.OnModelCreating(builder);
 
             builder.Entity<User>()
@@ -51,5 +51,6 @@ namespace Data
         public DbSet<SubCategory> SubCategories{ get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<BorrowedProduct> BorrowedProducts { get; set; }
+        public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
     }
 }

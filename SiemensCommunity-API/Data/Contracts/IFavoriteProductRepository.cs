@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Contracts
 {
-    public interface IProductRepository : IGenericRepository<Product>
+    public interface IFavoriteProductRepository : IGenericRepository<FavoriteProduct>
     {
-        public Task<List<ProductDTO>> GetProducts(int selectedCategory);
+        public Task<IEnumerable<FavoriteProduct>> GetAsync(int userId);
     }
 }

@@ -16,9 +16,9 @@ namespace Data.Implementations
            
         }
 
-        public async Task<List<ProductDTO>> GetProducts(int selectedValue)
+        public async Task<List<ProductDTO>> GetProducts(int selectedCategory)
         {
-            if(selectedValue == 0)
+            if(selectedCategory == 0)
             {
                 var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory)
                .Select(x => new ProductDTO
@@ -37,7 +37,7 @@ namespace Data.Implementations
             }
             else
             {
-               var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.CategoryId == selectedValue)
+               var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.CategoryId == selectedCategory)
               .Select(x => new ProductDTO
               {
                   Id = x.Id,
@@ -52,8 +52,6 @@ namespace Data.Implementations
               });
               return await product.ToListAsync();
             }
-          
-           
         }
     }
 }

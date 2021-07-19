@@ -32,4 +32,15 @@ img {
     font-size: 20px;
 }
 
+.pagination {
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.fa-heart {
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+
 

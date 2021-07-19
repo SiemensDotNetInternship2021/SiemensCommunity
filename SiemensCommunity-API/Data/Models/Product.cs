@@ -15,7 +15,7 @@ namespace Data.Models
         [ForeignKey("SubCategory")]
         public int SubCategoryId { get; set; }
 
-       [ForeignKey("User")]
+        [ForeignKey("User")]
         public int UserId { get; set; }
 
         public string Name { get; set; }

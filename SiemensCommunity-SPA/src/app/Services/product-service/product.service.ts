@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IFavoriteProduct } from 'src/app/Models/IFavoriteProduct';
 import { IProduct } from 'src/app/Models/IProduct';
 
 @Injectable({
@@ -11,7 +12,19 @@ export class ProductService {
 
   constructor(public http: HttpClient) { }
 
-  getProducts(selectedValue : number) {
-    return this.http.get<IProduct[]>(this.rootUrl + '/Product/' + selectedValue);
+  getProducts(selectedCategory : number) {
+    return this.http.get<IProduct[]>(this.rootUrl + '/Product/' + selectedCategory);
+  }
+
+  getFavoriteProducts(userId : number) {
+    return this.http.get<IFavoriteProduct[]>(this.rootUrl + '/FavoriteProduct/' + userId);
+  }
+
+  addFavoriteProducts(userId : number, productId : number) {
+    var favoriteProductDetails = {
+      userId : userId,
+      productId : productId
+    }
+    return this.http.post(this.rootUrl + '/FavoriteProduct/', favoriteProductDetails)
   }
 }

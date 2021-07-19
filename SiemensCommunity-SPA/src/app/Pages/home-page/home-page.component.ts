@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ICategory } from 'src/app/Models/ICategory';
+import { IFavoriteProduct } from 'src/app/Models/IFavoriteProduct';
 import { IProduct } from 'src/app/Models/IProduct';
 import { CategoryService } from 'src/app/Services/category-service/category.service';
 import { ProductService } from 'src/app/Services/product-service/product.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-page',
@@ -13,22 +15,30 @@ export class HomePageComponent implements OnInit {
 
   products : IProduct[] = [];
   categories: ICategory[] = [];
-  mySelect : number = 0;
-  selectedValue : number = 0;
+  mySelectedCategory : number = 0;
+  selectedCategory : number = 0;
   checkBoxValue : number = 0;
+  totalLength:any;
+  page : number = 0;
+  favoriteProducts : IFavoriteProduct[] =[];
+  favoriteProductsId : any[] = [];
+  userId = 2;
 
   constructor(public productService: ProductService,
-    public categoryService: CategoryService) { }
+    public categoryService: CategoryService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getCategories();
     this.getProducts();
+    this.getFavoriteProducts();
   }
 
   getProducts() {
-    this.productService.getProducts(this.selectedValue).subscribe((productsFromDb) => 
+    this.productService.getProducts(this.selectedCategory).subscribe((productsFromDb) => 
     {
       this.products = productsFromDb;
+      this.totalLength = this.products.length;
     })
   }
 
@@ -40,8 +50,8 @@ export class HomePageComponent implements OnInit {
   }
 
   getSelected() {
-    this.selectedValue = this.mySelect;
-    this.productService.getProducts(this.selectedValue).subscribe((productsFromDb) => 
+    this.selectedCategory = this.mySelectedCategory;
+    this.productService.getProducts(this.selectedCategory).subscribe((productsFromDb) => 
     {
       this.products = productsFromDb;
     })
@@ -52,4 +62,24 @@ export class HomePageComponent implements OnInit {
       console.log(this.checkBoxValue);
   }
 
+  getFavoriteProducts() {
+    this.productService.getFavoriteProducts(this.userId).subscribe((favoriteProductsFromDB) => {
+      favoriteProductsFromDB.forEach(value => this.favoriteProductsId.push(value.productId));
+      console.log(this.favoriteProductsId);
+    })
+  }
+
+  addToFavorite(productId : number) {
+    this.productService.addFavoriteProducts(productId, this.userId).subscribe((res : any) =>
+    {
+        
+    },
+    err=>{
+      this.toastr.success("The product has been added to your favorite list!");
+    });
+  }
+
+  deleteFavoriteProduct() {
+    
+  }
 }

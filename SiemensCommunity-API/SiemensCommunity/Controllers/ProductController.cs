@@ -15,10 +15,8 @@ namespace SiemensCommunity.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly IAccountService _accountService;
 
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
-        private readonly UserAdapter _userAdapter = new UserAdapter();
 
         public ProductController(IProductService productService)
         {
@@ -61,12 +59,11 @@ namespace SiemensCommunity.Controllers
             }
         }
 
-        [HttpGet("{selectedValue}")]
-        public async Task<IActionResult> Get([FromRoute] int selectedValue)
+        [HttpGet("{selectedCategory}")]
+        public async Task<IActionResult> Get([FromRoute] int selectedCategory)
         {
-            var products = await _productService.GetProducts(selectedValue);
+            var products = await _productService.GetProducts(selectedCategory);
             return Ok(products);
         }
-
     }
 }

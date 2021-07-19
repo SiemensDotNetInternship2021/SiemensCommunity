@@ -37,11 +37,13 @@ namespace SiemensCommunity
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IFavoriteProductRepository, FavoriteProductRepository>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IFavoriteProductService, FavoriteProductService>();
 
             services.AddSingleton<ISystemClock, SystemClock>();
 
