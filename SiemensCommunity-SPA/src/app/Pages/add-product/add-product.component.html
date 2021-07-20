@@ -1,6 +1,6 @@
-<form [formGroup] = "service.addProductModel" (submit)="addProduct()" autocomplete="off">
+<form [formGroup] = "service.addProductModel" (submit)="addProduct()" enctype="multipart/form-data" autocomplete="off">
     <p>{{titlePage}}</p>
-        <input type="hidden" formControlName = "Id"/>
+        <input type="hidden" formControlName = "Id" value="0"/>
             <label>
                 <p class="label-txt">Product name</p>
                 <input type="text" class="input" formControlName="Name">
@@ -13,44 +13,41 @@
             <label>                      
                 <p class="label-txt">Category</p>
                 <select class="form-control custom-select" formControlName="Category" (ngModelChange)="onCategoryChanged($event)">
-                    <option class="option-display" selected = "selcted">Select an option:</option>
-                    <option *ngFor = "let category of categories" value={{category.id}}>{{category.name}}</option>
+                    <option class="option-display" selected="selected" hidden>Select an option:</option>
+                    <option *ngFor = "let category of selectedCategories" value="{{category.id}}">{{category.name}}</option>
                 </select> 
                 <div class="line-box">
                     <div class="line"></div>
                 </div>                                                                
-                <label class="text-danger" *ngIf="service.addProductModel.get('Category')?.touched && service.addProductModel.get('Category')?.errors?.required">Choose a category</label>
+                <label class="text-danger" *ngIf="service.addProductModel.get('Category')?.touched && service.addProductModel.get('Category')?.errors?.required">Category is required</label>
             </label>
 
             <label>                      
                 <p class="label-txt">Subcategory</p>
                 <select class="form-control custom-select" formControlName="SubCategory" (ngModelChange)="onSubCategoryChanged($event)">
-                    <option class="option-display" selected="selected" hidden>Select an option:</option>
-                    <option *ngFor = "let subcategory of subcategories" value={{subcategory.id}}>{{subcategory.name}}</option>
+                    <option class="option-display" selected="selected" hidden value = "Select an option:">Select an option:</option>
+                    <option *ngFor = "let subcategory of selectedSubCategories" value = "{{subcategory.id}}" >{{subcategory.name}}</option>
                 </select> 
                 <div class="line-box">
                     <div class="line"></div>
                 </div>                                                                
-                <label class="text-danger" *ngIf="service.addProductModel.get('SubCategory')?.touched && service.addProductModel.get('SubCategory')?.errors?.required">Choose a subcategory</label>
+                <label class="text-danger" *ngIf="service.addProductModel.get('Subcategory')?.touched && service.addProductModel.get('Subcategory')?.errors?.required">Subcategory is required</label>
             </label>
 
-            <label>
-                <p class="label-txt">Product description</p>
-                <textarea type="text" class="input" rows="3" formControlName="Details"> </textarea>
+            <label *ngFor = "let property of properties">
+                <p class="label-txt" >{{property.name}}</p>
+                <input type="text" class="input" formControlName="property">
                 <div class="line-box">
                     <div class="line"></div>
                 </div>
-                <label class="text-danger"  *ngIf="service.addProductModel.get('Details')?.touched && service.addProductModel.get('Details')?.errors?.required">A description is required</label>
             </label>
 
-            <label>
-                <p class="label-txt">Product image</p>
-                <input type="file" class="input" rows="3" formControlName="Image"/>
+            <label >
+                <p class="label-txt" >Image</p>
+                <input type="file" class="input" (ngModelChange)="onFileSelect($event)" formControlName="Image">
                 <div class="line-box">
                     <div class="line"></div>
                 </div>
-                <label class="text-danger"  *ngIf="service.addProductModel.get('Image')?.touched && service.addProductModel.get('Image')?.errors?.required">An image is required</label>
             </label>
-
     <button class="btn btn-dark" [disabled]="service.addProductModel.invalid">Submit</button>
 </form>

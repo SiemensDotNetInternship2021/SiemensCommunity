@@ -18,6 +18,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { AddProductComponent } from './Pages/add-product/add-product.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { AddProductComponent } from './Pages/add-product/add-product.component';
     LentProductsPageComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    AddProductComponent
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +43,11 @@ import { AddProductComponent } from './Pages/add-product/add-product.component';
     ReactiveFormsModule,
     RouterModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FileUploadModule
+  ],
+  exports: [
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

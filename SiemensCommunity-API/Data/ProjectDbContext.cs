@@ -14,24 +14,6 @@ namespace Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Department>().HasData(new Department { Id = 1, Name = "HR" },
-                                                 new Department { Id = 2, Name = "Marketing" },
-                                                 new Department { Id = 3, Name = "IT" });
-
-            builder.Entity<Category>().HasData(new Category { Id = 1, Name = "Books" },
-                                               new Category { Id = 2, Name = "Decorative objects" });
-
-            builder.Entity<SubCategory>().HasData(new SubCategory { Id = 1, CategoryId = 1, Name = "SF" },
-                                                  new SubCategory { Id = 2, CategoryId = 1, Name = "Poems" },
-                                                  new SubCategory { Id = 3, CategoryId = 2, Name = "Desk" });
-
-            builder.Entity<Product>().HasData(new Product { Id = 1, Name = "Book SF", CategoryId = 1, SubCategoryId = 1, IsAvailable = true, Rating = 3, UserId = 1 },
-                                            new Product { Id = 2, Name = "Book Poems", CategoryId = 1, SubCategoryId = 2, IsAvailable = true, Rating = 3, UserId = 1 },
-                                            new Product { Id = 3, Name = "Book Poems", CategoryId = 1, SubCategoryId = 2, IsAvailable = true, Rating = 4, UserId = 1 },
-                                            new Product { Id = 4, Name = "Book SF", CategoryId = 1, SubCategoryId = 1, IsAvailable = true, Rating = 5, UserId = 1 },
-                                            new Product { Id = 5, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 1 },
-                                            new Product { Id = 6, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 1 });
-
             base.OnModelCreating(builder);
 
             builder.Entity<User>()
@@ -53,5 +35,6 @@ namespace Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<BorrowedProduct> BorrowedProducts { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<Property> Properties { get; set; }
     }
 }

@@ -1,10 +1,14 @@
+import { JsonPipe } from '@angular/common';
 import { ɵflushModuleScopingQueueAsMuchAsPossible } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { FileUploader } from 'ng2-file-upload';
+import { ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 import { ICategory } from 'src/app/Models/ICategory';
+import { IProperty } from 'src/app/Models/IProperty';
 import { ISubCategory } from 'src/app/Models/ISubCategory';
 import { AddProductService } from 'src/app/Services/add-product-service/add-product.service';
+import { CategoryPropertiesService } from 'src/app/Services/category-properties/category-properties.service';
 import { CategoryService } from 'src/app/Services/category-service/category.service';
 import { SubcategoryService } from 'src/app/Services/subcategory-service/subcategory.service';
 
@@ -14,10 +18,21 @@ import { SubcategoryService } from 'src/app/Services/subcategory-service/subcate
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
+
+
+
   categories : ICategory[] = [];
-  selectedCategory: number = 0;
+  selectedCategoryId: number = 0;
+  selectedCategories: ICategory[] = [];
+
   subcategories: ISubCategory[] = [];
-  selectedSubCategory: number = 0;
+  selectedSubCategory: any;
+  selectedSubCategoryId: number = 0;
+  selectedSubCategories: ISubCategory[] = [];
+
+  properties: IProperty[] = [];
+  photo: any;
+
   titlePage: string = "";
   sendButtonTile: string = "";
   saveSuccess: boolean = false;
@@ -25,6 +40,7 @@ export class AddProductComponent implements OnInit {
   constructor(public service: AddProductService, 
     public categoryService: CategoryService,
     public subcategoryService: SubcategoryService,
+    public categoryPropertiesService: CategoryPropertiesService,
     public router: Router,
     public toastr: ToastrService) { }
 
@@ -32,31 +48,67 @@ export class AddProductComponent implements OnInit {
     this.categoryService.getCategories().subscribe((category) => {
       category.forEach(value => this.categories.push(value));
     });
+    this.selectedCategories = this.categories;
 
     this.subcategoryService.getSubCategories().subscribe((subcategory)=>{
       subcategory.forEach(value => this.subcategories.push(value));
     }); 
-    console.log(this.subcategories);
+    this.selectedSubCategories = this.subcategories;
+
     this.titlePage = "Add new product";
   }
 
+  getProperties(selectedCategoryId: any){
+    this.properties = [];
+    this.categoryPropertiesService.getCategoryProperties(selectedCategoryId).subscribe(res => {
+      if(res.body!= null)
+        this.properties = res.body;
+    });
+  }
+
   addProduct() {
-    this.service.addProduct().subscribe((res: any) => 
+    console.log();
+    this.service.addProduct(this.properties).subscribe((res: any) => 
     {
       alert("Product added succsefully.");
       this.router.navigateByUrl('/home');
     },
     err =>{
-      this.toastr.error(err);
+      this.toastr.error("error");
     });
   }
 
   onCategoryChanged(selectedCategoryId: any){
-    this.selectedCategory = selectedCategoryId;
+    this.selectedCategoryId = selectedCategoryId;
+    this.selectedSubCategories = [];
+    this.subcategories.forEach(subcategory => {
+      if(subcategory.categoryId == selectedCategoryId){
+        this.selectedSubCategories.push(subcategory);
+      }
+    });
+    this.getProperties(selectedCategoryId);
   }
 
   onSubCategoryChanged(selectedSubCategoryId: any){
-    this.selectedSubCategory = selectedSubCategoryId;
+    this.selectedSubCategoryId = selectedSubCategoryId;
+    this.selectedSubCategories.forEach(subcategory => {
+      if(subcategory.id == selectedSubCategoryId){
+        this.selectedSubCategory = subcategory;
+      }
+    });
+
+    if(this.selectedCategoryId == 0){
+      this.selectedCategories = [];
+      this.categories.forEach(category => {
+        if(category.id == this.selectedSubCategory.id){
+          this.selectedCategories.push(category);
+        }
+      });
+    }
   }
 
+  onFileSelect(event: any){
+    console.log(typeof(event) );
+    this.service.uploadFile(event);
+  }
 }
