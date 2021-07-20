@@ -9,6 +9,6 @@ namespace Data.Contracts
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-        public Task<List<ProductDTO>> GetProducts(int selectedCategory);
+        public Task<List<ProductDTO>> GetProducts(int selectedCategory, int selectedOption);
     }
 }

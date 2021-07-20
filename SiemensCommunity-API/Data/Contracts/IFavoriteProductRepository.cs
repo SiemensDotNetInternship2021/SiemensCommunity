@@ -10,5 +10,7 @@ namespace Data.Contracts
     public interface IFavoriteProductRepository : IGenericRepository<FavoriteProduct>
     {
         public Task<IEnumerable<FavoriteProduct>> GetAsync(int userId);
+
+        public Task<FavoriteProduct> DeleteAsync(FavoriteProduct productDetails);
     }
 }

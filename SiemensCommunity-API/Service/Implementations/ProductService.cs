@@ -16,6 +16,7 @@ namespace Service.Implementations
         private readonly IProductRepository _productRepository;
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
         private readonly ProductDTOAdapter _productDTOAdapter = new ProductDTOAdapter();
+        private readonly OptionDetailsDTOAdapter _optionDetailsDTOAdapter = new OptionDetailsDTOAdapter();
 
         public ProductService(IProductRepository productRepository)
         {
@@ -39,9 +40,9 @@ namespace Service.Implementations
             return _productAdapter.AdaptList(returnedProducts);
         }
 
-        public async Task<List<ProductDTO>> GetProducts(int selectedCategory)
+        public async Task<List<ProductDTO>> GetProducts(int selectedCategory, int selectedOption)
         {
-            var returnedProducts = await _productRepository.GetProducts(selectedCategory);
+            var returnedProducts = await _productRepository.GetProducts(selectedCategory, selectedOption);
             return _productDTOAdapter.AdaptList(returnedProducts);
         }
 

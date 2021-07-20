@@ -17,6 +17,7 @@ namespace SiemensCommunity.Controllers
         private readonly IProductService _productService;
 
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
+        private readonly OptionDetailsDTOAdapter _optionDetailsDTOAdapter = new OptionDetailsDTOAdapter();
 
         public ProductController(IProductService productService)
         {
@@ -59,11 +60,11 @@ namespace SiemensCommunity.Controllers
             }
         }
 
-        [HttpGet("{selectedCategory}")]
-        public async Task<IActionResult> Get([FromRoute] int selectedCategory)
+        [HttpGet("optionDetails")]
+        public async Task<IActionResult> Get(int selectedCategory, int selectedOption)
         {
-            var products = await _productService.GetProducts(selectedCategory);
-            return Ok(products);
+           var products = await _productService.GetProducts(selectedCategory, selectedOption);
+           return Ok(products);
         }
     }
 }

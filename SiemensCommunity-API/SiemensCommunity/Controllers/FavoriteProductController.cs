@@ -31,8 +31,8 @@ namespace SiemensCommunity.Controllers
             return Ok(favoriteProducts);
         }
 
-        [HttpPost] 
-        public async Task<IActionResult> AddToFavorite([FromBody] FavoriteProduct product)
+        [HttpPost]
+        public async Task<IActionResult> AddToFavorite([FromBody] FavoriteProduct productDetails)
         {
             if (!(ModelState.IsValid))
             {
@@ -40,8 +40,24 @@ namespace SiemensCommunity.Controllers
             }
             else
             {
-                var returnedProduct = await _favoriteProductService.AddAsync(_favoriteProductAdapter.Adapt(product));
+                var returnedProduct = await _favoriteProductService.AddAsync(_favoriteProductAdapter.Adapt(productDetails));
                 return Ok(returnedProduct);
+            }
+        }
+
+        [HttpPost]
+        [Route("DeleteFavoriteProduct")]
+        public async Task<IActionResult> Delete(FavoriteProduct productDetails)
+        {
+            var product = await _favoriteProductService.DeleteAsync(_favoriteProductAdapter.Adapt(productDetails));
+
+            if (product != null)
+            {
+                return Ok(productDetails);
+            }
+            else
+            {
+                return NotFound(productDetails);
             }
         }
 

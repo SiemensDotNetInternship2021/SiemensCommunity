@@ -26,9 +26,15 @@ namespace Service.Implementations
             return _favoriteProductAdapter.AdaptList(returnedFavoriteProducts);
         }
 
-        public async Task<FavoriteProduct> AddAsync(FavoriteProduct product)
+        public async Task<FavoriteProduct> AddAsync(FavoriteProduct productDetails)
         {
-            var returnedProduct = await _favoriteProductRepository.AddAsync(_favoriteProductAdapter.Adapt(product));
+            var returnedProduct = await _favoriteProductRepository.AddAsync(_favoriteProductAdapter.Adapt(productDetails));
+            return _favoriteProductAdapter.Adapt(returnedProduct);
+        }
+
+        public async Task<FavoriteProduct> DeleteAsync(FavoriteProduct productDetails)
+        {
+            var returnedProduct = await _favoriteProductRepository.DeleteAsync(_favoriteProductAdapter.Adapt(productDetails));
             return _favoriteProductAdapter.Adapt(returnedProduct);
         }
 

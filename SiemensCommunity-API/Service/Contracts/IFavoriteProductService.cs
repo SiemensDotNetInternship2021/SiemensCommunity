@@ -12,5 +12,7 @@ namespace Service.Contracts
         public Task<IEnumerable<FavoriteProduct>> GetAsync(int userId);
 
         public Task<FavoriteProduct> AddAsync(FavoriteProduct productDetails);
+
+        public Task<FavoriteProduct> DeleteAsync(FavoriteProduct productDetails);
     }
 }

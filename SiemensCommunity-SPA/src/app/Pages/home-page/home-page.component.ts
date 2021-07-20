@@ -22,7 +22,7 @@ export class HomePageComponent implements OnInit {
   page : number = 0;
   favoriteProducts : IFavoriteProduct[] =[];
   favoriteProductsId : any[] = [];
-  userId = 2;
+  userId = 3;
 
   constructor(public productService: ProductService,
     public categoryService: CategoryService,
@@ -35,7 +35,7 @@ export class HomePageComponent implements OnInit {
   }
 
   getProducts() {
-    this.productService.getProducts(this.selectedCategory).subscribe((productsFromDb) => 
+    this.productService.getProducts(this.selectedCategory, this.checkBoxValue).subscribe((productsFromDb) => 
     {
       this.products = productsFromDb;
       this.totalLength = this.products.length;
@@ -51,7 +51,7 @@ export class HomePageComponent implements OnInit {
 
   getSelected() {
     this.selectedCategory = this.mySelectedCategory;
-    this.productService.getProducts(this.selectedCategory).subscribe((productsFromDb) => 
+    this.productService.getProducts(this.selectedCategory, this.checkBoxValue).subscribe((productsFromDb) => 
     {
       this.products = productsFromDb;
     })
@@ -60,26 +60,40 @@ export class HomePageComponent implements OnInit {
   checkboxChange(event : any) {
       this.checkBoxValue = event.target.value;
       console.log(this.checkBoxValue);
+      this.productService.getProducts(this.selectedCategory, this.checkBoxValue).subscribe((productsFromDb) => 
+    {
+      this.products = productsFromDb;
+    })
   }
 
   getFavoriteProducts() {
     this.productService.getFavoriteProducts(this.userId).subscribe((favoriteProductsFromDB) => {
-      favoriteProductsFromDB.forEach(value => this.favoriteProductsId.push(value.productId));
+      favoriteProductsFromDB.forEach(value => this.favoriteProductsId.push(value.productId))
       console.log(this.favoriteProductsId);
     })
   }
 
   addToFavorite(productId : number) {
-    this.productService.addFavoriteProducts(productId, this.userId).subscribe((res : any) =>
+    this.productService.addFavoriteProduct(productId, this.userId).subscribe((res : any) =>
     {
-        
+      this.toastr.success("The product has been added to your favorite list");
+      this.favoriteProductsId = [];
+      this.getFavoriteProducts();
     },
     err=>{
-      this.toastr.success("The product has been added to your favorite list!");
+      this.toastr.error("The product couldn`t be added to your favorite products list");
     });
   }
 
-  deleteFavoriteProduct() {
-    
+  deleteFavoriteProduct(productId : number) {
+    this.productService.deleteFavoriteProduct(productId, this.userId).subscribe((res : any) =>
+    {
+      this.toastr.success("The product has been removed from your favorite list");
+      this.favoriteProductsId = [];
+      this.getFavoriteProducts();
+    },
+    err=>{
+      this.toastr.error("The product couldn`t be removed from your favorite products list");
+    });
   }
 }

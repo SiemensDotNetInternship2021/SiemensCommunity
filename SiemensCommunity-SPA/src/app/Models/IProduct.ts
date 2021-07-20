@@ -7,6 +7,6 @@ export interface IProduct {
     name: string,
     isAvailable: boolean,
     imagePath: string,
-    raiting: number,
+    rating: number,
     details: string,
 }

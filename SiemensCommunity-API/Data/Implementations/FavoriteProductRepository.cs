@@ -27,6 +27,15 @@ namespace Data.Implementations
             });
             return await favoriteProduct.ToListAsync();
         }
+
+        public async Task<FavoriteProduct> DeleteAsync(FavoriteProduct productDetails)
+        {
+            var productToDelete = Context.FavoriteProducts.Where(fp => fp.ProductId == productDetails.ProductId && fp.UserId == productDetails.UserId)
+                .First();
+            Context.FavoriteProducts.Remove(productToDelete);
+            var saveChanges = await Context.SaveChangesAsync();
+            return productDetails;
+        }
     }
 }
 

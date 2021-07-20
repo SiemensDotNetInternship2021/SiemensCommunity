@@ -9,11 +9,14 @@
    </div>
    <div class="col-md-3">
      <form>
+      <label class="option"> All
+        <input value="0" [checked]="true" name = "option" (change) = "checkboxChange($event)" type="radio">
+      </label>
       <label class="option"> Available
         <input value="1" name = "option"  (change) = "checkboxChange($event)" type="radio">
       </label>
-      <label class="option"> All
-        <input value="2" [checked]="true" name = "option" (change) = "checkboxChange($event)" type="radio">
+      <label class="option"> Favorites
+        <input value="2" name = "option" (change) = "checkboxChange($event)" type="radio">
       </label>
      </form>
    </div>
@@ -29,11 +32,12 @@
               <p class="card-text">Type: {{product.subCategoryName}}</p>
               <p class="card-text">Owner: {{product.user}}</p>
               <p class="card-text">Details: {{product.details}}</p>
-              <p class="card-text">ProdcutId: {{product.id}}</p>
+              <p class="card-text">Rate: {{product.rating}}</p>
+              <p class="card-text">Available: {{product.isAvailable}}</p>
             </div>
             <div class="card-body">
-                <i *ngIf="favoriteProductsId.includes(product.id)" (click)="addToFavorite(product.id)" class="fas fa-heart"></i>
-                <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart"></i>
+                <i *ngIf="favoriteProductsId.includes(product.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(product.id)"></i>
+                <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart" (click)="addToFavorite(product.id)"></i>
               <button class="btn btn-primary">Borrow</button>
             </div>
         </div>

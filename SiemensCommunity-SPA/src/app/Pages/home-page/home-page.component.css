@@ -2,7 +2,9 @@ p.title {
     font-size: 3.5em;
     text-align: center;
 }
-
+.card-title {
+    font-size: 2em;
+}
 div.card {
     margin-top: 50px;
 }
@@ -40,6 +42,7 @@ img {
 .fa-heart {
     font-size: 25px;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 
