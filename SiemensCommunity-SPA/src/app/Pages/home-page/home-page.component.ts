@@ -17,7 +17,7 @@ export class HomePageComponent implements OnInit {
   categories: ICategory[] = [];
   mySelectedCategory : number = 0;
   selectedCategory : number = 0;
-  checkBoxValue : number = 0;
+  selectedOption : number = 0;
   totalLength:any;
   page : number = 0;
   favoriteProducts : IFavoriteProduct[] =[];
@@ -35,7 +35,7 @@ export class HomePageComponent implements OnInit {
   }
 
   getProducts() {
-    this.productService.getProducts(this.selectedCategory, this.checkBoxValue).subscribe((productsFromDb) => 
+    this.productService.getProducts(this.selectedCategory, this.selectedOption).subscribe((productsFromDb) => 
     {
       this.products = productsFromDb;
       this.totalLength = this.products.length;
@@ -51,24 +51,24 @@ export class HomePageComponent implements OnInit {
 
   getSelected() {
     this.selectedCategory = this.mySelectedCategory;
-    this.productService.getProducts(this.selectedCategory, this.checkBoxValue).subscribe((productsFromDb) => 
-    {
-      this.products = productsFromDb;
-    })
+    this.favoriteProductsId = [];
+    this.favoriteProducts = [];
+    this.getProducts();
+    this.getFavoriteProducts();
   }
 
   checkboxChange(event : any) {
-      this.checkBoxValue = event.target.value;
-      console.log(this.checkBoxValue);
-      this.productService.getProducts(this.selectedCategory, this.checkBoxValue).subscribe((productsFromDb) => 
-    {
-      this.products = productsFromDb;
-    })
+      this.selectedOption = event.target.value;
+      this.favoriteProductsId = [];
+      this.favoriteProducts = [];
+      this.getProducts();
+      this.getFavoriteProducts();
   }
 
   getFavoriteProducts() {
-    this.productService.getFavoriteProducts(this.userId).subscribe((favoriteProductsFromDB) => {
-      favoriteProductsFromDB.forEach(value => this.favoriteProductsId.push(value.productId))
+    this.productService.getFavoriteProducts(this.userId, this.selectedCategory, this.selectedOption).subscribe((favoriteProductsFromDB) => {
+      favoriteProductsFromDB.forEach(favoriteProduct => this.favoriteProducts.push(favoriteProduct));
+      favoriteProductsFromDB.forEach(favoriteProduct => this.favoriteProductsId.push(favoriteProduct.id))
       console.log(this.favoriteProductsId);
     })
   }
@@ -78,6 +78,7 @@ export class HomePageComponent implements OnInit {
     {
       this.toastr.success("The product has been added to your favorite list");
       this.favoriteProductsId = [];
+      this.favoriteProducts =[];
       this.getFavoriteProducts();
     },
     err=>{
@@ -90,6 +91,7 @@ export class HomePageComponent implements OnInit {
     {
       this.toastr.success("The product has been removed from your favorite list");
       this.favoriteProductsId = [];
+      this.favoriteProducts =[];
       this.getFavoriteProducts();
     },
     err=>{

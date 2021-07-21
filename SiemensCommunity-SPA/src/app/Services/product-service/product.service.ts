@@ -19,13 +19,13 @@ export class ProductService {
       selectedCategory : selectedCategory,
       selectedOption : selectedOption
     }
-   console.log(optionDetails.selectedOption);
-   console.log(optionDetails.selectedCategory);
    return this.http.get<IProduct[]>(this.rootUrl + '/Product/optionDetails?selectedCategory=' + selectedCategory + '&&selectedOption=' + selectedOption);
   }
 
-  getFavoriteProducts(userId : number) {
-    return this.http.get<IFavoriteProduct[]>(this.rootUrl + '/FavoriteProduct/' + userId);
+  getFavoriteProducts(userId : number, selectedCategory : number, selectedOption : number) {
+    console.log(selectedCategory);
+    console.log(selectedOption);
+    return this.http.get<IFavoriteProduct[]>(this.rootUrl + '/FavoriteProduct/favoriteProductDetails?userId=' + userId + '&selectedCategory=' + selectedCategory + '&selectedOption=' + selectedOption);
   }
 
   addFavoriteProduct(productId : number, userId : number) {

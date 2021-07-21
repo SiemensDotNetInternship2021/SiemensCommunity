@@ -24,10 +24,10 @@ namespace SiemensCommunity.Controllers
             _favoriteProductService = productService;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetFavoriteProducts([FromRoute] int userId)
+        [HttpGet("favoriteProductDetails")]
+        public async Task<IActionResult> GetFavoriteProducts(int userId, int selectedCategory, int selectedOption)
         {
-            var favoriteProducts = await _favoriteProductService.GetAsync(userId);
+            var favoriteProducts = await _favoriteProductService.GetAsync(userId, selectedCategory, selectedOption);
             return Ok(favoriteProducts);
         }
 

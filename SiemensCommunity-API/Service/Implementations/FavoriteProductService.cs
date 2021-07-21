@@ -14,16 +14,17 @@ namespace Service.Implementations
     {
         private readonly IFavoriteProductRepository _favoriteProductRepository;
         private readonly FavoriteProductAdapter _favoriteProductAdapter = new FavoriteProductAdapter();
+        private readonly FavoriteProductDTOAdapter _favoriteProductDTOAdapter = new FavoriteProductDTOAdapter();
 
         public FavoriteProductService(IFavoriteProductRepository departmentRepository)
         {
             _favoriteProductRepository = departmentRepository;
         }
 
-        public async Task<IEnumerable<FavoriteProduct>> GetAsync(int userId)
+        public async Task<IEnumerable<FavoriteProductDTO>> GetAsync(int userId, int selectedCategory, int selectedOption)
         {
-            var returnedFavoriteProducts = await _favoriteProductRepository.GetAsync(userId);
-            return _favoriteProductAdapter.AdaptList(returnedFavoriteProducts);
+            var returnedFavoriteProducts = await _favoriteProductRepository.GetAsync(userId, selectedCategory, selectedOption);
+            return _favoriteProductDTOAdapter.AdaptList(returnedFavoriteProducts);
         }
 
         public async Task<FavoriteProduct> AddAsync(FavoriteProduct productDetails)

@@ -9,7 +9,7 @@ namespace Data.Contracts
 {
     public interface IFavoriteProductRepository : IGenericRepository<FavoriteProduct>
     {
-        public Task<IEnumerable<FavoriteProduct>> GetAsync(int userId);
+        public Task<IEnumerable<FavoriteProductDTO>> GetAsync(int userId, int selectedCategory, int selectedOption);
 
         public Task<FavoriteProduct> DeleteAsync(FavoriteProduct productDetails);
     }

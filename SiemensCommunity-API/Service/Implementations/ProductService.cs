@@ -40,9 +40,9 @@ namespace Service.Implementations
             return _productAdapter.AdaptList(returnedProducts);
         }
 
-        public async Task<List<ProductDTO>> GetProducts(int selectedCategory, int selectedOption)
+        public async Task<List<ProductDTO>> GetFiltredProducts(int selectedCategory, int selectedOption)
         {
-            var returnedProducts = await _productRepository.GetProducts(selectedCategory, selectedOption);
+            var returnedProducts = await _productRepository.GetFiltredProducts(selectedCategory, selectedOption);
             return _productDTOAdapter.AdaptList(returnedProducts);
         }
 

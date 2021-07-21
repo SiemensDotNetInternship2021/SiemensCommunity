@@ -21,9 +21,9 @@
      </form>
    </div>
   </div>
-  <div class="row justify-content-center align-items-center">
-    <div *ngFor="let product of products | paginate : 
-    {itemsPerPage: 4, 
+  <div *ngIf="!(selectedOption == 2)" class="row justify-content-center align-items-center">
+    <div  *ngFor="let product of products | paginate : 
+      {itemsPerPage: 4, 
       currentPage: page}" class="col-md-3">
         <div class="card" style="width: 18rem;">
             <img src="{{product.imagePath}}" class="card-img-top" >
@@ -45,7 +45,33 @@
     <div class="pagination">
       <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
     </div>
-</div>
+  </div>
+
+  <div *ngIf="selectedOption == 2" class="row justify-content-center align-items-center">
+    <div  *ngFor="let favoriteProduct of favoriteProducts | paginate : 
+      {itemsPerPage: 4, 
+      currentPage: page}" class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <img src="{{favoriteProduct.imagePath}}" class="card-img-top" >
+            <div class="card-body">
+              <h5 class="card-title">{{favoriteProduct.name}}</h5>
+              <p class="card-text">Type: {{favoriteProduct.subCategoryName}}</p>
+              <p class="card-text">Owner: {{favoriteProduct.user}}</p>
+              <p class="card-text">Details: {{favoriteProduct.details}}</p>
+              <p class="card-text">Rate: {{favoriteProduct.rating}}</p>
+              <p class="card-text">Available: {{favoriteProduct.isAvailable}}</p>
+            </div>
+            <div class="card-body">
+                <i *ngIf="favoriteProductsId.includes(favoriteProduct.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(favoriteProduct.id)"></i>
+                <i *ngIf="!favoriteProductsId.includes(favoriteProduct.id)" class="far fa-heart" (click)="addToFavorite(favoriteProduct.id)"></i>
+              <button class="btn btn-primary">Borrow</button>
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+      <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
 </div>
  
 

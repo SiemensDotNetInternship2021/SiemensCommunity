@@ -28,10 +28,12 @@ namespace Data.Models
 
         public string Details { get; set; }
 
-        public virtual Category Category { get; set; }
+        public Category Category { get; set; }
 
-       public SubCategory SubCategory { get; set; }
+        public SubCategory SubCategory { get; set; }
 
-        public virtual User User { get; set; }
+        public User User { get; set; }
+
+        public FavoriteProduct FavoriteProduct { get; set; }
     }
 }

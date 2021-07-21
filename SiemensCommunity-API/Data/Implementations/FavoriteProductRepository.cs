@@ -17,15 +17,60 @@ namespace Data.Implementations
 
         }
 
-        public async Task<IEnumerable<FavoriteProduct>> GetAsync(int userId)
+        public async Task<IEnumerable<FavoriteProductDTO>> GetAsync(int userId, int selectedCategory, int selectedOption)
         {
-            var favoriteProduct = Context.FavoriteProducts.Where(fp => fp.UserId == userId).Select(fp => new FavoriteProduct
+          
+            if (selectedOption == 2 && selectedCategory == 0)
             {
-                Id = fp.Id,
-                ProductId = fp.ProductId,
-                UserId = fp.UserId,
-            });
-            return await favoriteProduct.ToListAsync();
+                var favoriteProduct = Context.FavoriteProducts.Where(fp => fp.UserId == userId).Include(fp => fp.Product).Select(
+                x => new FavoriteProductDTO
+                {
+                    Id = x.ProductId,
+                    Details = x.Product.Details,
+                    IsAvailable = x.Product.IsAvailable,
+                    Name = x.Product.Name,
+                    Rating = x.Product.Rating,
+                    User = x.Product.User.UserName,
+                    CategoryName = x.Product.Category.Name,
+                    SubCategoryName = x.Product.SubCategory.Name,
+                    ImagePath = x.Product.ImagePath
+                });
+                return await favoriteProduct.ToListAsync();
+            }
+            else if (selectedOption == 2 && (selectedCategory == 1 || selectedCategory == 2))
+            {
+                var favoriteProduct = Context.FavoriteProducts.Where(fp => fp.UserId == userId).Include(fp => fp.Product).Where(fp => fp.Product.Id == fp.ProductId).Where(fp => fp.Product.CategoryId == selectedCategory).Select(
+                x => new FavoriteProductDTO
+                {
+                    Id = x.ProductId,
+                    Details = x.Product.Details,
+                    IsAvailable = x.Product.IsAvailable,
+                    Name = x.Product.Name,
+                    Rating = x.Product.Rating,
+                    User = x.Product.User.UserName,
+                    CategoryName = x.Product.Category.Name,
+                    SubCategoryName = x.Product.SubCategory.Name,
+                    ImagePath = x.Product.ImagePath
+                });
+                return await favoriteProduct.ToListAsync();
+            }
+            else
+            {
+                var favoriteProduct = Context.FavoriteProducts.Where(fp => fp.UserId == userId)
+                    .Select(x => new FavoriteProductDTO
+                {
+                    Id = x.ProductId,
+                    Details = x.Product.Details,
+                    IsAvailable = x.Product.IsAvailable,
+                    Name = x.Product.Name,
+                    Rating = x.Product.Rating,
+                    User = x.Product.User.UserName,
+                    CategoryName = x.Product.Category.Name,
+                    SubCategoryName = x.Product.SubCategory.Name,
+                    ImagePath = x.Product.ImagePath
+                });
+                return await favoriteProduct.ToListAsync();
+            }
         }
 
         public async Task<FavoriteProduct> DeleteAsync(FavoriteProduct productDetails)

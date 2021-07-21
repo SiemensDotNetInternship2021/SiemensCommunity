@@ -10,6 +10,10 @@ namespace Data.Models
         public string LastName { get; set; }
         public string Department { get; set; }
         public int OfficeFloor { get; set; }
+
+        public ICollection<Product> Products { get; set; }
+
         public ICollection<AppUserRole> UserRoles { get; set; }
+        public ICollection<FavoriteProduct> FavoriteProduct { get; set; }
     }
 }

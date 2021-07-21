@@ -61,10 +61,10 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpGet("optionDetails")]
-        public async Task<IActionResult> Get(int selectedCategory, int selectedOption)
+        public async Task<IActionResult> GetFiltredProducts(int selectedCategory, int selectedOption)
         {
-           var products = await _productService.GetProducts(selectedCategory, selectedOption);
-           return Ok(products);
+           var filtredProducts = await _productService.GetFiltredProducts(selectedCategory, selectedOption);
+           return Ok(filtredProducts);
         }
     }
 }

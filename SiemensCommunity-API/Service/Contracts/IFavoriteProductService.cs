@@ -9,7 +9,7 @@ namespace Service.Contracts
 {
     public interface IFavoriteProductService
     {
-        public Task<IEnumerable<FavoriteProduct>> GetAsync(int userId);
+        public Task<IEnumerable<FavoriteProductDTO>> GetAsync(int userId, int selectedCategory, int selectedOption);
 
         public Task<FavoriteProduct> AddAsync(FavoriteProduct productDetails);
 
