@@ -24,7 +24,8 @@ namespace SiemensCommunity.Controllers
         [HttpGet("getCategoryProperties")]
         public async Task<IActionResult> GetCategoryProperties(int categoryId)
         {
-            var properties = await _propertyService.GetCategoryProperties(categoryId);
+            var propertiesModel = await _propertyService.GetCategoryProperties(categoryId);
+            var properties = _propertyAdapter.AdaptListToPropertyDTO(propertiesModel);
             return Ok(properties);
         }
     }

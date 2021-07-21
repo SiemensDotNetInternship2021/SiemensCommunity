@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SiemensCommunity.Models
 {
-    public class AddProduct
+    public class UpdateProductDTo
     {
         public int Id { get; set; }
         [Required]
@@ -20,6 +19,7 @@ namespace SiemensCommunity.Models
         public string Name { get; set; }
         [Required]
         public string Details { get; set; }
+        public string ImageURL { get; set; }
         public IFormFileCollection Files { get; set; }
     }
 }

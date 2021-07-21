@@ -15,8 +15,7 @@ export class CategoryPropertiesService {
   getCategoryProperties(categoryId: any){
     return this.http.get<IProperty[]>(this.rootUrl + "/property/getCategoryProperties", {
        params: 
-        {categoryId: categoryId},
-      observe: 'response'});
+        {categoryId: categoryId}});
   }
 
 }

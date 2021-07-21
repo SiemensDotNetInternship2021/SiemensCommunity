@@ -9,5 +9,6 @@ namespace Data.Contracts
 {
     public interface IPhotoRepository:IGenericRepository<Photo>
     {
+        public Task<Photo> FindByURL(string url);
     }
 }

@@ -96,3 +96,10 @@ body {
     font-size: 1em;
     box-shadow: none;
   }
+.label_input{
+  display: flex;
+}
+.img_ctn img{
+  min-width: 100px;
+  max-width: 200px;
+}

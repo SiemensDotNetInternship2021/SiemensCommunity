@@ -17,6 +17,7 @@ namespace SiemensCommunity.Adapters
             {
                 config.CreateMap<Property, Service.Models.Property>();
                 config.CreateMap<Service.Models.Property, Property>();
+                config.CreateMap<Service.Models.Property, PropertyDTO>();
             });
 
             _propertyAdapter = config.CreateMapper();
@@ -32,6 +33,14 @@ namespace SiemensCommunity.Adapters
             return _propertyAdapter.Map<Service.Models.Property, Property>(property);
         }
 
+        public PropertyDTO AdaptToPropertyDTO(Service.Models.Property property)
+        {
+            return _propertyAdapter.Map<Service.Models.Property, PropertyDTO>(property);
+        }
+        public IEnumerable<PropertyDTO> AdaptListToPropertyDTO(IEnumerable<Service.Models.Property> property)
+        {
+            return _propertyAdapter.Map<IEnumerable<Service.Models.Property>, IEnumerable<PropertyDTO>>(property);
+        }
         public IEnumerable<Property> AdaptList(IEnumerable<Service.Models.Property> property)
         {
             return _propertyAdapter.Map<IEnumerable<Service.Models.Property>, IEnumerable<Property>>(property);

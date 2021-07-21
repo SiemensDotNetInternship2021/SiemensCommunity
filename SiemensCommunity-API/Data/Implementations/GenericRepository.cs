@@ -40,6 +40,15 @@ namespace Data.Implementations
         {
             return await Context.Set<T>().ToListAsync();
         }
+
+        public virtual async Task<T> UpdateAsync(T entity, int id)
+        {
+            var existing = await Context.Set<T>().FindAsync(id);
+            Context.Entry(existing).CurrentValues.SetValues(entity);
+            await Context.SaveChangesAsync();
+            return entity;
+        }
+
     }
 
 }

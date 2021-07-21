@@ -17,7 +17,8 @@ namespace Service.Adapters
         {
             var config = new MapperConfiguration(config =>
             {
-                config.CreateMap<AddProductAdapter, Data.Models.AddProduct>();  
+
+                config.CreateMap<AddProductAdapter, Data.Models.AddProduct>();
                 config.CreateMap<Data.Models.AddProduct, AddProductAdapter>();
             });
 

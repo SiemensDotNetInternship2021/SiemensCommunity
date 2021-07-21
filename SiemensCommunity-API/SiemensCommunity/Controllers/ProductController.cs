@@ -16,7 +16,6 @@ namespace SiemensCommunity.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly IAccountService _accountService;
 
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
         private readonly UserAdapter _userAdapter = new UserAdapter();
@@ -28,8 +27,9 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody]AddProduct addProduct)
+        public async Task<IActionResult> Add([FromForm]AddProduct addProduct)
         {
+
             if (!(ModelState.IsValid))
             {
                 return BadRequest(ModelState);
@@ -46,6 +46,19 @@ namespace SiemensCommunity.Controllers
                     return StatusCode((int) HttpStatusCode.InternalServerError);
                 }
             }
+        }
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromForm] UpdateProductDTo addProduct)
+        {
+
+            return Ok();
+        }
+
+        [HttpGet("getproduct")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            var product = await _productService.GetByIdAsync(id);
+            return Ok(product);
         }
 
         [HttpDelete]

@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace Service.Models
 {
-    public class AddProduct
+    public class ProductFormDTO
     {
         public int Id { get; set; }
-        public int CategoryId { get; set; }
-        public int SubCategoryId { get; set; }
-        public int UserId { get; set; }
         public string Name { get; set; }
+        public Category Category { get; set; }
+        public SubCategory Subcategory { get; set; }
+        public string Photo { get; set; }
+        public IFormCollection Image{ get; set; }
         public string Details { get; set; }
-        public string ImageURL { get; set; }
-        public IFormFile Image { get; set; }
     }
 }

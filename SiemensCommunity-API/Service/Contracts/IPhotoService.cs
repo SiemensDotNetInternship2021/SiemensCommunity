@@ -10,6 +10,6 @@ namespace Service.Contracts
 {
     public interface IPhotoService
     {
-        public Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
+        public Task<ImageUploadResult> UploadPhohoAsync(IFormFile file);
     }
 }

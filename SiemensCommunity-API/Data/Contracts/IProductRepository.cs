@@ -9,6 +9,6 @@ namespace Data.Contracts
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-
+        public Task<ProductFormDTO> FindById(int id);
     }
 }

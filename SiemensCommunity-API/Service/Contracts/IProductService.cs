@@ -12,5 +12,6 @@ namespace Service.Contracts
         public Task<Product> AddAsync(AddProduct product);
         public Task<bool> DeleteByIdAsync(int id);
         public Task<IEnumerable<Product>> GetAsync();
+        public Task<ProductFormDTO> GetByIdAsync(int id); 
     }
 }

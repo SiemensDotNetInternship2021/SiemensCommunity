@@ -1,5 +1,6 @@
 ﻿using Data.Contracts;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,11 @@ namespace Data.Implementations
         public PhotoRepository(ProjectDbContext context): base(context)
         {
 
+        }
+
+        public async Task<Photo> FindByURL(string url)
+        {
+            return await Context.Photos.Where(p => p.Url == url).SingleOrDefaultAsync();
         }
     }
 }

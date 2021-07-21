@@ -1,3 +1,4 @@
+<app-nav-bar></app-nav-bar>
 <form [formGroup] = "service.addProductModel" (submit)="addProduct()" enctype="multipart/form-data" autocomplete="off">
     <p>{{titlePage}}</p>
         <input type="hidden" formControlName = "Id" value="0"/>
@@ -13,8 +14,7 @@
             <label>                      
                 <p class="label-txt">Category</p>
                 <select class="form-control custom-select" formControlName="Category" (ngModelChange)="onCategoryChanged($event)">
-                    <option class="option-display" selected="selected" hidden>Select an option:</option>
-                    <option *ngFor = "let category of selectedCategories" value="{{category.id}}">{{category.name}}</option>
+                    <option *ngFor = "let category of selectedCategories" selected = "{{category.isSelected == 'selected'}}" value="{{category.id}}">{{category.name}}</option>
                 </select> 
                 <div class="line-box">
                     <div class="line"></div>
@@ -25,8 +25,7 @@
             <label>                      
                 <p class="label-txt">Subcategory</p>
                 <select class="form-control custom-select" formControlName="SubCategory" (ngModelChange)="onSubCategoryChanged($event)">
-                    <option class="option-display" selected="selected" hidden value = "Select an option:">Select an option:</option>
-                    <option *ngFor = "let subcategory of selectedSubCategories" value = "{{subcategory.id}}" >{{subcategory.name}}</option>
+                    <option *ngFor = "let subcategory of selectedSubCategories" selected value = "{{subcategory.id}}" >{{subcategory.name}}</option>
                 </select> 
                 <div class="line-box">
                     <div class="line"></div>
@@ -36,18 +35,24 @@
 
             <label *ngFor = "let property of properties">
                 <p class="label-txt" >{{property.name}}</p>
-                <input type="text" class="input" formControlName="property">
+                <input type="text" class="input" value="{{property.description}}" (change)="onInputChange($event, property.id)">
                 <div class="line-box">
                     <div class="line"></div>
                 </div>
             </label>
+                <label class ="label_image">
+                    <div class="label_input">
+                        <p class="label-txt" >Image</p>
+                        <input type="file" class="input" (change)="onFileSelect($event)" formControlName="Image">
+                        <div class="img_ctn" *ngIf ="productImage != ''">
+                            <img src = "{{productImage}}" alt = "Imaginea produsului"/>
+                        </div>
+                    </div>
+                    <div class="line-box">
+                        <div class="line"></div>
+                    </div>
+                </label>
 
-            <label >
-                <p class="label-txt" >Image</p>
-                <input type="file" class="input" (ngModelChange)="onFileSelect($event)" formControlName="Image">
-                <div class="line-box">
-                    <div class="line"></div>
-                </div>
-            </label>
-    <button class="btn btn-dark" [disabled]="service.addProductModel.invalid">Submit</button>
+
+    <button class="btn btn-dark" >Submit</button>
 </form>
