@@ -33,16 +33,9 @@ export class AddProductService {
   });
 
   addProduct(properties: any, productId: number, productImage: string) {
-    var addProductData = {
-      Id: ((this.addProductModel.value.Id == 0)? 0: this.addProductModel.value.Id),
-      Name: this.addProductModel.value.Name,
-      CategoryId: this.addProductModel.value.Category,
-      SubCategoryId: this.addProductModel.value.SubCategory,
-      Image: this.addProductModel.value.Image,
-      Details: properties,
-      UserId: 1
-    }
-    console.log(this.addProductModel.value.SubCategory);
+
+
+    //fill he form to send data in back
     this.formData.append("Id", productId=== undefined? "0": productId.toLocaleString());
     this.formData.append("Name", this.addProductModel.value.Name);
     this.formData.append("CategoryId", this.addProductModel.value.Category);
@@ -58,9 +51,6 @@ export class AddProductService {
     }
   }
 
-  getCategories(){
-    return this.http.get<ICategory[]>(this.rootUrl + '/Category/get')
-  }
 
   uploadFile(file: any){
     this.formData.append("Files", file);

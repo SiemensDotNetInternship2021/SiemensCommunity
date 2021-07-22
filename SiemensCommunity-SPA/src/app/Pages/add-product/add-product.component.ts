@@ -1,12 +1,7 @@
-import { JsonPipe } from '@angular/common';
-import { ThisReceiver } from '@angular/compiler';
-import { ɵflushModuleScopingQueueAsMuchAsPossible } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FileUploader } from 'ng2-file-upload';
 import { ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 import { ICategory } from 'src/app/Models/ICategory';
-import { IProduct } from 'src/app/Models/IProduct';
 import { IProperty } from 'src/app/Models/IProperty';
 import { ISubCategory } from 'src/app/Models/ISubCategory';
 import { AddProductService } from 'src/app/Services/add-product-service/add-product.service';
@@ -62,13 +57,14 @@ export class AddProductComponent implements OnInit {
       this.modifyProductConstructor(this.productId);
     }
   }
-
+//builds the page to add a new product
   addProductPageConstructor(){
     this.getCategories();
     this.getSubCategories();  
     this.titlePage = "Add new product";
   }
 
+  //build the page o edit a product 
   modifyProductConstructor(productId: number){
     console.log("componenta product id " + productId);
     this.productService.getProduct(productId).subscribe((product) =>{
@@ -76,6 +72,7 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  //fiil the form un the product data
   fillForm(product: any){
     this.properties =JSON.parse(product.details);
     this.service.addProductModel.value.Name = product.name;
@@ -103,6 +100,7 @@ export class AddProductComponent implements OnInit {
     });
     this.selectedCategories = this.categories;
   }
+
   //get subcategories from db
   getSubCategories(){
     this.subcategoryService.getSubCategories().subscribe((subcategory)=>{
@@ -111,10 +109,11 @@ export class AddProductComponent implements OnInit {
     }); 
   }
   
+  //call api
   addProduct() {
     this.service.addProduct(this.properties, this.productId, this.productImage).subscribe((res: any) => 
     {
-      alert("Product added succsefully.");
+      this.toastr.success("Product added succsefully.");
       this.router.navigateByUrl('/home');
     },
     err =>{
@@ -122,6 +121,7 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  //when category changed fiil subcategories and properties
   onCategoryChanged(selectedCategoryId: any){
     this.selectedCategoryId = selectedCategoryId;
     this.selectedSubCategories = [];
@@ -171,10 +171,6 @@ export class AddProductComponent implements OnInit {
     });
   }
 
-  //get properties of a product
-  getProductProperties(selectedProduct: any){
-    console.log(selectedProduct.details);
-  }
 
   //upload file in form
   onFileSelect(event: any){
@@ -185,7 +181,7 @@ export class AddProductComponent implements OnInit {
   }
 
   onInputChange(event: any, propertyId: number){
-    var property = this.properties.forEach(property =>{
+    this.properties.forEach(property =>{
       if(property.id == propertyId){
         property.description = event.target.value;
       }

@@ -14,6 +14,7 @@
             <label>                      
                 <p class="label-txt">Category</p>
                 <select class="form-control custom-select" formControlName="Category" (ngModelChange)="onCategoryChanged($event)">
+                    <option disabled value="" >Select an option</option>
                     <option *ngFor = "let category of selectedCategories" selected = "{{category.isSelected == 'selected'}}" value="{{category.id}}">{{category.name}}</option>
                 </select> 
                 <div class="line-box">
@@ -25,6 +26,7 @@
             <label>                      
                 <p class="label-txt">Subcategory</p>
                 <select class="form-control custom-select" formControlName="SubCategory" (ngModelChange)="onSubCategoryChanged($event)">
+                    <option disabled value="" >Select an option</option>
                     <option *ngFor = "let subcategory of selectedSubCategories" selected value = "{{subcategory.id}}" >{{subcategory.name}}</option>
                 </select> 
                 <div class="line-box">
