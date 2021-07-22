@@ -22,6 +22,7 @@ namespace Service.Implementations
         private readonly ProductAdapter _addProductAdapter = new ProductAdapter();
         private readonly PhotoAdapter _photoAdapter = new PhotoAdapter();
         private readonly ProductFormAdapter _productFormDTOAdapter = new ProductFormAdapter();
+        private readonly UpdateProductAdapter _updateProductAdapter = new UpdateProductAdapter();
 
         public ProductService(IProductRepository productRepository, IPhotoService photoService, IPhotoRepository photoRepository)
         {
@@ -32,38 +33,24 @@ namespace Service.Implementations
 
         public async Task<Product> AddAsync(AddProduct addProduct)
         {
-            var image = new Photo();
-            var photoInDb = new Data.Models.Photo();
-            var returnedProduct = new Data.Models.Product();
-            if (addProduct.ImageURL == "" || addProduct.ImageURL == null)
+            var result = await _photoService.UploadPhohoAsync(addProduct.File);
+            if (result.Error != null)
             {
-                var result = await _photoService.UploadPhohoAsync(addProduct.Image);
-                if (result.Error != null)
-                {
-                    //return error
-                }
-                image.Url = result.SecureUrl.AbsoluteUri;
-                image.PublicId = result.PublicId;
-                image.IsMain = false;
-                photoInDb = await _photoRepository.AddAsync(_photoAdapter.Adapt(image));
+                //return error
+            }
+            var image = new Photo
+            {
+                Url = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId,
+                IsMain = false
+            };
 
-            }
-            else
-            {
-                photoInDb = await _photoRepository.FindByURL(addProduct.ImageURL);
-            }
-            
+            var photoInDb = await _photoRepository.AddAsync(_photoAdapter.Adapt(image));
             var adaptedProduct = _productAdapter.AdaptAddProductToProduct(addProduct);
             adaptedProduct.Photo = photoInDb;
             adaptedProduct.PhotoId = photoInDb.Id;
-            if(adaptedProduct.Id == 0)
-            {
-               returnedProduct = await _productRepository.AddAsync(adaptedProduct);
-            }
-            else
-            {
-                returnedProduct = await _productRepository.UpdateAsync(adaptedProduct, adaptedProduct.Id);
-            }
+
+            var returnedProduct = await _productRepository.AddAsync(adaptedProduct);
             return _productAdapter.Adapt(returnedProduct);
         }
 
@@ -82,6 +69,31 @@ namespace Service.Implementations
         {
             var returnedProduct = await _productRepository.FindById(id);
             return _productFormDTOAdapter.Adapt(returnedProduct);
+        }
+
+        public async Task<Product> UpdateAsync(UpdateProductDTO product)
+        {
+            var image = new Photo();
+            var photoInDb = await _photoRepository.FindByURL(product.ImageURL);
+            var oldPhotoId = photoInDb.Id;
+            if (product.File != null)
+            {
+                var result = await _photoService.UploadPhohoAsync(product.File);
+                if (result.Error != null)
+                {
+                    //return error
+                }
+                image.Url = result.SecureUrl.AbsoluteUri;
+                image.PublicId = result.PublicId;
+                image.IsMain = false;
+                photoInDb = await _photoRepository.AddAsync(_photoAdapter.Adapt(image));
+            }
+            product.PhotoId = photoInDb.Id;
+            var productUpdated = await _productRepository.UpdateAsync(_updateProductAdapter.Adapt(product), product.Id);
+            if(oldPhotoId != photoInDb.Id)
+                await _photoRepository.DeleteByIdAsync(photoInDb.Id);
+
+            return _productAdapter.Adapt(productUpdated);
         }
     }
 }

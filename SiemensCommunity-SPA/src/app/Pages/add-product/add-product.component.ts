@@ -130,7 +130,8 @@ export class AddProductComponent implements OnInit {
         this.selectedSubCategories.push(subcategory);
       }
     });
-    if(this.productId == 0){
+    console.log(this.productId);
+    if(this.productId == undefined){
       if(typeof(selectedCategoryId) == 'string' || typeof(selectedCategoryId) == 'number'){
         this.getProperties(selectedCategoryId);
       }

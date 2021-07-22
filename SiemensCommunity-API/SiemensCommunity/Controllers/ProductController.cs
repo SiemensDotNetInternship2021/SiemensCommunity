@@ -20,6 +20,7 @@ namespace SiemensCommunity.Controllers
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
         private readonly UserAdapter _userAdapter = new UserAdapter();
         private readonly AddProductAdapter _addProductAdapter = new AddProductAdapter();
+        private readonly UpdateProductAdapter _updateProductAdapter = new UpdateProductAdapter();
 
         public ProductController(IProductService productService)
         {
@@ -48,10 +49,26 @@ namespace SiemensCommunity.Controllers
             }
         }
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromForm] UpdateProductDTo addProduct)
+        public async Task<IActionResult> Update([FromForm] UpdateProductDTO addProduct)
         {
 
-            return Ok();
+
+            if (!(ModelState.IsValid))
+            {
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                var returnedProduct = await _productService.UpdateAsync(_updateProductAdapter.Adapt(addProduct));
+                if (returnedProduct != null)
+                {
+                    return Ok(_productAdapter.Adapt(returnedProduct));
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError);
+                }
+            }
         }
 
         [HttpGet("getproduct")]
