@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Data
 {
@@ -24,17 +23,20 @@ namespace Data
 
             builder.Entity<SubCategory>().HasData(new SubCategory { Id = 1, CategoryId = 1, Name = "SF" },
                                                   new SubCategory { Id = 2, CategoryId = 1, Name = "Poems" },
-                                                  new SubCategory { Id = 3, CategoryId = 2, Name = "Desk" });
+                                                  new SubCategory { Id = 3, CategoryId = 2, Name = "Desk" },
+                                                  new SubCategory { Id = 4, CategoryId = 1, Name = "Thrillers" });
 
             builder.Entity<Product>().HasData(new Product { Id = 1, Name = "Book SF", CategoryId = 1, SubCategoryId = 1, IsAvailable = true, Rating = 3, UserId = 2 },
                                             new Product { Id = 2, Name = "Book Poems", CategoryId = 1, SubCategoryId = 2, IsAvailable = true, Rating = 3, UserId = 2 },
                                             new Product { Id = 3, Name = "Book Poems", CategoryId = 1, SubCategoryId = 2, IsAvailable = true, Rating = 4, UserId = 2 },
                                             new Product { Id = 4, Name = "Book SF", CategoryId = 1, SubCategoryId = 1, IsAvailable = false, Rating = 5, UserId = 2 },
                                             new Product { Id = 5, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 2 },
-                                            new Product { Id = 6, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 2 });
+                                            new Product { Id = 6, Name = "Decorative Object", CategoryId = 2, SubCategoryId = 3, IsAvailable = false, Rating = 5, UserId = 2 },
+                                            new Product { Id = 7, Name = "Book Thriller", CategoryId = 1, SubCategoryId = 4, IsAvailable = true, Rating = 4, UserId = 4 });
 
-            builder.Entity<BorrowedProduct>().HasData(new BorrowedProduct { Id = 1, UserId = 2, ProductId = 4, StartDate="2021/7/13", EndDate = "2021/7/23" },
-                                                      new BorrowedProduct { Id = 2, UserId = 2, ProductId = 4, StartDate = "2021/7/13", EndDate = "2021/7/23" });
+            builder.Entity<BorrowedProduct>().HasData(new BorrowedProduct { Id = 1, UserId = 2, ProductId = 4, StartDate = "2021/7/13", EndDate = "2021/7/23" },
+                                                      new BorrowedProduct { Id = 2, UserId = 2, ProductId = 4, StartDate = "2021/7/13", EndDate = "2021/7/23" },
+                                                      new BorrowedProduct { Id = 3, UserId = 4, ProductId = 7, StartDate = "2021/7/13", EndDate = "2021/7/23" });
 
             base.OnModelCreating(builder);
 
@@ -51,8 +53,8 @@ namespace Data
             .IsRequired();
         }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories{ get; set; }
-        public DbSet<SubCategory> SubCategories{ get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<BorrowedProduct> BorrowedProducts { get; set; }
     }

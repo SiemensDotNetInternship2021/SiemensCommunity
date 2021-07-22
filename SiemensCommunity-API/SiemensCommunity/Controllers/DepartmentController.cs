@@ -17,7 +17,7 @@ namespace SiemensCommunity.Controllers
             _departmentService = departmentService;
         }
 
-        [HttpGet("get")]
+        [HttpGet("getDepartments")]
         public async Task<IActionResult> GetDepartments()
         {
             var departments = await _departmentService.GetAsync();

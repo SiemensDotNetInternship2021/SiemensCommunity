@@ -85,7 +85,6 @@ namespace SiemensCommunity
              });*/
 
             services.AddAuthentication();
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -16,6 +16,7 @@ import { UserService } from 'src/app/Services/user.service';
 export class RegisterPageComponent implements OnInit {
 
   departments : IDepartment[] = [];
+  departmentTest: IDepartment[] = [];
 
   constructor(public service: UserService,
     public serviceDepartment: DepartmentService,
@@ -41,6 +42,7 @@ export class RegisterPageComponent implements OnInit {
 
   getDepartments() {
     this.serviceDepartment.getDepartments().subscribe((department) => {
+      console.log(department);
       department.forEach(value => this.departments.push(value));
     })
   }

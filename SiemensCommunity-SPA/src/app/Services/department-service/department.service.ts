@@ -12,6 +12,8 @@ export class DepartmentService {
   constructor(private http: HttpClient) { }
 
   getDepartments() {
-    return this.http.get<IDepartment[]>(this.rootUrl + '/Department/get')
+    var test = this.http.get<IDepartment[]>(this.rootUrl + '/Department/getDepartments');
+    console.log(test);
+    return test;
   }
 }

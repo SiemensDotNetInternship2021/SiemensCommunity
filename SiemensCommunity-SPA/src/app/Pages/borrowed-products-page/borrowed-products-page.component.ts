@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IBorrowedProducts } from 'src/app/Models/IBorrowedProducts';
+import { BorrowedItemsServiceService } from 'src/app/Services/borrowed-items-service/borrowed-items-service.service';
 
 @Component({
   selector: 'app-borrowed-products-page',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BorrowedProductsPageComponent implements OnInit {
 
-  constructor() { }
+  borrowedProducts: IBorrowedProducts[] = [];
+  totalLength:any;
+  page:number = 1;
+
+  constructor(public borrowedProductsService: BorrowedItemsServiceService) {
+    this.borrowedProducts = [];
+   }
 
   ngOnInit(): void {
+    this.getBorrowedProducts();
+  }
+
+  getBorrowedProducts(){
+    this.borrowedProductsService.getBorrowedProducts().subscribe((borrowedProds =>
+      {
+        this.borrowedProducts = borrowedProds;
+        this.totalLength = this.borrowedProducts.length;
+      }))
   }
 
 }

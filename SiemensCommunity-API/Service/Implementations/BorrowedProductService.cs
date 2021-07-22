@@ -2,15 +2,12 @@
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Service.Implementations
 {
-    public class BorrowedProductService: IBorrowedProductService
+    public class BorrowedProductService : IBorrowedProductService
     {
         private readonly IBorrowedProductRepository _borrowedProductRepository;
         private readonly BorrowedProductAdapter _borrowedProductAdapter = new BorrowedProductAdapter();
@@ -25,5 +22,6 @@ namespace Service.Implementations
             var returnedProducts = await _borrowedProductRepository.GetAsync();
             return _borrowedProductAdapter.AdaptList(returnedProducts);
         }
+
     }
 }
