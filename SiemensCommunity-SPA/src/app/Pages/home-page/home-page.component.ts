@@ -18,10 +18,10 @@ export class HomePageComponent implements OnInit {
   mySelectedCategory : number = 0;
   selectedCategory : number = 0;
   selectedOption : number = 0;
-  totalLength:any;
   page : number = 0;
   favoriteProducts : IFavoriteProduct[] =[];
   favoriteProductsId : any[] = [];
+  starRating = 0;
   userId = 3;
 
   constructor(public productService: ProductService,
@@ -38,7 +38,6 @@ export class HomePageComponent implements OnInit {
     this.productService.getProducts(this.selectedCategory, this.selectedOption).subscribe((productsFromDb) => 
     {
       this.products = productsFromDb;
-      this.totalLength = this.products.length;
     })
   }
 
@@ -69,11 +68,10 @@ export class HomePageComponent implements OnInit {
     this.productService.getFavoriteProducts(this.userId, this.selectedCategory, this.selectedOption).subscribe((favoriteProductsFromDB) => {
       favoriteProductsFromDB.forEach(favoriteProduct => this.favoriteProducts.push(favoriteProduct));
       favoriteProductsFromDB.forEach(favoriteProduct => this.favoriteProductsId.push(favoriteProduct.id))
-      console.log(this.favoriteProductsId);
     })
   }
 
-  addToFavorite(productId : number) {
+  addFavoriteProduct(productId : number) {
     this.productService.addFavoriteProduct(productId, this.userId).subscribe((res : any) =>
     {
       this.toastr.success("The product has been added to your favorite list");
@@ -97,5 +95,17 @@ export class HomePageComponent implements OnInit {
     err=>{
       this.toastr.error("The product couldn`t be removed from your favorite products list");
     });
+  }
+
+  rateProduct(productId : number) {
+    this.productService.rateProduct(productId, this.userId, this.starRating).subscribe((res : any) =>
+    {
+      this.toastr.success("The product has been rated");
+      this.starRating = 0;
+    },
+    err=> {
+      this.toastr.error("Product couldn`t be rated");
+      this.starRating = 0;
+    })
   }
 }

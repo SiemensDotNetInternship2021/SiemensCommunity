@@ -45,5 +45,9 @@ img {
     cursor: pointer;
 }
 
+.rating {
+    color: green;
+    font-size: 35px;
+}
 
 

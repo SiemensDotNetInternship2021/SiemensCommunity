@@ -20,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MatIconModule } from '@angular/material/icon';
     ToastrModule.forRoot(),
     NgxPaginationModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

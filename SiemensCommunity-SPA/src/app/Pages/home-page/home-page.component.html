@@ -35,9 +35,10 @@
               <p class="card-text">Rate: {{product.rating}}</p>
               <p class="card-text">Available: {{product.isAvailable}}</p>
             </div>
+            <ngb-rating  class="rating" [max]="5" [(rate)]="starRating" (rateChange)="rateProduct(product.id)"></ngb-rating>
             <div class="card-body">
                 <i *ngIf="favoriteProductsId.includes(product.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(product.id)"></i>
-                <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart" (click)="addToFavorite(product.id)"></i>
+                <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart" (click)="addFavoriteProduct(product.id)"></i>
               <button class="btn btn-primary">Borrow</button>
             </div>
         </div>
@@ -60,10 +61,11 @@
               <p class="card-text">Details: {{favoriteProduct.details}}</p>
               <p class="card-text">Rate: {{favoriteProduct.rating}}</p>
               <p class="card-text">Available: {{favoriteProduct.isAvailable}}</p>
+              <ngb-rating class="rating"[max]="5" [(rate)]="starRating"></ngb-rating>
             </div>
             <div class="card-body">
                 <i *ngIf="favoriteProductsId.includes(favoriteProduct.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(favoriteProduct.id)"></i>
-                <i *ngIf="!favoriteProductsId.includes(favoriteProduct.id)" class="far fa-heart" (click)="addToFavorite(favoriteProduct.id)"></i>
+                <i *ngIf="!favoriteProductsId.includes(favoriteProduct.id)" class="far fa-heart" (click)="addFavoriteProduct(favoriteProduct.id)"></i>
               <button class="btn btn-primary">Borrow</button>
             </div>
         </div>

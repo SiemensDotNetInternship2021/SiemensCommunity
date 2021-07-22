@@ -34,6 +34,8 @@ namespace Data.Models
 
         public User User { get; set; }
 
-        public FavoriteProduct FavoriteProduct { get; set; }
+        public ICollection<FavoriteProduct> FavoriteProduct { get; set; }
+
+        public ICollection<ProductRating> ProductRating { get; set; }
     }
 }

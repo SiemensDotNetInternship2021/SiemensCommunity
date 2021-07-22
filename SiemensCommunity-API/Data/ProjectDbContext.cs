@@ -52,5 +52,6 @@ namespace Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<BorrowedProduct> BorrowedProducts { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
+        public DbSet<ProductRating> ProductRatings { get; set; }
     }
 }

@@ -43,4 +43,14 @@ export class ProductService {
     }
     return this.http.post(this.rootUrl + '/FavoriteProduct/DeleteFavoriteProduct' , favoriteProductDetails)
   }
+
+  rateProduct(productId : number, userId : number, rating : number) {
+    var ratingDetails = {
+      productId : productId,
+      userId : userId,
+      rate : rating,
+    }
+
+    return this.http.post(this.rootUrl + '/ProductRating/', ratingDetails)
+  }
 }
