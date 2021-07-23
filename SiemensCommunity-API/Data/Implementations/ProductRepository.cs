@@ -21,35 +21,37 @@ namespace Data.Implementations
             if (selectedOption == 0 && selectedCategory == 0)
             {
                 var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory)
-               .Select(x => new ProductDTO
-               {
+                .Include(pr => pr.ProductRating)
+                .Select(x => new ProductDTO
+                {
                    Id = x.Id,
                    Details = x.Details,
                    IsAvailable = x.IsAvailable,
                    Name = x.Name,
-                   Rating = x.Rating,
+                   Rating = x.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0,
                    User = x.User.UserName,
                    CategoryName = x.Category.Name,
                    SubCategoryName = x.SubCategory.Name,
                    ImagePath = x.ImagePath
-               });
+                });
                 return await product.ToListAsync();
             }
             else
             if (selectedOption == 0 && (selectedCategory == 1 || selectedCategory == 2))
             {
                 var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.CategoryId == selectedCategory)
+               .Include(pr => pr.ProductRating)
                .Select(x => new ProductDTO
                {
                    Id = x.Id,
                    Details = x.Details,
                    IsAvailable = x.IsAvailable,
                    Name = x.Name,
-                   Rating = x.Rating,
+                   Rating = x.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0,
                    User = x.User.UserName,
                    CategoryName = x.Category.Name,
                    SubCategoryName = x.SubCategory.Name,
-                   ImagePath = x.ImagePath
+                   ImagePath = x.ImagePath,
                });
                 return await product.ToListAsync();
             }
@@ -57,13 +59,14 @@ namespace Data.Implementations
             if (selectedOption == 1 && (selectedCategory == 0))
             {
                 var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.IsAvailable == true)
+                .Include(pr => pr.ProductRating)
                 .Select(x => new ProductDTO
                 {
                     Id = x.Id,
                     Details = x.Details,
                     IsAvailable = x.IsAvailable,
                     Name = x.Name,
-                    Rating = x.Rating,
+                    Rating = x.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0,
                     User = x.User.UserName,
                     CategoryName = x.Category.Name,
                     SubCategoryName = x.SubCategory.Name,
@@ -75,13 +78,14 @@ namespace Data.Implementations
             if (selectedOption == 1 && (selectedCategory == 1 || selectedCategory == 2))
             {
                 var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.CategoryId == selectedCategory && pr.IsAvailable == true)
+                .Include(pr => pr.ProductRating)
                 .Select(x => new ProductDTO
                 {
                     Id = x.Id,
                     Details = x.Details,
                     IsAvailable = x.IsAvailable,
                     Name = x.Name,
-                    Rating = x.Rating,
+                    Rating = x.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0,
                     User = x.User.UserName,
                     CategoryName = x.Category.Name,
                     SubCategoryName = x.SubCategory.Name,
@@ -92,13 +96,14 @@ namespace Data.Implementations
             else
             {
                 var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory)
+               .Include(pr => pr.ProductRating)
                .Select(x => new ProductDTO
                {
                    Id = x.Id,
                    Details = x.Details,
                    IsAvailable = x.IsAvailable,
                    Name = x.Name,
-                   Rating = x.Rating,
+                   Rating = x.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0,
                    User = x.User.UserName,
                    CategoryName = x.Category.Name,
                    SubCategoryName = x.SubCategory.Name,

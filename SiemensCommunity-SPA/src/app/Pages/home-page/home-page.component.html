@@ -23,7 +23,7 @@
   </div>
   <div *ngIf="!(selectedOption == 2)" class="row justify-content-center align-items-center">
     <div  *ngFor="let product of products | paginate : 
-      {itemsPerPage: 4, 
+      {itemsPerPage: 8, 
       currentPage: page}" class="col-md-3">
         <div class="card" style="width: 18rem;">
             <img src="{{product.imagePath}}" class="card-img-top" >
@@ -51,7 +51,8 @@
   <div *ngIf="selectedOption == 2" class="row justify-content-center align-items-center">
     <div  *ngFor="let favoriteProduct of favoriteProducts | paginate : 
       {itemsPerPage: 4, 
-      currentPage: page}" class="col-md-3">
+      currentPage: page
+      }" class="col-md-3">
         <div class="card" style="width: 18rem;">
             <img src="{{favoriteProduct.imagePath}}" class="card-img-top" >
             <div class="card-body">

@@ -1,3 +1,4 @@
+import { VariableAst } from "@angular/compiler";
 
 export interface IProduct {
     id : number,
@@ -9,4 +10,4 @@ export interface IProduct {
     imagePath: string,
     rating: number,
     details: string,
-}
+} 

@@ -30,7 +30,6 @@ namespace Data.Implementations
                 await Context.SaveChangesAsync();
                 return ratingDetails;
             }
-
         }
     }
 }

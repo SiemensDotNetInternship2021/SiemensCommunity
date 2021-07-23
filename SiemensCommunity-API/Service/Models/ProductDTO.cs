@@ -22,7 +22,7 @@ namespace Service.Models
 
         public string ImagePath { get; set; }
 
-        public int Rating { get; set; }
+        public double Rating{ get; set; }
 
         public string Details { get; set; }
     }

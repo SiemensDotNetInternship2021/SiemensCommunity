@@ -22,7 +22,7 @@ export class HomePageComponent implements OnInit {
   favoriteProducts : IFavoriteProduct[] =[];
   favoriteProductsId : any[] = [];
   starRating = 0;
-  userId = 3;
+  userId = 4;
 
   constructor(public productService: ProductService,
     public categoryService: CategoryService,
