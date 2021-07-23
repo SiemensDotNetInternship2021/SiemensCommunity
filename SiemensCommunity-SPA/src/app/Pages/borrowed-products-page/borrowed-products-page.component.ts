@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IBorrowedProducts } from 'src/app/Models/IBorrowedProducts';
+import { ICategory } from 'src/app/Models/ICategory';
 import { BorrowedItemsServiceService } from 'src/app/Services/borrowed-items-service/borrowed-items-service.service';
+import { CategoriesService } from 'src/app/Services/categories-service/categories.service';
+
 
 @Component({
   selector: 'app-borrowed-products-page',
@@ -10,15 +13,19 @@ import { BorrowedItemsServiceService } from 'src/app/Services/borrowed-items-ser
 export class BorrowedProductsPageComponent implements OnInit {
 
   borrowedProducts: IBorrowedProducts[] = [];
+  categories: ICategory[] = [];
   totalLength:any;
   page:number = 1;
 
-  constructor(public borrowedProductsService: BorrowedItemsServiceService) {
+  constructor(public borrowedProductsService: BorrowedItemsServiceService,
+              public categoriesService: CategoriesService) {
     this.borrowedProducts = [];
+    this.categories = [];
    }
 
   ngOnInit(): void {
     this.getBorrowedProducts();
+    this.getCategories();
   }
 
   getBorrowedProducts(){
@@ -27,6 +34,12 @@ export class BorrowedProductsPageComponent implements OnInit {
         this.borrowedProducts = borrowedProds;
         this.totalLength = this.borrowedProducts.length;
       }))
+  }
+
+  getCategories(){
+    this.categoriesService.getCategories().subscribe((category) => {
+      category.forEach(value => this.categories.push(value));
+    })
   }
 
 }

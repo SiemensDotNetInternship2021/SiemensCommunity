@@ -2,6 +2,20 @@
 <div class="container h-100">
 
     <div class="row justify-content-center align-items-center">
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Select a category
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a *ngFor = "let category of categories" class="dropdown-item" href="#">{{category.name}}</a></li> 
+        </ul>
+      </div>
+
+      <section class="example-section">
+        <mat-checkbox class="example-margin">Check me!</mat-checkbox>
+      </section>
+
       <div *ngFor = "let borrowedProduct of borrowedProducts | paginate: {
         itemsPerPage: 4,
         currentPage: page
