@@ -62,7 +62,7 @@
               <p class="card-text">Details: {{favoriteProduct.details}}</p>
               <p class="card-text">Rate: {{favoriteProduct.rating}}</p>
               <p class="card-text">Available: {{favoriteProduct.isAvailable}}</p>
-              <ngb-rating class="rating"[max]="5" [(rate)]="starRating"></ngb-rating>
+              <ngb-rating  class="rating" [max]="5" [(rate)]="starRating" (rateChange)="rateProduct(favoriteProduct.id)"></ngb-rating>
             </div>
             <div class="card-body">
                 <i *ngIf="favoriteProductsId.includes(favoriteProduct.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(favoriteProduct.id)"></i>
