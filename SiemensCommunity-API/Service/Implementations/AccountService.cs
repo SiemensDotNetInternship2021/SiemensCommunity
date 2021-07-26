@@ -31,10 +31,10 @@ namespace Service.Implementations
             return returnedUserId;
         }
 
-        public async Task<bool> VerifyLoginAsync(UserLoginCredentials user)
+        public async Task<int> VerifyLoginAsync(UserLoginCredentials user)
         {
-            var returned = await _accountReposistory.VerifyLoginAsync(_userAdapter.AdaptFromUserData(user));
-            return returned;
+            var returnedUserId = await _accountReposistory.VerifyLoginAsync(_userAdapter.AdaptFromUserData(user));
+            return returnedUserId;
         }
 
         public async Task<bool> ForgotPasswordAsync(string email)

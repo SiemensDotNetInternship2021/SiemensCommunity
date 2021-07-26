@@ -22,6 +22,8 @@ export class LoginPageComponent implements OnInit {
   login() {
     this.service.login().subscribe((res: any) => 
     {
+      localStorage.setItem('token', res.token);
+      console.log(localStorage.getItem('token'));
       this.router.navigateByUrl('/home');
     },
     err=>{

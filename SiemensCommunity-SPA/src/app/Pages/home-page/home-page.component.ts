@@ -20,18 +20,30 @@ export class HomePageComponent implements OnInit {
   selectedOption : number = 0;
   page : number = 0;
   favoriteProducts : IFavoriteProduct[] =[];
-  favoriteProductsId : any[] = [];
-  starRating = 0;
-  userId = 4;
+  favoriteProductsId : number[] = [];
+  userId : number = 0;
 
   constructor(public productService: ProductService,
     public categoryService: CategoryService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.getUserId()
     this.getCategories();
     this.getProducts();
     this.getFavoriteProducts();
+  }
+
+  getUserId() {
+    var payLoad = localStorage.getItem('token');
+    var tokenPayLoad = "";
+    if(payLoad != null) {
+      tokenPayLoad = window.atob(payLoad.split('.')[1]);
+    }
+      console.log(tokenPayLoad.split(':')[1].split(',')[0]);
+      console.log(typeof(parseInt(tokenPayLoad.split(':')[1].split(',')[0])));
+      this.userId = parseInt(tokenPayLoad.split(':')[1].split(',')[0].replace('"', ''));
+      console.log(this.userId);
   }
 
   getProducts() {
@@ -75,9 +87,9 @@ export class HomePageComponent implements OnInit {
     this.productService.addFavoriteProduct(productId, this.userId).subscribe((res : any) =>
     {
       this.toastr.success("The product has been added to your favorite list");
-      this.favoriteProductsId = [];
+      this.favoriteProductsId.push(productId);
       this.favoriteProducts =[];
-      this.getFavoriteProducts();
+      console.log(this.favoriteProductsId);
     },
     err=>{
       this.toastr.error("The product couldn`t be added to your favorite products list");
@@ -88,6 +100,7 @@ export class HomePageComponent implements OnInit {
     this.productService.deleteFavoriteProduct(productId, this.userId).subscribe((res : any) =>
     {
       this.toastr.success("The product has been removed from your favorite list");
+      var productIndex = this.favoriteProductsId.indexOf(productId);
       this.favoriteProductsId = [];
       this.favoriteProducts =[];
       this.getFavoriteProducts();
@@ -97,15 +110,13 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  rateProduct(productId : number) {
-    this.productService.rateProduct(productId, this.userId, this.starRating).subscribe((res : any) =>
+  rateProduct(productId : number, event : number) {
+    this.productService.rateProduct(productId, this.userId, event).subscribe((res : any) =>
     {
       this.toastr.success("The product has been rated");
-      this.starRating = 0;
     },
     err=> {
       this.toastr.error("Product couldn`t be rated");
-      this.starRating = 0;
     })
   }
 }

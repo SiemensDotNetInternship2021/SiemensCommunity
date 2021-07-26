@@ -23,8 +23,6 @@ export class ProductService {
   }
 
   getFavoriteProducts(userId : number, selectedCategory : number, selectedOption : number) {
-    console.log(selectedCategory);
-    console.log(selectedOption);
     return this.http.get<IFavoriteProduct[]>(this.rootUrl + '/FavoriteProduct/favoriteProductDetails?userId=' + userId + '&selectedCategory=' + selectedCategory + '&selectedOption=' + selectedOption);
   }
 
@@ -44,11 +42,11 @@ export class ProductService {
     return this.http.post(this.rootUrl + '/FavoriteProduct/DeleteFavoriteProduct' , favoriteProductDetails)
   }
 
-  rateProduct(productId : number, userId : number, rating : number) {
+  rateProduct(productId : number, userId : number, event : number) {
     var ratingDetails = {
       productId : productId,
       userId : userId,
-      rate : rating,
+      rate : event,
     }
 
     return this.http.post(this.rootUrl + '/ProductRating/', ratingDetails)
