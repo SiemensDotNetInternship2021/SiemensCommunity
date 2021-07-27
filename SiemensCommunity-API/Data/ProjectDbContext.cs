@@ -27,7 +27,6 @@ namespace Data
             .WithOne(u => u.Role)
             .HasForeignKey(ur => ur.RoleId)
             .IsRequired();
-            
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
