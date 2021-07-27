@@ -24,7 +24,6 @@ export class RegisterPageComponent implements OnInit {
       this.departments = [];
     }
     
-
     ngOnInit(): void {
       this.service.registrationModel.reset();
       this.getDepartments();
@@ -33,7 +32,7 @@ export class RegisterPageComponent implements OnInit {
   register() {
     this.service.register().subscribe((res: any) => 
     {
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/login');
     },
     err=>{
       this.toastr.error("Invalid credentials.");

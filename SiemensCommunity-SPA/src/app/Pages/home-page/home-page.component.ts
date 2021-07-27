@@ -32,6 +32,7 @@ export class HomePageComponent implements OnInit {
     this.getCategories();
     this.getProducts();
     this.getFavoriteProducts();
+    console.log(localStorage.getItem('token'));
   }
 
   getUserId() {
@@ -40,8 +41,6 @@ export class HomePageComponent implements OnInit {
     if(payLoad != null) {
       tokenPayLoad = window.atob(payLoad.split('.')[1]);
     }
-      console.log(tokenPayLoad.split(':')[1].split(',')[0]);
-      console.log(typeof(parseInt(tokenPayLoad.split(':')[1].split(',')[0])));
       this.userId = parseInt(tokenPayLoad.split(':')[1].split(',')[0].replace('"', ''));
       console.log(this.userId);
   }
@@ -100,7 +99,6 @@ export class HomePageComponent implements OnInit {
     this.productService.deleteFavoriteProduct(productId, this.userId).subscribe((res : any) =>
     {
       this.toastr.success("The product has been removed from your favorite list");
-      var productIndex = this.favoriteProductsId.indexOf(productId);
       this.favoriteProductsId = [];
       this.favoriteProducts =[];
       this.getFavoriteProducts();

@@ -9,17 +9,18 @@ import { MycatalogPageComponent } from './Pages/mycatalog-page/mycatalog-page.co
 import { RegisterPageComponent } from './Pages/register-page/register-page.component';
 import { ResetPasswordComponent } from './Pages/reset-password/reset-password.component';
 import { WelcomePageComponent } from './Pages/welcome-page/welcome-page.component';
+import { PageGuard } from './Shared/page-guard/page.guard';
 
 const routes: Routes = [
   {path: '',component: WelcomePageComponent},
   {path: 'register', component: RegisterPageComponent},
   {path: 'login', component: LoginPageComponent},
-  {path: 'home', component: HomePageComponent},
-  {path: 'lent', component: LentProductsPageComponent},
-  {path: 'borrowed', component: BorrowedProductsPageComponent},
-  {path: 'mycatalog', component: MycatalogPageComponent},
-  {path: 'forgotpassword', component: ForgotPasswordComponent},
-  {path: 'resetpassword', component: ResetPasswordComponent}
+  {path: 'home', component: HomePageComponent, canActivate:[PageGuard]},
+  {path: 'lent', component: LentProductsPageComponent, canActivate:[PageGuard]},
+  {path: 'borrowed', component: BorrowedProductsPageComponent, canActivate:[PageGuard]},
+  {path: 'mycatalog', component: MycatalogPageComponent, canActivate:[PageGuard]},
+  {path: 'forgotpassword', component: ForgotPasswordComponent, canActivate:[PageGuard]},
+  {path: 'resetpassword', component: ResetPasswordComponent, canActivate:[PageGuard]}
 ];
 
 @NgModule({
