@@ -4,25 +4,25 @@
    <div class="col-md-3">
     <select class="form-control custom-select" [(ngModel)]="mySelectedCategory" (change)="getSelected()">
       <option class="option-display" selected="selected" value=0 >All Categories</option>
-      <option value="{{category.id}}" *ngFor = "let category of categories">{{category.name}}</option>
+      <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
     </select> 
    </div>
    <div class="col-md-3">
      <form>
       <label class="option"> All
-        <input value="0" [checked]="true" name = "option" (change) = "checkboxChange($event)" type="radio">
+        <input value="0" [checked]="true" name = "option" (change)="checkboxChange($event)" type="radio">
       </label>
       <label class="option"> Available
-        <input value="1" name = "option"  (change) = "checkboxChange($event)" type="radio">
+        <input value="1" name = "option" (change)="checkboxChange($event)" type="radio">
       </label>
       <label class="option"> Favorites
-        <input value="2" name = "option" (change) = "checkboxChange($event)" type="radio">
+        <input value="2" name = "option" (change)="checkboxChange($event)" type="radio">
       </label>
      </form>
    </div>
   </div>
   <div *ngIf="!(selectedOption == 2)" class="row justify-content-center align-items-center">
-    <div  *ngFor="let product of products | paginate : 
+    <div *ngFor="let product of products | paginate : 
       {itemsPerPage: 8, 
       currentPage: page}" class="col-md-3">
         <div class="card" style="width: 18rem;">
@@ -35,7 +35,7 @@
               <p class="card-text">Rate: {{product.rating}}</p>
               <p class="card-text">Available: {{product.isAvailable}}</p>
             </div>
-            <ngb-rating class="rating" [max]="5"  (rateChange)="rateProduct(product.id, $event)"></ngb-rating>
+            <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(product.id, $event)"></ngb-rating>
             <div class="card-body">
                 <i *ngIf="favoriteProductsId.includes(product.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(product.id)"></i>
                 <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart" (click)="addFavoriteProduct(product.id)"></i>
@@ -49,8 +49,9 @@
   </div>
 
   <div *ngIf="selectedOption == 2" class="row justify-content-center align-items-center">
+    <div class="no-products" *ngIf="favoriteProducts.length <= 0">You have no favorite products</div>
     <div  *ngFor="let favoriteProduct of favoriteProducts | paginate : 
-      {itemsPerPage: 4, 
+      {itemsPerPage: 8, 
       currentPage: page
       }" class="col-md-3">
         <div class="card" style="width: 18rem;">
@@ -71,7 +72,7 @@
             </div>
         </div>
     </div>
-    <div class="pagination">
+    <div *ngIf="favoriteProducts.length > 0" class="pagination">
       <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>

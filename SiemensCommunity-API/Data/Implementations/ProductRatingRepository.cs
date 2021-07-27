@@ -1,7 +1,5 @@
 ﻿using Data.Contracts;
 using Data.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 

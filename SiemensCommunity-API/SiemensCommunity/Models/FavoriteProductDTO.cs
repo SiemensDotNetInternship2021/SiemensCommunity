@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SiemensCommunity.Models
+﻿namespace SiemensCommunity.Models
 {
     public class FavoriteProductDTO
     {

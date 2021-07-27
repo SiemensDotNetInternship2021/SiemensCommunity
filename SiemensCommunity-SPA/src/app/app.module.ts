@@ -21,6 +21,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminPanelComponent } from './Pages/admin-panel/admin-panel.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LentProductsPageComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,

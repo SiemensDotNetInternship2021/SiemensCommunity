@@ -32,17 +32,15 @@ export class HomePageComponent implements OnInit {
     this.getCategories();
     this.getProducts();
     this.getFavoriteProducts();
-    console.log(localStorage.getItem('token'));
   }
 
   getUserId() {
-    var payLoad = localStorage.getItem('token');
-    var tokenPayLoad = "";
-    if(payLoad != null) {
-      tokenPayLoad = window.atob(payLoad.split('.')[1]);
+    var token = localStorage.getItem('token');
+    var tokenDetails = "";
+    if(token != null) {
+      tokenDetails = window.atob(token.split('.')[1]);
     }
-      this.userId = parseInt(tokenPayLoad.split(':')[1].split(',')[0].replace('"', ''));
-      console.log(this.userId);
+      this.userId = parseInt(tokenDetails.split(':')[1].split(',')[0].replace('"', ''));
   }
 
   getProducts() {
@@ -88,7 +86,6 @@ export class HomePageComponent implements OnInit {
       this.toastr.success("The product has been added to your favorite list");
       this.favoriteProductsId.push(productId);
       this.favoriteProducts =[];
-      console.log(this.favoriteProductsId);
     },
     err=>{
       this.toastr.error("The product couldn`t be added to your favorite products list");

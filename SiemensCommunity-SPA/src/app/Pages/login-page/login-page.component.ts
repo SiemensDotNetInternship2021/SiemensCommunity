@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/Services/user.service';
@@ -23,7 +22,6 @@ export class LoginPageComponent implements OnInit {
     this.service.login().subscribe((res: any) => 
     {
       localStorage.setItem('token', res.token);
-      console.log(localStorage.getItem('token'));
       this.router.navigateByUrl('/home');
     },
     err=>{

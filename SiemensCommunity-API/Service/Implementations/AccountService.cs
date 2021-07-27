@@ -1,14 +1,9 @@
 ﻿using Data.Contracts;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Service.Implementations
 {

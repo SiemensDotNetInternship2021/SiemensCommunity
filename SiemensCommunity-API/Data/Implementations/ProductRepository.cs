@@ -38,7 +38,7 @@ namespace Data.Implementations
                 foreach (var element in await product)
                 {
                     var check = Context.Products.SingleOrDefault(pr => pr.Id == element.Id);
-                    if(check != null)
+                    if (check != null)
                     {
                         check.Rating = element.Rating;
                         await Context.SaveChangesAsync();
@@ -47,7 +47,6 @@ namespace Data.Implementations
 
                 return await product;
             }
-            else
             if (selectedOption == 0 && (selectedCategory == 1 || selectedCategory == 2))
             {
                 var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.CategoryId == selectedCategory)
@@ -77,7 +76,6 @@ namespace Data.Implementations
 
                 return await product;
             }
-            else
             if (selectedOption == 1 && (selectedCategory == 0))
             {
                 var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.IsAvailable == true)
@@ -107,7 +105,6 @@ namespace Data.Implementations
 
                 return await product;
             }
-            else
             if (selectedOption == 1 && (selectedCategory == 1 || selectedCategory == 2))
             {
                 var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.CategoryId == selectedCategory && pr.IsAvailable == true)
@@ -139,32 +136,7 @@ namespace Data.Implementations
             }
             else
             {
-                var product = Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory)
-               .Include(pr => pr.ProductRating)
-               .Select(x => new ProductDTO
-               {
-                   Id = x.Id,
-                   Details = x.Details,
-                   IsAvailable = x.IsAvailable,
-                   Name = x.Name,
-                   Rating = Math.Round(x.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
-                   User = x.User.UserName,
-                   CategoryName = x.Category.Name,
-                   SubCategoryName = x.SubCategory.Name,
-                   ImagePath = x.ImagePath
-               }).ToListAsync();
-
-                foreach (var element in await product)
-                {
-                    var check = Context.Products.SingleOrDefault(pr => pr.Id == element.Id);
-                    if (check != null)
-                    {
-                        check.Rating = element.Rating;
-                        await Context.SaveChangesAsync();
-                    }
-                }
-
-                return await product;
+                return null;
             }
         } 
     }
