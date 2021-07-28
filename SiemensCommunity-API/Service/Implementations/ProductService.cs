@@ -37,5 +37,13 @@ namespace Service.Implementations
             var returnedProducts = await _productRepository.GetAsync();
             return _productAdapter.AdaptList(returnedProducts);
         }
+
+       /* public async Task<IEnumerable<Product>> GetByCategoryIdAsync(int categoryId)
+        {
+            var returnedProducts = await _productRepository.GetAsync();
+            var filtered = returnedProducts.Where(x => x.CategoryId == categoryId).ToList();
+
+            return _productAdapter.AdaptList(filtered);
+        }*/
     }
 }

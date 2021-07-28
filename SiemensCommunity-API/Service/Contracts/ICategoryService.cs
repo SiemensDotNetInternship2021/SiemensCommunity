@@ -9,6 +9,7 @@ namespace Service.Contracts
 {
     public interface ICategoryService
     {
+        public Task<Category> AddAsync(Category category);
         public Task<IEnumerable<Category>> GetAsync();
     }
 }

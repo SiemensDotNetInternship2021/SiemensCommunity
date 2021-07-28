@@ -20,6 +20,12 @@ namespace Service.Implementations
             _categoryRepository = categoryRepository;
         }
 
+        public async Task<Category> AddAsync(Category category)
+        {
+            var returnedCategory = await _categoryRepository.AddAsync(_categoryAdapter.Adapt(category));
+            return _categoryAdapter.Adapt(returnedCategory);
+        }
+
         public async Task<IEnumerable<Category>> GetAsync()
         {
             var returnedCategories = await _categoryRepository.GetAsync();

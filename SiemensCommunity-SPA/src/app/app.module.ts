@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgxStarRatingModule } from 'ngx-star-rating';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxPaginationModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgxStarRatingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

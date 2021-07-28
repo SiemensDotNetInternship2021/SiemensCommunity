@@ -17,7 +17,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit() 
   {
-    this.http.get("http://localhost:52718/api/Product/get").subscribe(response => {
+    this.http.get("http://localhost:52718/api/Product/getProducts").subscribe(response => {
       this.products = response;
     }, error => {
       console.log(error);

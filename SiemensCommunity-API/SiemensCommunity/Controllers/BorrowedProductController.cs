@@ -15,10 +15,17 @@ namespace SiemensCommunity.Controllers
             _borrowedProductService = borrowedProductService;
         }
 
-        [HttpGet("get")]
+        [HttpGet("getBorrowedProducts")]
         public async Task<IActionResult> Get()
         {
             var borrowedProductList = await _borrowedProductService.GetAsync();
+            return Ok(borrowedProductList);
+        }
+
+        [HttpGet("getBorrowedProductsByCategory")]
+        public async Task<IActionResult> GetBorrowedProductsByCategory(int categoryId)
+        {
+            var borrowedProductList = await _borrowedProductService.GetByCategoryIdAsync(categoryId);
             return Ok(borrowedProductList);
         }
     }

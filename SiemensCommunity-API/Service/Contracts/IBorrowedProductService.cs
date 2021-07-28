@@ -7,5 +7,6 @@ namespace Service.Contracts
     public interface IBorrowedProductService
     {
         public Task<IEnumerable<BorrowedProduct>> GetAsync();
+        public Task<IEnumerable<BorrowedProduct>> GetByCategoryIdAsync(int categoryId);
     }
 }

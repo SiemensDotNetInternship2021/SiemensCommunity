@@ -76,7 +76,6 @@ namespace Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-
                     b.Property<string>("StartDate")
                         .HasColumnType("nvarchar(max)");
 

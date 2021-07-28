@@ -12,6 +12,10 @@ export class BorrowedItemsServiceService {
   constructor(private http: HttpClient) { }
 
   getBorrowedProducts() {
-    return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/get')
+    return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProducts')
   } 
+
+  getBorrowedProductsByCategoryId(category: number) {
+    return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProductsByCategory?categoryId=' + category);
+  }
 }

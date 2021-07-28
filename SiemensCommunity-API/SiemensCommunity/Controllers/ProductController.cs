@@ -25,7 +25,7 @@ namespace SiemensCommunity.Controllers
             _productService = productService;
         }
 
-        [HttpPost]
+        [HttpPost("addProduct")]
         public async Task<IActionResult> Add([FromBody]Product product)
         {
             if (!(ModelState.IsValid))
@@ -61,7 +61,7 @@ namespace SiemensCommunity.Controllers
             }
         }
 
-        [HttpGet("get")]
+        [HttpGet("getProducts")]
         public async Task<IActionResult> Get()
         {
             var productList = await _productService.GetAsync();

@@ -2,15 +2,14 @@
 <div class="container h-100">
 
     <div class="row justify-content-center align-items-center">
-
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Select a category
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a *ngFor = "let category of categories" class="dropdown-item" href="#">{{category.name}}</a></li> 
-        </ul>
-      </div>
+    
+      <div class="col-md-3">
+        <select class="form-control custom-select" [(ngModel)]="selectedCategory" (change)="getSelectedCategory()">
+          <option class="option-display" selected="selected" value=0 hidden>Select a category</option>
+          <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+        </select> 
+       </div>
+     
 
       <section class="example-section">
         <mat-checkbox class="example-margin">Check me!</mat-checkbox>
@@ -21,6 +20,7 @@
         currentPage: page
       }" class="col-md-3">
           <div class="card" style="width: 18rem;">
+
               <img src="assets/unnamed.png" class="card-img-top" >
               <div class="card-body">
                 <h5 class="card-title">Object Name</h5>
@@ -33,6 +33,14 @@
               <div class="card-body">
                 <button class="btn btn-primary">Give Back</button>
               </div>
+
+              <div class="cont">
+                <div class="stars">
+                  <ngx-star-rating [(ngModel)]="rating" [id]="'rating'" ></ngx-star-rating >
+                </div>
+                <div>Rating: {{ rating }}</div>
+              </div>
+
           </div>
       </div>
 

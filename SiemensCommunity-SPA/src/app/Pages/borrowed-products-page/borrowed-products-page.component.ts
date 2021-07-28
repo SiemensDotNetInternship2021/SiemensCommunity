@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IBorrowedProducts } from 'src/app/Models/IBorrowedProducts';
 import { ICategory } from 'src/app/Models/ICategory';
+import { IProducts } from 'src/app/Models/IProducts';
 import { BorrowedItemsServiceService } from 'src/app/Services/borrowed-items-service/borrowed-items-service.service';
 import { CategoriesService } from 'src/app/Services/categories-service/categories.service';
+import { ProductsService } from 'src/app/Services/products-service/products.service';
 
 
 @Component({
@@ -16,16 +18,23 @@ export class BorrowedProductsPageComponent implements OnInit {
   categories: ICategory[] = [];
   totalLength:any;
   page:number = 1;
+  selectedCategory: number = 0;
+  categoryId: number = 0;
+  products: IProducts[] = [];
+  rating: number = 0;
 
   constructor(public borrowedProductsService: BorrowedItemsServiceService,
-              public categoriesService: CategoriesService) {
+              public categoriesService: CategoriesService,
+              public productsService: ProductsService) {
     this.borrowedProducts = [];
     this.categories = [];
+    this.products = [];
    }
 
   ngOnInit(): void {
     this.getBorrowedProducts();
     this.getCategories();
+    this.getProducts();
   }
 
   getBorrowedProducts(){
@@ -36,9 +45,27 @@ export class BorrowedProductsPageComponent implements OnInit {
       }))
   }
 
+  getProducts(){
+    this.productsService.getProducts().subscribe((prods) => {
+      this.products = prods;
+    })
+  }
+
+  getSelectedCategory(){
+    this.categoryId = this.selectedCategory;
+    this.getBorrowedProductsByCategoryId();
+  }
+
   getCategories(){
     this.categoriesService.getCategories().subscribe((category) => {
-      category.forEach(value => this.categories.push(value));
+      //category.forEach(value => this.categories.push(value));
+      this.categories = category;
+    })
+  }
+
+  getBorrowedProductsByCategoryId(){
+    this.borrowedProductsService.getBorrowedProductsByCategoryId(this.categoryId).subscribe((prodsByCateg) => {
+      this.borrowedProducts = prodsByCateg;
     })
   }
 
