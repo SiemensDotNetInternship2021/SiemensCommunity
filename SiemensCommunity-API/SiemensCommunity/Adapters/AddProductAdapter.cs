@@ -25,7 +25,7 @@ namespace SiemensCommunity.Adapters
 
         public Service.Models.AddProduct Adapt(AddProduct product)
         {
-            return _addProductAdapter.Map<AddProduct, Service.Models.AddProduct>(product);
+        return _addProductAdapter.Map<AddProduct, Service.Models.AddProduct>(product);
         }
 
         public AddProduct Adapt(Service.Models.AddProduct product)

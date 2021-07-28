@@ -13,6 +13,9 @@ using Microsoft.Extensions.Options;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using CloudinaryDotNet;
+using SiemensCommunity;
+using System.IO;
+using System.Threading;
 
 namespace Service.Tests
 {
@@ -21,38 +24,15 @@ namespace Service.Tests
         private PhotoService photoService;
         private Mock<IPhotoService> photoServiceMock;
         private Mock<IPhotoRepository> photoRepository = new Mock<IPhotoRepository>();
-        Account cloudinaryMock = new Account { 
-
-        };
         Mock<ImageUploadResult> uploadResult = new Mock<ImageUploadResult>();
-        Mock<IFormFile> testFile = new Mock<IFormFile>();
-             
-/*        private List<Data.Models.Photo> dataPhotos = new List<Data.Models.Photo> {
-            new Data.Models.Photo { Id = 1, Url = "", PublicId = "", IsMain = false },
-            new Data.Models.Photo { Id = 2, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false },
-            new Data.Models.Photo { Id = 3, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false }
-        };
-
-        private List<Photo> photos = new List<Photo> {
-                new Photo { Id = 1, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false },
-                new Photo { Id = 2, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false },
-                new Photo { Id = 3, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false }
-        };*/
+        IOptions<Service.Helpers.CloudinaryConfiguration> options = Options.Create(new Helpers.CloudinaryConfiguration() { CloudName = "db4zulf3p", ApiKey = "571223714477617", ApiSecret = "VxOGPDY7nfF_C0T_kllq824BkDY" });
 
         [SetUp]
         public void SetUp()
         {
             photoServiceMock = new Mock<IPhotoService>(MockBehavior.Strict);
+            photoService = new PhotoService(options);
         }
 
-        [Test]
-        public async Task UploadPhohoAsync_UploadPhoto()
-        {
-            photoServiceMock.Setup(p => p.UploadPhohoAsync(testFile.Object)).Returns(Task.FromResult(uploadResult.Object));
-
-            var result = await photoService.UploadPhohoAsync(testFile.Object);
-
-            Assert.IsNull(result.Error);
-        }
     }
 }

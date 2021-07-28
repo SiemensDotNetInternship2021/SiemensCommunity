@@ -33,10 +33,10 @@ namespace Service.Implementations
 
         public async Task<Product> AddAsync(AddProduct addProduct)
         {
-            var result = await _photoService.UploadPhohoAsync(addProduct.File);
-            if (result.Error != null)
+            var result = await _photoService.UploadPhotoAsync(addProduct.File);
+            if (result == null || result.Error != null)
             {
-                //return error
+                throw new NotImplementedException();
             }
             var image = new Photo
             {
@@ -78,7 +78,7 @@ namespace Service.Implementations
             var oldPhotoId = photoInDb.Id;
             if (product.File != null)
             {
-                var result = await _photoService.UploadPhohoAsync(product.File);
+                var result = await _photoService.UploadPhotoAsync(product.File);
                 if (result.Error != null)
                 {
                     //return error

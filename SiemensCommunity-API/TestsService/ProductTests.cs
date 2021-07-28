@@ -1,11 +1,14 @@
 ﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Data.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using Service.Contracts;
 using Service.Implementations;
 using Service.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,9 +21,13 @@ namespace Service.Tests
         private ProductService productService;
         private Mock<IProductService> productServiceMock;
         private Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
+
         private Mock<IPhotoRepository> photoRepositoryMock = new Mock<IPhotoRepository>();
         private Mock<IPhotoService> photoServiceMock = new Mock<IPhotoService>();
         private PhotoService photoService;
+
+        Mock<IFormFile> testFile = new Mock<IFormFile>();
+
         private List<Data.Models.Product> dataProducts = new List<Data.Models.Product> {
             new Data.Models.Product { Id = 1, Name = "Category 1" },
             new Data.Models.Product {Id =2, Name = "Category 2"}
@@ -45,8 +52,9 @@ namespace Service.Tests
         }
 
         [Test]
-        public async Task AddProduct_ShouldAddProduct()
+        public async Task AddProduct_ShouldReturnException()
         {
+            var testPhoto = new Data.Models.Photo { IsMain = false, PublicId = Guid.NewGuid().ToString(), Url = Guid.NewGuid().ToString() };
             var productData = new Data.Models.Product
             {
                 Id = 0,
@@ -57,24 +65,18 @@ namespace Service.Tests
                 Details = "Some details",
                 UserId = 1
             };
-            var productAdd = new AddProduct
-            {
-                Id = 0,
-                Name = "Product",
-                CategoryId = 1,
-                SubCategoryId = 1,
-                Details = "Some details",
-                UserId = 1,
-                ImageURL = "some url"
-            };
+            var productAdd = new AddProduct{ Id = 0,Name = "Product",CategoryId = 1,SubCategoryId = 1,Details = "Some details",UserId = 1, ImageURL = "some url" };
+            photoServiceMock.Setup(p => p.UploadPhotoAsync(testFile.Object)).ReturnsAsync(new Mock<ImageUploadResult>().Object);
             productRepository.Setup(c => c.AddAsync(productData)).Returns(Task.FromResult(productData));
+            photoRepositoryMock.Setup(p => p.AddAsync(testPhoto)).Returns(Task.FromResult(testPhoto));
 
-
-            var result = await productService.AddAsync(productAdd);
-
-            Assert.AreEqual(productAdd.Id, productAdd.Id);
+            try
+            {
+                await productService.AddAsync(productAdd);
+            }catch (NotImplementedException)
+            {
+                Assert.Pass();
+            }
         }
-
-
     }
 }
