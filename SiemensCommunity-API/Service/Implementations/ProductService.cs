@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Common;
 using Data.Contracts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
@@ -23,19 +25,24 @@ namespace Service.Implementations
         private readonly PhotoAdapter _photoAdapter = new PhotoAdapter();
         private readonly ProductFormAdapter _productFormDTOAdapter = new ProductFormAdapter();
         private readonly UpdateProductAdapter _updateProductAdapter = new UpdateProductAdapter();
+        private readonly ILogger _logger;
 
-        public ProductService(IProductRepository productRepository, IPhotoService photoService, IPhotoRepository photoRepository)
+        public ProductService(IProductRepository productRepository, IPhotoService photoService, IPhotoRepository photoRepository, ILoggerFactory logger)
         {
             _productRepository = productRepository;
             _photoService = photoService;
             _photoRepository = photoRepository;
+            _logger = logger.CreateLogger("ProductService");
         }
 
         public async Task<Product> AddAsync(AddProduct addProduct)
         {
+            Data.Models.Product returnedProduct= new Data.Models.Product();
+
             var result = await _photoService.UploadPhotoAsync(addProduct.File);
             if (result == null || result.Error != null)
             {
+                _logger.LogError(MyLogEvents.ErrorUploadItem, "Error uploading photo with errors " + result.Error);
                 throw new NotImplementedException();
             }
             var image = new Photo
@@ -44,30 +51,62 @@ namespace Service.Implementations
                 PublicId = result.PublicId,
                 IsMain = false
             };
+            try
+            {
+                var photoInDb = await _photoRepository.AddAsync(_photoAdapter.Adapt(image));
+                var adaptedProduct = _productAdapter.AdaptAddProductToProduct(addProduct);
+                adaptedProduct.Photo = photoInDb;
+                adaptedProduct.PhotoId = photoInDb.Id;
+                returnedProduct = await _productRepository.AddAsync(adaptedProduct);
+                _logger.LogInformation(MyLogEvents.InsertItem, "Product successfully added");
+            } catch (Exception ex)
+            {
+                _logger.LogError(MyLogEvents.InsertItem, "Error while inserting product wiht message " + ex.Message);
+            }
 
-            var photoInDb = await _photoRepository.AddAsync(_photoAdapter.Adapt(image));
-            var adaptedProduct = _productAdapter.AdaptAddProductToProduct(addProduct);
-            adaptedProduct.Photo = photoInDb;
-            adaptedProduct.PhotoId = photoInDb.Id;
-
-            var returnedProduct = await _productRepository.AddAsync(adaptedProduct);
             return _productAdapter.Adapt(returnedProduct);
         }
 
         public async Task<bool> DeleteByIdAsync(int id)
         {
-            return await _productRepository.DeleteByIdAsync(id);
+            bool result = false;
+            try
+            {
+                result = await _productRepository.DeleteByIdAsync(id);
+                _logger.LogInformation(MyLogEvents.InsertItem, "Successful insertion of product with id={id}", id);
+            }catch(Exception ex)
+            {
+                _logger.LogError(MyLogEvents.InsertItem, "Error while deleting item with id={id}, with error {eroror}", id, ex.Message);
+            }
+            return result;
         }
 
         public async Task<IEnumerable<Product>> GetAsync()
         {
-            var returnedProducts = await _productRepository.GetAsync();
+            IEnumerable<Data.Models.Product> returnedProducts = new List<Data.Models.Product>();
+            try
+            {
+                returnedProducts = await _productRepository.GetAsync();
+                _logger.LogInformation(MyLogEvents.ListItems, "Got {count} products", returnedProducts.Count());
+            }catch(Exception ex)
+            {
+                _logger.LogError(MyLogEvents.ListItems, "Error while getting product with message " + ex.Message);
+            }
             return _productAdapter.AdaptList(returnedProducts);
         }
 
         public async Task<ProductFormDTO> GetByIdAsync(int id)
         {
-            var returnedProduct = await _productRepository.FindById(id);
+            Data.Models.ProductFormDTO returnedProduct = new Data.Models.ProductFormDTO();
+            try
+            {
+                returnedProduct = await _productRepository.FindById(id);
+                _logger.LogInformation(MyLogEvents.GetItem, "Getting item with id={id}", id);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(MyLogEvents.GetItem, "Error while getting item with id={id}, with error {error}", id, ex.Message);
+            }
             return _productFormDTOAdapter.Adapt(returnedProduct);
         }
 
@@ -81,7 +120,7 @@ namespace Service.Implementations
                 var result = await _photoService.UploadPhotoAsync(product.File);
                 if (result.Error != null)
                 {
-                    //return error
+                    _logger.LogError(MyLogEvents.UploadItem, "Error while uploading photo: {error}", result.Error);
                 }
                 image.Url = result.SecureUrl.AbsoluteUri;
                 image.PublicId = result.PublicId;

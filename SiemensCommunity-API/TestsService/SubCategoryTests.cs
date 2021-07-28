@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Service.Contracts;
-using Service.Implementations;
-using Data.Contracts;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Data.Contracts;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using Service.Contracts;
+using Service.Implementations;
 using Service.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Service.Tests
 {
@@ -31,7 +30,7 @@ namespace Service.Tests
         public void SetUp()
         {
             subCategoryServiceMock = new Mock<ISubCategoryService>(MockBehavior.Strict);
-            subCategoryService = new SubCategoryService(subCategoryRepository.Object);
+            subCategoryService = new SubCategoryService(subCategoryRepository.Object, new Mock<ILoggerFactory>().Object);
         }
 
         [Test]

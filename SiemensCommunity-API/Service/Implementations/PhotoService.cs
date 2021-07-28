@@ -1,6 +1,8 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Common;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Service.Contracts;
 using Service.Helpers;
@@ -15,8 +17,10 @@ namespace Service.Implementations
     public class PhotoService : IPhotoService
     {
         private readonly Cloudinary _cloudinary;
-        public PhotoService(IOptions<Service.Helpers.CloudinaryConfiguration> config)
+        private readonly ILogger _logger;
+        public PhotoService(IOptions<Service.Helpers.CloudinaryConfiguration> config, ILoggerFactory logger)
         {
+            _logger = logger.CreateLogger("PhotoService");
             var acc = new Account(
                 config.Value.CloudName,  
                 config.Value.ApiKey, 
@@ -39,8 +43,14 @@ namespace Service.Implementations
                                                 .Crop("fill")
                                                 .Gravity("face")
                 };
-
-                uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                try
+                {
+                    uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                    _logger.LogInformation(MyLogEvents.UpdateItem, "Image upload.");
+                }catch(Exception ex)
+                {
+                    _logger.LogError(MyLogEvents.ErrorUploadItem, "Error upload image with message " + ex.Message);
+                }
             }
             return uploadResult;
         }

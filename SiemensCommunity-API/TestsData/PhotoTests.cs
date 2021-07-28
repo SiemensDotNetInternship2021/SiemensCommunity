@@ -20,7 +20,6 @@ namespace Data.Tests
         private PhotoRepository repository;
         //mock
         private Mock<IPhotoRepository> photoRepositoryMock;
-        private Mock<DbSet<Photo>> mockPhotoDbSet;
         private ProjectDbContext dbContext;
         private string photoUrl = Guid.NewGuid().ToString();
         private string publicId = Guid.NewGuid().ToString();

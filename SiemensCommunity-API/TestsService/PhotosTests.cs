@@ -16,6 +16,7 @@ using CloudinaryDotNet;
 using SiemensCommunity;
 using System.IO;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 
 namespace Service.Tests
 {
@@ -31,7 +32,7 @@ namespace Service.Tests
         public void SetUp()
         {
             photoServiceMock = new Mock<IPhotoService>(MockBehavior.Strict);
-            photoService = new PhotoService(options);
+            photoService = new PhotoService(options, new Mock<ILoggerFactory>().Object);
         }
 
     }

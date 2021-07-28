@@ -2,6 +2,7 @@
 using CloudinaryDotNet.Actions;
 using Data.Contracts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -24,7 +25,6 @@ namespace Service.Tests
 
         private Mock<IPhotoRepository> photoRepositoryMock = new Mock<IPhotoRepository>();
         private Mock<IPhotoService> photoServiceMock = new Mock<IPhotoService>();
-        private PhotoService photoService;
 
         Mock<IFormFile> testFile = new Mock<IFormFile>();
 
@@ -48,7 +48,7 @@ namespace Service.Tests
         {
             cloudinary = new Cloudinary(new Account( CloudName, ApiKey, ApiSecret));
             productServiceMock = new Mock<IProductService>(MockBehavior.Strict);
-            productService = new ProductService(productRepository.Object, photoServiceMock.Object, photoRepositoryMock.Object);
+            productService = new ProductService(productRepository.Object, photoServiceMock.Object, photoRepositoryMock.Object, new Mock<ILoggerFactory>().Object);
         }
 
         [Test]

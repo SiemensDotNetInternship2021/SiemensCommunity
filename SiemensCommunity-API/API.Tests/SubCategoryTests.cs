@@ -21,7 +21,6 @@ namespace API.Tests
         private Mock<ISubCategoryService> subCategoryServiceMock;
         SubCategoryController subCategoryController;
         private HttpClient client;
-        string baseUrl = "https://localhost:52718/api";
 
         private List<Service.Models.SubCategory> dataSubCategories = new List<Service.Models.SubCategory>{
             new Service.Models.SubCategory (){Id = 1, Name = "Subcategory 1", CategoryId = 1},

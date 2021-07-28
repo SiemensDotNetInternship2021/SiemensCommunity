@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Moq;
 using Service.Contracts;
 using NUnit.Framework;
+using Microsoft.Extensions.Logging;
 
 namespace Service.Tests
 {
@@ -31,7 +32,7 @@ namespace Service.Tests
         public void SetUp()
         {
             propertyServiceMock = new Mock<IPropertyService>(MockBehavior.Strict);
-            propertyService = new PropertyService(propertyRepositoryMock.Object);
+            propertyService = new PropertyService(propertyRepositoryMock.Object, new Mock<ILoggerFactory>().Object);
         }
 
 

@@ -1,4 +1,6 @@
-﻿using Data.Contracts;
+﻿using Common;
+using Data.Contracts;
+using Microsoft.Extensions.Logging;
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
@@ -14,15 +16,26 @@ namespace Service.Implementations
     {
         private readonly IPropertyRepository _propertyRepository;
         private readonly PropertyAdapter _propertyAdapter = new PropertyAdapter();
+        private readonly ILogger _logger;
 
-        public PropertyService(IPropertyRepository propertyRepository)
+        public PropertyService(IPropertyRepository propertyRepository, ILoggerFactory logger)
         {
             _propertyRepository = propertyRepository;
+            _logger = logger.CreateLogger("PropertyService");
         }
         public async Task<IEnumerable<Property>> GetCategoryProperties(int categoryId)
         {
-            var properties = await _propertyRepository.GetCategoryProperties(categoryId);
-            return _propertyAdapter.AdaptList(properties);
+            IEnumerable<Property> adaptedProperties = new List<Property>();
+            try
+            {
+                var returnedProperties = await _propertyRepository.GetCategoryProperties(categoryId);
+                adaptedProperties = _propertyAdapter.AdaptList(returnedProperties);
+                _logger.LogInformation(MyLogEvents.ListItems, "Got {count} properties", adaptedProperties.Count());
+            }catch(Exception ex)
+            {
+                _logger.LogError(MyLogEvents.ListItems, "Error while getting list of properties: {error}", ex.Message);
+            }
+            return adaptedProperties;
         }
     }
 }

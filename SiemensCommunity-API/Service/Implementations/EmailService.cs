@@ -9,15 +9,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Logging;
+using Common;
 
 namespace Service.Implementations
 {
     public class EmailService : IEmailService
     {
         EmailConfiguration _emailConfiguration = null;
-        public EmailService(IOptions<EmailConfiguration> options)
+        private readonly ILogger _logger;
+        public EmailService(IOptions<EmailConfiguration> options, ILoggerFactory logger)
         {
             _emailConfiguration = options.Value;
+            _logger = logger.CreateLogger("Email service");
         }
 
         public bool SendEmail(EmailData emailData)
@@ -45,11 +49,13 @@ namespace Service.Implementations
                 emailClient.Disconnect(true);
                 emailClient.Dispose();
 
+                _logger.LogInformation(MyLogEvents.EmailSent, "Email sent.");
+
                 return true;
             }
             catch (Exception ex)
             {
-                //Log Exception Details
+                _logger.LogError(MyLogEvents.ErrorEmailSent, "Error sending email" + ex.Message);
                 return false;
             }
         }

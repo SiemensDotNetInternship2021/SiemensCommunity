@@ -1,4 +1,5 @@
 ﻿using Data.Contracts;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using Service.Contracts;
@@ -31,7 +32,7 @@ namespace Service.Tests
         public void SetUp()
         {
             departmentServiceMock = new Mock<IDepartmentService>(MockBehavior.Strict);
-            departmentService = new DepartmentService(departmentRepository.Object);
+            departmentService = new DepartmentService(departmentRepository.Object, new Mock<ILoggerFactory>().Object);
         }
 
         [Test]

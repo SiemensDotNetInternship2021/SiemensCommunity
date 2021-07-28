@@ -16,7 +16,6 @@ namespace Data.Tests
     {
         private ProductRepository repository;
         private Mock<IProductRepository> productRepositoryMock;
-        private List<Product> products;
         DbContextOptions<ProjectDbContext> options = new DbContextOptionsBuilder<ProjectDbContext>()
                                      .UseInMemoryDatabase(databaseName: "SiemensCommunityTests")
                                      .Options;

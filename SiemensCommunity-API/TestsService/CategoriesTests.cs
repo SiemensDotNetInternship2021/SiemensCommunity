@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Service.Implementations;
 using Moq;
 using Data.Contracts;
 using NUnit.Framework;
+using Microsoft.Extensions.Logging;
 
 namespace Service.Tests
 {
@@ -32,7 +32,7 @@ namespace Service.Tests
         public void SetUp()
         {
             categoryServiceMock = new Mock<ICategoryService>(MockBehavior.Strict);
-            categoryService = new CategoryService(categoryRepository.Object);
+            categoryService = new CategoryService(categoryRepository.Object, new Mock<ILoggerFactory>().Object);
         }
 
         [Test]
