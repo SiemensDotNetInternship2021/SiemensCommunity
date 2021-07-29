@@ -11,6 +11,7 @@ namespace Service.Implementations
     {
         private readonly UserAdapter _userAdapter = new UserAdapter();
         private readonly ResetPasswordAdapter _resetPasswordAdapter = new ResetPasswordAdapter();
+        private readonly TokenDetailsAdapter _tokenDetailsAdapter = new TokenDetailsAdapter();
 
         private readonly IAccountRepository _accountReposistory;
         private readonly IEmailService _emailService;
@@ -26,10 +27,10 @@ namespace Service.Implementations
             return returnedUserId;
         }
 
-        public async Task<int> VerifyLoginAsync(UserLoginCredentials user)
+        public async Task<TokenDetails> VerifyLoginAsync(UserLoginCredentials user)
         {
-            var returnedUserId = await _accountReposistory.VerifyLoginAsync(_userAdapter.AdaptFromUserData(user));
-            return returnedUserId;
+            var returnedTokenDetails = await _accountReposistory.VerifyLoginAsync(_userAdapter.AdaptFromUserData(user));
+            return _tokenDetailsAdapter.Adapt(returnedTokenDetails);
         }
 
         public async Task<bool> ForgotPasswordAsync(string email)

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class OptionDetailsDTO
+    public class TokenDetails
     {
-        public int SelectedCategory { get; set; }
+        public int UserId { get; set; }
 
-        public int SelectedOption { get; set; }
+        public string UserRole { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Service.Implementations
         private readonly IProductRepository _productRepository;
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
         private readonly ProductDTOAdapter _productDTOAdapter = new ProductDTOAdapter();
-        private readonly OptionDetailsDTOAdapter _optionDetailsDTOAdapter = new OptionDetailsDTOAdapter();
+        private readonly TokenDetailsAdapter _optionDetailsDTOAdapter = new TokenDetailsAdapter();
 
         public ProductService(IProductRepository productRepository)
         {

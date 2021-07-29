@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Service.Contracts;
@@ -57,15 +58,17 @@ namespace SiemensCommunity.Controllers
             }
             else
             {
-                var returnedUserId = await _accountService.VerifyLoginAsync(_userAdapter.Adapt(userLoginCredentials));
+                var returnedTokenDetails = await _accountService.VerifyLoginAsync(_userAdapter.Adapt(userLoginCredentials));
 
-                if (returnedUserId != 0)
+                if (returnedTokenDetails != null)
                 {
+                    IdentityOptions _identityOptions = new IdentityOptions();
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
                         Subject = new ClaimsIdentity(new Claim[]
                     {
-                          new Claim("UserId", returnedUserId.ToString()),
+                          new Claim("UserId", returnedTokenDetails.UserId.ToString()),
+                          new Claim(_identityOptions.ClaimsIdentity.RoleClaimType, returnedTokenDetails.UserRole)
                     }),
                         Expires = DateTime.UtcNow.AddMinutes(60),
                     };

@@ -3,6 +3,7 @@ using Data.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Data.Implementations
@@ -23,22 +24,29 @@ namespace Data.Implementations
             throw new NotImplementedException();
         }
 
-        public async Task<int> VerifyLoginAsync(UserLoginCredentials user)
+        public async Task<TokenDetails> VerifyLoginAsync(UserLoginCredentials user)
         {
             var userDb = await _userManager.FindByEmailAsync(user.Email);
 
             if (user != null)
             {
                 var verifyPassword = await _signInManager.CheckPasswordSignInAsync(userDb, user.Password, user.IsPersistent);
-                if (verifyPassword.Succeeded) 
+                if (verifyPassword.Succeeded)
                 {
-                    return userDb.Id;
+                    var role = await _userManager.GetRolesAsync(userDb);
+
+                    var tokenDetails = new TokenDetails
+                    {
+                        UserId = userDb.Id,
+                        UserRole = role.FirstOrDefault(),
+                    };
+                    return tokenDetails;
                 }
                 else
-                    return 0;
+                    return null;
             }
             else
-                return 0;
+                return null;
         }
 
         public async Task<int> RegisterAsync(User user, string password)

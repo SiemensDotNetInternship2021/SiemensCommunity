@@ -14,7 +14,7 @@ namespace SiemensCommunity.Controllers
         private readonly IProductService _productService;
 
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
-        private readonly OptionDetailsDTOAdapter _optionDetailsDTOAdapter = new OptionDetailsDTOAdapter();
+        private readonly TokenDetailsAdapter _optionDetailsDTOAdapter = new TokenDetailsAdapter();
 
         public ProductController(IProductService productService)
         {
