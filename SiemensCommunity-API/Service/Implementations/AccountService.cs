@@ -1,14 +1,9 @@
 ﻿using Data.Contracts;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Service.Implementations
 {
@@ -16,6 +11,7 @@ namespace Service.Implementations
     {
         private readonly UserAdapter _userAdapter = new UserAdapter();
         private readonly ResetPasswordAdapter _resetPasswordAdapter = new ResetPasswordAdapter();
+        private readonly TokenDetailsAdapter _tokenDetailsAdapter = new TokenDetailsAdapter();
 
         private readonly IAccountRepository _accountReposistory;
         private readonly IEmailService _emailService;
@@ -31,10 +27,10 @@ namespace Service.Implementations
             return returnedUserId;
         }
 
-        public async Task<bool> VerifyLoginAsync(UserLoginCredentials user)
+        public async Task<TokenDetails> VerifyLoginAsync(UserLoginCredentials user)
         {
-            var returned = await _accountReposistory.VerifyLoginAsync(_userAdapter.AdaptFromUserData(user));
-            return returned;
+            var returnedTokenDetails = await _accountReposistory.VerifyLoginAsync(_userAdapter.AdaptFromUserData(user));
+            return _tokenDetailsAdapter.Adapt(returnedTokenDetails);
         }
 
         public async Task<bool> ForgotPasswordAsync(string email)

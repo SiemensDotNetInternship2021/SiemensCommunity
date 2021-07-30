@@ -19,10 +19,10 @@ namespace Data.Models
         [ForeignKey("Product")]
         public int ProductId { get; set; }
 
-        public int Rating { get; set; }
+        public int Rate { get; set; }
 
-        public User MyProperty { get; set; }
+        public  User User { get; set; }
 
-        public Product Product { get; set; }
+        public  Product Product { get; set; }
     }
 }

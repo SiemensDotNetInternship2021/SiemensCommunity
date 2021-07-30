@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Service.Contracts;
 using SiemensCommunity.Adapters;
 using SiemensCommunity.Models;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SiemensCommunity.Controllers
@@ -15,6 +21,7 @@ namespace SiemensCommunity.Controllers
         private readonly IAccountService _accountService;
         private readonly UserAdapter _userAdapter = new UserAdapter();
         private readonly ResetPasswordAdapter _resetPasswordAdapter = new ResetPasswordAdapter();
+      //  private readonly ApplicationSettings _applicationSettings;
 
         public AccountController(IAccountService accountService)
         {
@@ -51,10 +58,25 @@ namespace SiemensCommunity.Controllers
             }
             else
             {
-                var responseLogin =await _accountService.VerifyLoginAsync(_userAdapter.Adapt(userLoginCredentials));
+                var returnedTokenDetails = await _accountService.VerifyLoginAsync(_userAdapter.Adapt(userLoginCredentials));
 
-                if (responseLogin)
-                    return Ok();
+                if (returnedTokenDetails != null)
+                {
+                    IdentityOptions _identityOptions = new IdentityOptions();
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new Claim[]
+                    {
+                          new Claim("UserId", returnedTokenDetails.UserId.ToString()),
+                          new Claim(_identityOptions.ClaimsIdentity.RoleClaimType, returnedTokenDetails.UserRole)
+                    }),
+                        Expires = DateTime.UtcNow.AddMinutes(60),
+                    };
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                    var token = tokenHandler.WriteToken(securityToken);
+                    return Ok( new { token });
+                }
                 else return BadRequest();
             }
         }

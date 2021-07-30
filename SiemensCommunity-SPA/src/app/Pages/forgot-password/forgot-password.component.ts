@@ -16,11 +16,14 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.service.loginModel.reset();
   }
 
   recoverPassword() {
     this.service.recoverPassword().subscribe((res : any) => {
       this.router.navigateByUrl('/login');
+      this.toastr.success("An email has been sent to your address");
+      this.service.loginModel.reset();
     },
     err=>{
       this.toastr.error("Invalid email");

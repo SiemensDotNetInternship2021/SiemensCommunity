@@ -9,6 +9,6 @@ namespace Data.Contracts
 {
     public interface IProductRatingRepository : IGenericRepository<ProductRating>
     {
-
+        public Task<ProductRating> AddWithCheck(ProductRating productDetails);
     }
 }

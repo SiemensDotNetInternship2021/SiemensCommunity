@@ -1,11 +1,10 @@
 ﻿using Data.Contracts;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Data.Implementations
 {
@@ -25,26 +24,29 @@ namespace Data.Implementations
             throw new NotImplementedException();
         }
 
-        public async Task<bool> VerifyLoginAsync(UserLoginCredentials user)
+        public async Task<TokenDetails> VerifyLoginAsync(UserLoginCredentials user)
         {
             var userDb = await _userManager.FindByEmailAsync(user.Email);
 
             if (user != null)
             {
                 var verifyPassword = await _signInManager.CheckPasswordSignInAsync(userDb, user.Password, user.IsPersistent);
-                if (verifyPassword.Succeeded) 
+                if (verifyPassword.Succeeded)
                 {
-                    //await _signInManager.SignInAsync(userDb, user.IsPersistent);
+                    var role = await _userManager.GetRolesAsync(userDb);
 
-                    //token configuration? what to send with the token.
-                    return true;
+                    var tokenDetails = new TokenDetails
+                    {
+                        UserId = userDb.Id,
+                        UserRole = role.FirstOrDefault(),
+                    };
+                    return tokenDetails;
                 }
                 else
-                    //to do: return exception
-                    return false;
+                    return null;
             }
             else
-                return false;
+                return null;
         }
 
         public async Task<int> RegisterAsync(User user, string password)

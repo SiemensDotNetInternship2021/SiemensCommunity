@@ -1,12 +1,8 @@
-﻿using AutoMapper;
-using Data.Contracts;
+﻿using Data.Contracts;
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Service.Implementations
@@ -15,6 +11,8 @@ namespace Service.Implementations
     {
         private readonly IProductRepository _productRepository;
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
+        private readonly ProductDTOAdapter _productDTOAdapter = new ProductDTOAdapter();
+        private readonly TokenDetailsAdapter _optionDetailsDTOAdapter = new TokenDetailsAdapter();
 
         public ProductService(IProductRepository productRepository)
         {
@@ -23,7 +21,7 @@ namespace Service.Implementations
 
         public async Task<Product> AddAsync(Product product)
         {
-            var returnedProduct =  await _productRepository.AddAsync(_productAdapter.Adapt(product));
+            var returnedProduct = await _productRepository.AddAsync(_productAdapter.Adapt(product));
             return _productAdapter.Adapt(returnedProduct);
         }
 
@@ -45,5 +43,12 @@ namespace Service.Implementations
 
             return _productAdapter.AdaptList(filtered);
         }*/
+
+        public async Task<List<ProductDTO>> GetFiltredProducts(int selectedCategory, int selectedOption)
+        {
+            var returnedProducts = await _productRepository.GetFiltredProducts(selectedCategory, selectedOption);
+            return _productDTOAdapter.AdaptList(returnedProducts);
+        }
+
     }
 }

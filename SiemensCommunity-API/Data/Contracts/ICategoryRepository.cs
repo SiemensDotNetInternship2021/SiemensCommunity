@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Data.Contracts
 {
     public interface ICategoryRepository : IGenericRepository<Category>
-    { 
-
+    {
+        
     }
 }

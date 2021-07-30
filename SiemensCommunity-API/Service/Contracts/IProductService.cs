@@ -1,8 +1,5 @@
 ﻿using Service.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Service.Contracts
@@ -12,5 +9,6 @@ namespace Service.Contracts
         public Task<Product> AddAsync(Product product);
         public Task<bool> DeleteByIdAsync(int id);
         public Task<IEnumerable<Product>> GetAsync();
+        public Task<List<ProductDTO>> GetFiltredProducts(int selectedCategory, int selectedOption);
     }
 }

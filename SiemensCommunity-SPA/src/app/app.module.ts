@@ -18,6 +18,11 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminPanelComponent } from './Pages/admin-panel/admin-panel.component';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 
@@ -34,7 +39,8 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
     BorrowedProductsPageComponent,
     LentProductsPageComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +52,10 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxPaginationModule,
+    MatDialogModule,
+    MatIconModule,
+    NgbModule,
+    ToastrModule.forRoot(),
     MatCheckboxModule,
     NgxStarRatingModule
   ],

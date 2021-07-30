@@ -3,6 +3,7 @@ using Data.Contracts;
 using Data.Implementations;
 using Data.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,11 +11,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Service.Contracts;
 using Service.Implementations;
 using Service.Models;
+using SiemensCommunity.Models;
 using System;
+using System.Text;
 
 namespace SiemensCommunity
 {
@@ -31,22 +35,26 @@ namespace SiemensCommunity
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<EmailConfiguration>(Configuration.GetSection("EmailConfiguration"));
+            services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
             services.AddDbContext<ProjectDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            services.AddScoped<IBorrowedProductRepository, BorrowedProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IFavoriteProductRepository, FavoriteProductRepository>();
             services.AddScoped<IProductRatingRepository, ProductRatingRepository>();
+            services.AddScoped<IBorrowedProductRepository, BorrowedProductRepository>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
-            services.AddScoped<IBorrowedProductService, BorrowedProductService>();
+           
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IFavoriteProductService, FavoriteProductService>();
             services.AddScoped<IProductRatingService, ProductRatingService>();
+            services.AddScoped<IBorrowedProductService, BorrowedProductService>()
 
             services.AddSingleton<ISystemClock, SystemClock>();
 
@@ -68,25 +76,26 @@ namespace SiemensCommunity
                     opt.TokenLifespan = TimeSpan.FromHours(2));
 
             services.AddCors();
-            /* var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
-             services.AddAuthentication(x =>
-             {
-                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-             }).AddJwtBearer(x =>
-             {
-                 x.RequireHttpsMetadata = false;
-                 x.SaveToken = false;
-                 x.TokenValidationParameters = new TokenValidationParameters
-                 {
-                     ValidateIssuerSigningKey = true,
-                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                     ValidateIssuer = false,
-                     ValidateAudience = false,
-                     ClockSkew = TimeSpan.Zero
-                 };
-             });*/
+
+            var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = false;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
 
             services.AddAuthentication();
             services.AddControllers();

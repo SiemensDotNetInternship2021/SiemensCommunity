@@ -22,7 +22,7 @@ export class ResetPasswordComponent implements OnInit {
 
   resetPassword(){
     this.service.resetPassword().subscribe((res: any)=>{
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/login');
     },
     err=>{
       this.toastr.error('Invalid request');

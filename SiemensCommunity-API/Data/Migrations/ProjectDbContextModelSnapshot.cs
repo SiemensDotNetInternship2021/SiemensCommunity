@@ -19,6 +19,21 @@ namespace Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("CategorySubCategory", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId", "SubCategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("CategorySubCategory");
+                });
+
             modelBuilder.Entity("Data.Models.AppRole", b =>
                 {
                     b.Property<int>("Id")
@@ -119,18 +134,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Books"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Decorative objects"
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.Department", b =>
@@ -146,23 +149,28 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "HR"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Marketing"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "IT"
-                        });
+            modelBuilder.Entity("Data.Models.FavoriteProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FavoriteProducts");
                 });
 
             modelBuilder.Entity("Data.Models.Product", b =>
@@ -187,8 +195,8 @@ namespace Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RatingAverage")
-                        .HasColumnType("int");
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
@@ -200,9 +208,12 @@ namespace Data.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("SubCategoryId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
+                });
 
                     b.HasData(
                         new
@@ -211,7 +222,7 @@ namespace Data.Migrations
                             CategoryId = 1,
                             IsAvailable = true,
                             Name = "Book SF",
-                            RatingAverage = 3,
+                            Rating = 3,
                             SubCategoryId = 1,
                             UserId = 2
                         },
@@ -221,7 +232,7 @@ namespace Data.Migrations
                             CategoryId = 1,
                             IsAvailable = true,
                             Name = "Book Poems",
-                            RatingAverage = 3,
+                            Rating = 3,
                             SubCategoryId = 2,
                             UserId = 2
                         },
@@ -231,7 +242,7 @@ namespace Data.Migrations
                             CategoryId = 1,
                             IsAvailable = true,
                             Name = "Book Poems",
-                            RatingAverage = 4,
+                            Rating = 4,
                             SubCategoryId = 2,
                             UserId = 2
                         },
@@ -239,9 +250,9 @@ namespace Data.Migrations
                         {
                             Id = 4,
                             CategoryId = 1,
-                            IsAvailable = false,
+                            IsAvailable = true,
                             Name = "Book SF",
-                            RatingAverage = 5,
+                            Rating = 5,
                             SubCategoryId = 1,
                             UserId = 2
                         },
@@ -251,7 +262,7 @@ namespace Data.Migrations
                             CategoryId = 2,
                             IsAvailable = false,
                             Name = "Decorative Object",
-                            RatingAverage = 5,
+                            Rating = 5,
                             SubCategoryId = 3,
                             UserId = 2
                         },
@@ -260,32 +271,11 @@ namespace Data.Migrations
                             Id = 6,
                             CategoryId = 2,
                             IsAvailable = false,
-                            Name = "Decorative Object 2",
-                            RatingAverage = 5,
-                            SubCategoryId = 5,
-                            UserId = 5
+                            Name = "Decorative Object",
+                            Rating = 5,
+                            SubCategoryId = 3,
+                            UserId = 2
                         });
-                });
-
-            modelBuilder.Entity("Data.Models.ProductRating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductRatings");
                 });
 
             modelBuilder.Entity("Data.Models.SubCategory", b =>
@@ -305,26 +295,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            Name = "SF"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            Name = "Poems"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 2,
-                            Name = "Desk"
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>
@@ -492,6 +462,21 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CategorySubCategory", b =>
+                {
+                    b.HasOne("Data.Models.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.SubCategory", null)
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Data.Models.AppUserRole", b =>
                 {
                     b.HasOne("Data.Models.AppRole", "Role")
@@ -511,19 +496,69 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Models.FavoriteProduct", b =>
+                {
+                    b.HasOne("Data.Models.Product", "Product")
+                        .WithMany("FavoriteProduct")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.User", "User")
+                        .WithMany("FavoriteProduct")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Data.Models.Product", b =>
                 {
-                    b.HasOne("Data.Models.Category", null)
-                        .WithMany("Products")
+                    b.HasOne("Data.Models.Category", "Category")
+                        .WithMany("Product")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Models.User", null)
+                    b.HasOne("Data.Models.SubCategory", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.User", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Models.ProductRating", b =>
+                {
+                    b.HasOne("Data.Models.Product", "Product")
+                        .WithMany("ProductRating")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.User", "User")
+                        .WithMany("ProductRating")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -569,11 +604,22 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Category", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Data.Models.Product", b =>
+                {
+                    b.Navigation("FavoriteProduct");
+
+                    b.Navigation("ProductRating");
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>
                 {
+                    b.Navigation("FavoriteProduct");
+
+                    b.Navigation("ProductRating");
+
                     b.Navigation("Products");
 
                     b.Navigation("UserRoles");
