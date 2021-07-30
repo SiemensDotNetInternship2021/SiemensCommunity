@@ -12,9 +12,8 @@ namespace SiemensCommunity.Models
         //public int UserId { get; set; }
         public string Name { get; set; }
         public bool IsAvailable { get; set; }
-        public int Rating { get; set; }
+        public double RatingAverage { get; set; }
         public string Details { get; set; }
-        //public string Details { get; set; }
         //public User User { get; set; }
     }
 }

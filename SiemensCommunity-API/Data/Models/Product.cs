@@ -18,7 +18,7 @@ namespace Data.Models
         public string Name { get; set; }
         public bool IsAvailable { get; set; }
         public string ImagePath { get; set; }
-        public int Rating { get; set; }
+        public double RatingAverage { get; set; }
         public string Details { get; set; }
     }
 }

@@ -38,6 +38,7 @@ namespace SiemensCommunity
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IBorrowedProductRepository, BorrowedProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductRatingRepository, ProductRatingRepository>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAccountService, AccountService>();
@@ -45,6 +46,7 @@ namespace SiemensCommunity
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IBorrowedProductService, BorrowedProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductRatingService, ProductRatingService>();
 
             services.AddSingleton<ISystemClock, SystemClock>();
 
