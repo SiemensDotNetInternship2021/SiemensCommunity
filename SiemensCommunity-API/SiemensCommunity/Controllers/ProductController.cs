@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using SiemensCommunity.Adapters;
 using SiemensCommunity.Models;
@@ -14,6 +15,9 @@ namespace SiemensCommunity.Controllers
         private readonly IProductService _productService;
 
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
+        private readonly UserAdapter _userAdapter = new UserAdapter();
+        private readonly AddProductAdapter _addProductAdapter = new AddProductAdapter();
+        private readonly UpdateProductAdapter _updateProductAdapter = new UpdateProductAdapter();
         private readonly TokenDetailsAdapter _optionDetailsDTOAdapter = new TokenDetailsAdapter();
 
         public ProductController(IProductService productService)
@@ -21,16 +25,17 @@ namespace SiemensCommunity.Controllers
             _productService = productService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody]Product product)
+        [HttpPost("add")]
+        public async Task<IActionResult> Add([FromForm]AddProduct addProduct)
         {
+
             if (!(ModelState.IsValid))
             {
                 return BadRequest(ModelState);
             }
             else
             {
-                var returnedProduct = await _productService.AddAsync(_productAdapter.Adapt(product));
+                var returnedProduct = await _productService.AddAsync(_addProductAdapter.Adapt(addProduct));
                 if (returnedProduct != null)
                 {
                     return Ok(_productAdapter.Adapt(returnedProduct));
@@ -40,6 +45,35 @@ namespace SiemensCommunity.Controllers
                     return StatusCode((int)HttpStatusCode.InternalServerError);
                 }
             }
+        }
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromForm] UpdateProductDTO addProduct)
+        {
+
+
+            if (!(ModelState.IsValid))
+            {
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                var returnedProduct = await _productService.UpdateAsync(_updateProductAdapter.Adapt(addProduct));
+                if (returnedProduct != null)
+                {
+                    return Ok(_productAdapter.Adapt(returnedProduct));
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError);
+                }
+            }
+        }
+
+        [HttpGet("getproduct")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            var product = await _productService.GetByIdAsync(id);
+            return Ok(product);
         }
 
         [HttpDelete]

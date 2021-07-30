@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20210712111304_SeedDatabase")]
-    partial class SeedDatabase
+    [Migration("20210719052227_AddedPropertiesTable")]
+    partial class AddedPropertiesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,30 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
+            modelBuilder.Entity("Data.Models.BorrowedProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BorrowedProducts");
+                });
+
             modelBuilder.Entity("Data.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -79,18 +103,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Books"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Decorative objects"
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.Department", b =>
@@ -106,23 +118,27 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "HR"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Marketing"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "IT"
-                        });
+            modelBuilder.Entity("Data.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Data.Models.Product", b =>
@@ -138,14 +154,14 @@ namespace Data.Migrations
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PhotoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -160,71 +176,31 @@ namespace Data.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("PhotoId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book SF",
-                            Rating = 3,
-                            SubCategoryId = 1,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book Poems",
-                            Rating = 3,
-                            SubCategoryId = 2,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book Poems",
-                            Rating = 4,
-                            SubCategoryId = 2,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book SF",
-                            Rating = 5,
-                            SubCategoryId = 1,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 2,
-                            IsAvailable = false,
-                            Name = "Decorative Object",
-                            Rating = 5,
-                            SubCategoryId = 3,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 2,
-                            IsAvailable = false,
-                            Name = "Decorative Object",
-                            Rating = 5,
-                            SubCategoryId = 3,
-                            UserId = 2
-                        });
+            modelBuilder.Entity("Data.Models.Property", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Properties");
                 });
 
             modelBuilder.Entity("Data.Models.SubCategory", b =>
@@ -244,26 +220,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            Name = "SF"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            Name = "Poems"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 2,
-                            Name = "Desk"
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>
@@ -458,11 +414,30 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Models.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Models.User", null)
                         .WithMany("Products")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Photo");
+                });
+
+            modelBuilder.Entity("Data.Models.Property", b =>
+                {
+                    b.HasOne("Data.Models.Category", "Category")
+                        .WithMany("Properties")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -509,6 +484,8 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.Category", b =>
                 {
                     b.Navigation("Products");
+
+                    b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>

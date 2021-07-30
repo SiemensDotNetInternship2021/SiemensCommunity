@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddProductComponent } from './Pages/add-product/add-product.component';
 import { BorrowedProductsPageComponent } from './Pages/borrowed-products-page/borrowed-products-page.component';
 import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password.component';
 import { HomePageComponent } from './Pages/home-page/home-page.component';
@@ -20,7 +21,8 @@ const routes: Routes = [
   {path: 'borrowed', component: BorrowedProductsPageComponent, canActivate:[PageGuard]},
   {path: 'mycatalog', component: MycatalogPageComponent, canActivate:[PageGuard]},
   {path: 'forgotpassword', component: ForgotPasswordComponent, canActivate:[PageGuard]},
-  {path: 'resetpassword', component: ResetPasswordComponent, canActivate:[PageGuard]}
+    { path: 'resetpassword', component: ResetPasswordComponent, canActivate: [PageGuard] },
+    { path: 'addproduct', component: AddProductComponent, canActivate: [PageGuard] }
 ];
 
 @NgModule({

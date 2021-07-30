@@ -9,9 +9,9 @@ export class CategoryService {
 
   readonly rootUrl = 'http://localhost:52718/api';
 
-  constructor(public http: HttpClient) { }
-  
+  constructor(private http: HttpClient) { }
+
   getCategories() {
-    return this.http.get<ICategory[]>(this.rootUrl + '/Category/get')
+    return this.http.get<ICategory[]>(this.rootUrl + '/Category/get');
   }
 }

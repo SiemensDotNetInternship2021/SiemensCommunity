@@ -50,5 +50,7 @@ export class ProductService {
     }
 
     return this.http.post(this.rootUrl + '/ProductRating/', ratingDetails)
+  getProduct(productId: number){
+    return this.http.get<IProduct>(this.rootUrl + "/product/getproduct", {params:  {id: productId}});
   }
 }

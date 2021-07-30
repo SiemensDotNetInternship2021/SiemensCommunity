@@ -53,5 +53,7 @@ namespace Data
         public DbSet<BorrowedProduct> BorrowedProducts { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
         public DbSet<ProductRating> ProductRatings { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Property> Properties { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Service.Contracts;
+using Service.Helpers;
 using Service.Implementations;
 using Service.Models;
 using SiemensCommunity.Models;
@@ -34,6 +35,8 @@ namespace SiemensCommunity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CloudinaryConfiguration>(Configuration.GetSection("CloudinarySettings"));
+
             services.Configure<EmailConfiguration>(Configuration.GetSection("EmailConfiguration"));
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
@@ -45,6 +48,9 @@ namespace SiemensCommunity
             services.AddScoped<IFavoriteProductRepository, FavoriteProductRepository>();
             services.AddScoped<IProductRatingRepository, ProductRatingRepository>();
             services.AddScoped<IBorrowedProductRepository, BorrowedProductRepository>();
+            services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<IPropertyRepository, PropertyRepository>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAccountService, AccountService>();
@@ -55,6 +61,9 @@ namespace SiemensCommunity
             services.AddScoped<IFavoriteProductService, FavoriteProductService>();
             services.AddScoped<IProductRatingService, ProductRatingService>();
             services.AddScoped<IBorrowedProductService, BorrowedProductService>()
+            services.AddScoped<ISubCategoryService, SubCategoryService>();
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IPropertyService, PropertyService>();
 
             services.AddSingleton<ISystemClock, SystemClock>();
 

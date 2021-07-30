@@ -15,6 +15,9 @@ namespace SiemensCommunity.Models
 
         public string User { get; set; }
 
+        public int CategoryId { get; set; }
+        public int SubCategoryId { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
 
         public bool IsAvailable { get; set; }
@@ -24,5 +27,7 @@ namespace SiemensCommunity.Models
         public double Rating { get; set; }
 
         public string Details { get; set; }
+
+        public Photo Photo { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using SiemensCommunity.Adapters;
 using SiemensCommunity.Models;
@@ -16,6 +17,7 @@ namespace SiemensCommunity.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly CategoryAdapter _categoryAdapter = new CategoryAdapter();
+
 
         public CategoryController(ICategoryService categoryService)
         {

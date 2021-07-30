@@ -10,6 +10,6 @@ namespace Data.Contracts
         public Task<bool> DeleteByIdAsync(int id);
         //public Task<int> DeleteAll(IEnumerable<T> entities);
         public Task<IEnumerable<T>> GetAsync();
-        //public Task<T> FindById(int id);
+        public Task<T> UpdateAsync(T entity, int id);
     }
 }

@@ -17,6 +17,8 @@ import { ResetPasswordComponent } from './Pages/reset-password/reset-password.co
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AddProductComponent } from './Pages/add-product/add-product.component';
+import { FileUploadModule } from 'ng2-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,7 +42,8 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
     LentProductsPageComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    AdminPanelComponent,
+        AddProductComponent,
+        AdminPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,11 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
     ToastrModule.forRoot(),
     MatCheckboxModule,
     NgxStarRatingModule
+    ToastrModule.forRoot(),
+    FileUploadModule
+  ],
+  exports: [
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,13 +11,16 @@ namespace Data.Models
 
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-
+        public virtual Category Category{ get; set; }
         [ForeignKey("SubCategory")]
         public int SubCategoryId { get; set; }
+        public virtual SubCategory SubCategory { get; set; }
 
         [ForeignKey("User")]
         public int UserId { get; set; }
-
+        [ForeignKey("Photo")]
+        public int PhotoId { get; set; }
+        public Photo Photo { get; set; }
         public string Name { get; set; }
 
         public bool IsAvailable { get; set; }

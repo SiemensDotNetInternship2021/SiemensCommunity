@@ -172,6 +172,26 @@ namespace Data.Migrations
 
                     b.ToTable("FavoriteProducts");
                 });
+            modelBuilder.Entity("Data.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Photos");
+                });
 
             modelBuilder.Entity("Data.Models.Product", b =>
                 {
@@ -186,14 +206,14 @@ namespace Data.Migrations
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PhotoId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Rating")
                         .HasColumnType("float");
@@ -210,72 +230,31 @@ namespace Data.Migrations
 
                     b.HasIndex("SubCategoryId");
 
+                    b.HasIndex("PhotoId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
                 });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book SF",
-                            Rating = 3,
-                            SubCategoryId = 1,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book Poems",
-                            Rating = 3,
-                            SubCategoryId = 2,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book Poems",
-                            Rating = 4,
-                            SubCategoryId = 2,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 1,
-                            IsAvailable = true,
-                            Name = "Book SF",
-                            Rating = 5,
-                            SubCategoryId = 1,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 2,
-                            IsAvailable = false,
-                            Name = "Decorative Object",
-                            Rating = 5,
-                            SubCategoryId = 3,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 2,
-                            IsAvailable = false,
-                            Name = "Decorative Object",
-                            Rating = 5,
-                            SubCategoryId = 3,
-                            UserId = 2
-                        });
+            modelBuilder.Entity("Data.Models.Property", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Properties");
                 });
 
             modelBuilder.Entity("Data.Models.SubCategory", b =>
@@ -530,6 +509,13 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Models.User", "User")
+                    b.HasOne("Data.Models.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.User", null)
                         .WithMany("Products")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -559,6 +545,19 @@ namespace Data.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
+
+                    b.Navigation("Photo");
+                });
+
+            modelBuilder.Entity("Data.Models.Property", b =>
+                {
+                    b.HasOne("Data.Models.Category", "Category")
+                        .WithMany("Properties")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -612,6 +611,9 @@ namespace Data.Migrations
                     b.Navigation("FavoriteProduct");
 
                     b.Navigation("ProductRating");
+                    b.Navigation("Products");
+
+                    b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>

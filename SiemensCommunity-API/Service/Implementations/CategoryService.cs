@@ -1,4 +1,6 @@
-﻿using Data.Contracts;
+﻿using Common;
+using Data.Contracts;
+using Microsoft.Extensions.Logging;
 using Service.Adapters;
 using Service.Models;
 using Service.Contracts;
@@ -16,11 +18,12 @@ namespace Service.Implementations
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-        private readonly CategoryAdapter _categoryAdapter = new CategoryAdapter();
-
-        public CategoryService(ICategoryRepository categoryRepository)
+        private readonly CategoryAdapter _categoryAdapter= new CategoryAdapter();
+        private readonly ILogger _logger;
+        public CategoryService(ICategoryRepository categoryRepository, ILoggerFactory logger)
         {
             _categoryRepository = categoryRepository;
+            _logger = logger.CreateLogger("CategoryService");
         }
 
         public async Task<Category> AddAsync(Category category)
@@ -31,8 +34,9 @@ namespace Service.Implementations
 
         public async Task<IEnumerable<Category>> GetAsync()
         {
-            var returnedCategories = await _categoryRepository.GetAsync();
-            return _categoryAdapter.AdaptList(returnedCategories);
+            var categories = await _categoryRepository.GetAsync();
+            _logger.LogInformation(MyLogEvents.ListItems, "Getting list of categories, {count} found.", categories.Count());
+            return _categoryAdapter.AdaptList(categories);
         }
     }
 }
