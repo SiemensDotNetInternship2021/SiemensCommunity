@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FileUploader } from 'ng2-file-upload';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { ICategory } from 'src/app/Models/ICategory';
 import { IProperty } from 'src/app/Models/IProperty';

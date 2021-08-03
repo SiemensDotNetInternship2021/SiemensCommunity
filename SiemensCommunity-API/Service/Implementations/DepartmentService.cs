@@ -5,6 +5,7 @@ using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Service.Implementations

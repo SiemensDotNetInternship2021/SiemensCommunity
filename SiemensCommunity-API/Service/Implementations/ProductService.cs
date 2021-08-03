@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

@@ -7,7 +7,7 @@ export interface IProduct {
     user: string,
     categoryId: number,
     subCategoryId: number,
-    user: number,
+    userId: number,
     name: string,
     isAvailable: boolean,
     imagePath: string,

@@ -56,11 +56,10 @@ namespace SiemensCommunity
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
-           
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IFavoriteProductService, FavoriteProductService>();
             services.AddScoped<IProductRatingService, ProductRatingService>();
-            services.AddScoped<IBorrowedProductService, BorrowedProductService>()
+            services.AddScoped<IBorrowedProductService, BorrowedProductService>();
             services.AddScoped<ISubCategoryService, SubCategoryService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IPropertyService, PropertyService>();

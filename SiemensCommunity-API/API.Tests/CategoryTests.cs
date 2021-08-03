@@ -38,7 +38,7 @@ namespace API.Tests
         {
             categoryServiceMock.Setup(p => p.GetAsync()).Returns(Task.FromResult(dataSubCategories.AsEnumerable()));
 
-            var result = await categoryController.GetCategories();
+            var result = await categoryController.Get();
 
             Assert.IsInstanceOf<OkObjectResult>(result);
         }

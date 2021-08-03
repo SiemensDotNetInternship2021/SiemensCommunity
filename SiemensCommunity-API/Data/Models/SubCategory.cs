@@ -19,6 +19,6 @@ namespace Data.Models
         [StringLength(70)]
         public string Name { get; set; }
 
-        public ICollection<Category> Category { get; set; }
+        public Category Category { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpPost("addCategory")]
-        public async Task<IActionResult> Add([FromBody] Category category)
+        public async Task<IActionResult> Add([FromBody] Models.Category category)
         {
             if (!(ModelState.IsValid))
             {

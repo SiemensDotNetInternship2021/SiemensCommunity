@@ -19,21 +19,6 @@ namespace Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CategorySubCategory", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubCategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryId", "SubCategoryId");
-
-                    b.HasIndex("SubCategoryId");
-
-                    b.ToTable("CategorySubCategory");
-                });
-
             modelBuilder.Entity("Data.Models.AppRole", b =>
                 {
                     b.Property<int>("Id")
@@ -71,9 +56,19 @@ namespace Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RoleId1")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("AspNetUserRoles");
                 });
@@ -99,25 +94,9 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BorrowedProducts");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EndDate = "2021/7/23",
-                            ProductId = 4,
-                            StartDate = "2021/7/13",
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            EndDate = "2021/7/23",
-                            ProductId = 4,
-                            StartDate = "2021/7/13",
-                            UserId = 2
-                        });
+                    b.ToTable("BorrowedProducts");
                 });
 
             modelBuilder.Entity("Data.Models.Category", b =>
@@ -158,7 +137,10 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("PhotoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -166,12 +148,15 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PhotoId");
+
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("FavoriteProducts");
                 });
+
             modelBuilder.Entity("Data.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -215,7 +200,7 @@ namespace Data.Migrations
                     b.Property<int>("PhotoId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Rating")
+                    b.Property<double>("RatingAverage")
                         .HasColumnType("float");
 
                     b.Property<int>("SubCategoryId")
@@ -228,13 +213,38 @@ namespace Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SubCategoryId");
-
                     b.HasIndex("PhotoId");
+
+                    b.HasIndex("SubCategoryId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Data.Models.ProductRating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProductRatings");
                 });
 
             modelBuilder.Entity("Data.Models.Property", b =>
@@ -272,6 +282,8 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(70)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategories");
                 });
@@ -441,53 +453,61 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CategorySubCategory", b =>
-                {
-                    b.HasOne("Data.Models.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.SubCategory", null)
-                        .WithMany()
-                        .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Data.Models.AppUserRole", b =>
                 {
+                    b.HasOne("Data.Models.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Models.AppRole", "Role")
                         .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
+                        .HasForeignKey("RoleId1");
+
+                    b.HasOne("Data.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.User", "User")
                         .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Role");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Models.FavoriteProduct", b =>
+            modelBuilder.Entity("Data.Models.BorrowedProduct", b =>
                 {
-                    b.HasOne("Data.Models.Product", "Product")
-                        .WithMany("FavoriteProduct")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Models.FavoriteProduct", b =>
+                {
+                    b.HasOne("Data.Models.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId");
+
+                    b.HasOne("Data.Models.Product", "Product")
+                        .WithMany("FavoriteProduct")
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Data.Models.User", "User")
                         .WithMany("FavoriteProduct")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Photo");
 
                     b.Navigation("Product");
 
@@ -497,31 +517,32 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.Product", b =>
                 {
                     b.HasOne("Data.Models.Category", "Category")
-                        .WithMany("Product")
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Data.Models.SubCategory", "SubCategory")
                         .WithMany()
                         .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Data.Models.User", "User")
-                    b.HasOne("Data.Models.Photo", "Photo")
-                        .WithMany()
-                        .HasForeignKey("PhotoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.User", null)
                         .WithMany("Products")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Photo");
 
                     b.Navigation("SubCategory");
 
@@ -545,8 +566,6 @@ namespace Data.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
-
-                    b.Navigation("Photo");
                 });
 
             modelBuilder.Entity("Data.Models.Property", b =>
@@ -554,7 +573,18 @@ namespace Data.Migrations
                     b.HasOne("Data.Models.Category", "Category")
                         .WithMany("Properties")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Data.Models.SubCategory", b =>
+                {
+                    b.HasOne("Data.Models.Category", "Category")
+                        .WithMany("SubCategory")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -603,7 +633,11 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Category", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
+
+                    b.Navigation("Properties");
+
+                    b.Navigation("SubCategory");
                 });
 
             modelBuilder.Entity("Data.Models.Product", b =>
@@ -611,9 +645,6 @@ namespace Data.Migrations
                     b.Navigation("FavoriteProduct");
 
                     b.Navigation("ProductRating");
-                    b.Navigation("Products");
-
-                    b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>

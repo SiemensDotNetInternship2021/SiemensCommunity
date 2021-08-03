@@ -68,13 +68,16 @@ export class AddProductComponent implements OnInit {
   modifyProductConstructor(productId: number){
     console.log("componenta product id " + productId);
     this.productService.getProduct(productId).subscribe((product) =>{
+      console.log(product);
       this.fillForm(product);
     });
   }
 
   //fiil the form un the product data
   fillForm(product: any){
+    console.log(product.details);
     this.properties =JSON.parse(product.details);
+    console.log(this.properties);
     this.service.addProductModel.value.Name = product.name;
     this.service.addProductModel.controls['Name'].setValue(product.name);
     this.properties = JSON.parse(product.details);

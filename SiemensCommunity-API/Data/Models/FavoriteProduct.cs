@@ -14,7 +14,7 @@ namespace Data.Models
        public int Id { get; set; }
 
        [ForeignKey("Product")]
-       public int ProductId { get; set; }
+       public int? ProductId { get; set; }
 
        [ForeignKey("User")]
        public int UserId { get; set; }
@@ -22,5 +22,7 @@ namespace Data.Models
        public User User { get; set; }
 
        public Product Product { get; set; }
+
+       public Photo Photo { get; set; }
     }
 }

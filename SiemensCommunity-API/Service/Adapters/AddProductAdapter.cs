@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Adapters
 {
-    class AddProductAdapter
+    public class AddProductAdapter
     {
 
         private readonly IMapper _addProductAdapter;

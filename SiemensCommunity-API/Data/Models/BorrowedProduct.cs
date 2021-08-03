@@ -9,6 +9,7 @@ namespace Data.Models
         public int Id { get; set; }
         [ForeignKey("User")]
         public int UserId { get; set; }
+        public User User { get; set; }
         [ForeignKey("Product")]
         public int ProductId { get; set; }
         public string StartDate { get; set; }

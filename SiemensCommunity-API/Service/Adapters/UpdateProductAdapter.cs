@@ -18,7 +18,7 @@ namespace Service.Adapters
             {
 
                 config.CreateMap<UpdateProductDTO, Data.Models.Product>()
-                .ForMember(dest => dest.Rating, opt => opt.Ignore())
+                .ForMember(dest => dest.RatingAverage, opt => opt.Ignore())
                 .ForMember(dest => dest.IsAvailable, opt => opt.Ignore());
                 config.CreateMap<Data.Models.Product, UpdateProductDTO>();
             });

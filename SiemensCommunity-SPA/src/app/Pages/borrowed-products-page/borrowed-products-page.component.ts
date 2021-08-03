@@ -4,7 +4,7 @@ import { ICategory } from 'src/app/Models/ICategory';
 import { IProducts } from 'src/app/Models/IProducts';
 import { BorrowedItemsServiceService } from 'src/app/Services/borrowed-items-service/borrowed-items-service.service';
 import { CategoriesService } from 'src/app/Services/categories-service/categories.service';
-import { ProductsService } from 'src/app/Services/products-service/products.service';
+import { ProductService } from 'src/app/Services/product-service/product.service';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class BorrowedProductsPageComponent implements OnInit {
 
   constructor(public borrowedProductsService: BorrowedItemsServiceService,
               public categoriesService: CategoriesService,
-              public productsService: ProductsService) {
+              public productsService: ProductService) {
     this.borrowedProducts = [];
     this.categories = [];
     this.products = [];
@@ -46,7 +46,7 @@ export class BorrowedProductsPageComponent implements OnInit {
   }
 
   getProducts(){
-    this.productsService.getProducts().subscribe((prods) => {
+    this.productsService.getAllProducts().subscribe((prods) => {
       this.products = prods;
     })
   }

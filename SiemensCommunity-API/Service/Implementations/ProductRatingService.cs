@@ -1,6 +1,7 @@
 ﻿using Data.Contracts;
 using Service.Adapters;
 using Service.Contracts;
+using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -54,6 +54,17 @@ namespace Data.Implementations
             try
             {
                 var result = await _userManager.CreateAsync(user, password);
+                if (result.Succeeded)
+                {
+                    try
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
                 return user.Id;
             }
             catch (Exception ex)
