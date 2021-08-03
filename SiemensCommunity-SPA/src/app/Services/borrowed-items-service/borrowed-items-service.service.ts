@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IBorrowedProducts } from 'src/app/Models/IBorrowedProducts';
@@ -9,13 +10,41 @@ export class BorrowedItemsServiceService {
 
   readonly rootUrl = 'http://localhost:52718/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              public date : DatePipe) { }
 
-  getBorrowedProducts() {
-    return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProducts')
+  getBorrowedProducts(userId: number) {
+    return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProducts?userId=' + userId);
   } 
 
   getBorrowedProductsByCategoryId(category: number) {
     return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProductsByCategory?categoryId=' + category);
+  }
+
+  borrowProduct(productId: number, userId: number) {
+
+    var date = new Date();
+    var currentDate = this.date.transform(date, 'yyyy/mm/dd')
+    var endDate = new Date();
+    endDate.setDate(date.getDate() + 14);
+
+    var borrowDetails = {
+      productId: productId,
+      userId: userId,
+      startDate: new Date().toISOString(),
+      endDate: endDate.toISOString()
+    }
+
+    console.log(borrowDetails.productId + " " + borrowDetails.userId + " " +  borrowDetails.startDate + " " +  borrowDetails.endDate);
+    return this.http.post(this.rootUrl + '/BorrowedProduct/borrowProduct', borrowDetails);
+  }
+
+  returnedBorrowedProduct(userId: number, productId: number) {
+    var borrowDetails = {
+      userId: userId,
+      productId: productId
+    }
+
+    return this.http.post(this.rootUrl + '/BorrowedProduct/returnBorrowedProduct', borrowDetails);
   }
 }

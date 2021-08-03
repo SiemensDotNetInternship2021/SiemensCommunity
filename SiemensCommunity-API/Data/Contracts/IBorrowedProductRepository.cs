@@ -7,6 +7,9 @@ namespace Data.Contracts
     public interface IBorrowedProductRepository : IGenericRepository<BorrowedProduct>
     {
         //public Task<IEnumerable<BorrowedProduct>> GetByCategoryIdAsync(int categoryId);
+        public Task<BorrowedProduct> BorrowProduct(BorrowedProduct borrowDetails);
+        public Task<IEnumerable<BorrowedProduct>> GetBorrowedProductsByUserIdAsync(int userId);
 
+        public Task<BorrowedProduct> GiveBackProduct(BorrowedProduct borrowDetails);
     }
 }

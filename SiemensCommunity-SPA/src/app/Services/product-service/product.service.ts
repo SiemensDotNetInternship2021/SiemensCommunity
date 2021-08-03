@@ -5,6 +5,7 @@ import { IFavoriteProduct } from 'src/app/Models/IFavoriteProduct';
 import { IOptionDetails } from 'src/app/Models/IOptionDetails';
 import { IProduct } from 'src/app/Models/IProduct';
 import { IProducts } from 'src/app/Models/IProducts';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class ProductService {
 
   readonly rootUrl = 'http://localhost:52718/api';
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient,
+              public date: DatePipe) { }
 
   getProducts(selectedCategory : number, selectedOption : number) {
     var optionDetails  = {
@@ -60,4 +62,5 @@ export class ProductService {
   getAllProducts() {
     return this.http.get<IProducts[]>(this.rootUrl + '/Product/getProducts')
   }
+
 }

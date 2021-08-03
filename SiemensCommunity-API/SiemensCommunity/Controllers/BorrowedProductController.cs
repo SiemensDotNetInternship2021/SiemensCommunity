@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using SiemensCommunity.Adapters;
+using SiemensCommunity.Models;
 using System.Threading.Tasks;
 
 namespace SiemensCommunity.Controllers
@@ -9,6 +11,7 @@ namespace SiemensCommunity.Controllers
     public class BorrowedProductController : Controller
     {
         private readonly IBorrowedProductService _borrowedProductService;
+        private readonly BorrowedProductAdapter _borrowedProductAdapter = new BorrowedProductAdapter();
 
         public BorrowedProductController(IBorrowedProductService borrowedProductService)
         {
@@ -16,9 +19,9 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpGet("getBorrowedProducts")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int userId)
         {
-            var borrowedProductList = await _borrowedProductService.GetAsync();
+            var borrowedProductList = await _borrowedProductService.GetBorrowedByUserIdAsync(userId);
             return Ok(borrowedProductList);
         }
 
@@ -27,6 +30,33 @@ namespace SiemensCommunity.Controllers
         {
             var borrowedProductList = await _borrowedProductService.GetByCategoryIdAsync(categoryId);
             return Ok(borrowedProductList);
+        }
+
+        [HttpPost("borrowProduct")]
+        public async Task<IActionResult> BorrowProduct(BorrowedProduct borrowProduct)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var borrowedProduct = await _borrowedProductService.BorrowProduct(_borrowedProductAdapter.Adapt(borrowProduct));
+
+            return Ok(borrowedProduct);
+
+        }
+
+        [HttpPost("returnBorrowedProduct")]
+        public async Task<IActionResult> ReturnBorrowProduct(BorrowedProduct borrowedProduct)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var returnedProduct = await _borrowedProductService.ReturnBorrowedProduct(_borrowedProductAdapter.Adapt(borrowedProduct));
+
+            return Ok(returnedProduct);
         }
     }
 }

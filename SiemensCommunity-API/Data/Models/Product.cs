@@ -40,5 +40,8 @@ namespace Data.Models
         public virtual Category Category { get; set; } 
 
         public Photo Photo { get; set; }
+
+        public BorrowedProduct BorrowedProduct { get; set; }
+
     }
 }

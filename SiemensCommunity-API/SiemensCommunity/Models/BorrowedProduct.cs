@@ -10,7 +10,7 @@ namespace SiemensCommunity.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public int ProductId { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

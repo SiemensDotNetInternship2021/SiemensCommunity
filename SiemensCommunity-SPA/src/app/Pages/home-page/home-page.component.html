@@ -39,7 +39,8 @@
             <div class="card-body">
                 <i *ngIf="favoriteProductsId.includes(product.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(product.id)"></i>
                 <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart" (click)="addFavoriteProduct(product.id)"></i>
-              <button class="btn btn-primary">Borrow</button>
+              <button *ngIf="!borrowedProductsId.includes(product.id)" class="btn btn-primary" (click)="borrowProduct(product.id)">Borrow</button>
+              <button *ngIf="borrowedProductsId.includes(product.id)" class="btn btn-primary" (click)="giveBackBorrowedProduct(product.id)">Give Back</button>
             </div>
         </div>
     </div>
@@ -68,7 +69,7 @@
             <div class="card-body">
                 <i *ngIf="favoriteProductsId.includes(favoriteProduct.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(favoriteProduct.id)"></i>
                 <i *ngIf="!favoriteProductsId.includes(favoriteProduct.id)" class="far fa-heart" (click)="addFavoriteProduct(favoriteProduct.id)"></i>
-              <button class="btn btn-primary">Borrow</button>
+              <button class="btn btn-primary" (click)="borrowProduct(favoriteProduct.id)">Borrow</button>
             </div>
         </div>
     </div>

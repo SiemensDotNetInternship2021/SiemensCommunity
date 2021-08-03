@@ -26,6 +26,7 @@ import { AdminPanelComponent } from './Pages/admin-panel/admin-panel.component';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxStarRatingModule } from 'ngx-star-rating';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -62,7 +63,7 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
     NgxStarRatingModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

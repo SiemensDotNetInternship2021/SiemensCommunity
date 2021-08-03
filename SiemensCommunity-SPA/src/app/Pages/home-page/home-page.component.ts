@@ -5,6 +5,7 @@ import { IProduct } from 'src/app/Models/IProduct';
 import { CategoryService } from 'src/app/Services/category-service/category.service';
 import { ProductService } from 'src/app/Services/product-service/product.service';
 import { ToastrService } from 'ngx-toastr';
+import { BorrowedItemsServiceService } from 'src/app/Services/borrowed-items-service/borrowed-items-service.service';
 
 @Component({
   selector: 'app-home-page',
@@ -22,16 +23,19 @@ export class HomePageComponent implements OnInit {
   favoriteProducts : IFavoriteProduct[] =[];
   favoriteProductsId : number[] = [];
   userId : number = 0;
+  borrowedProductsId: number[]=[];
 
   constructor(public productService: ProductService,
     public categoryService: CategoryService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    public borrowedProductService: BorrowedItemsServiceService) { }
 
   ngOnInit(): void {
     this.getUserId()
     this.getCategories();
     this.getProducts();
     this.getFavoriteProducts();
+    this.getBorrowedProducts();
   }
 
   getUserId() {
@@ -112,6 +116,38 @@ export class HomePageComponent implements OnInit {
     },
     err=> {
       this.toastr.error("Product couldn`t be rated");
+    })
+  }
+
+  borrowProduct(productId: number){
+    this.borrowedProductService.borrowProduct(productId, this.userId).subscribe((res : any) => 
+   {
+    this.toastr.success("The product has been borrowed");
+    this.borrowedProductsId = [];
+     this.getBorrowedProducts();
+   },
+   err => {
+    this.toastr.error("Product couldn`t be borrowed");
+   })
+  }
+
+  getBorrowedProducts(){
+    this.borrowedProductService.getBorrowedProducts(this.userId).subscribe((borrowedProds =>
+      {
+        borrowedProds.forEach(borrowProd => this.borrowedProductsId.push(borrowProd.productId));
+        console.log(this.borrowedProductsId);
+      }))
+  }
+
+  giveBackBorrowedProduct(productId : number){
+    this.borrowedProductService.returnedBorrowedProduct(this.userId, productId).subscribe((res : any) => 
+    {
+     this.toastr.success("The product has been returned");
+     this.borrowedProductsId = [];
+     this.getBorrowedProducts();
+    },
+    err => {
+     this.toastr.error("Product couldn`t be returned");
     })
   }
 }

@@ -22,6 +22,7 @@ export class BorrowedProductsPageComponent implements OnInit {
   categoryId: number = 0;
   products: IProducts[] = [];
   rating: number = 0;
+  userId: number = 0;
 
   constructor(public borrowedProductsService: BorrowedItemsServiceService,
               public categoriesService: CategoriesService,
@@ -32,13 +33,23 @@ export class BorrowedProductsPageComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.getUserId();
     this.getBorrowedProducts();
     this.getCategories();
     this.getProducts();
   }
 
+  getUserId() {
+    var token = localStorage.getItem('token');
+    var tokenDetails = "";
+    if(token != null) {
+      tokenDetails = window.atob(token.split('.')[1]);
+    }
+      this.userId = parseInt(tokenDetails.split(':')[1].split(',')[0].replace('"', ''));
+  }
+
   getBorrowedProducts(){
-    this.borrowedProductsService.getBorrowedProducts().subscribe((borrowedProds =>
+    this.borrowedProductsService.getBorrowedProducts(this.userId).subscribe((borrowedProds =>
       {
         this.borrowedProducts = borrowedProds;
         this.totalLength = this.borrowedProducts.length;

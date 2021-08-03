@@ -36,5 +36,22 @@ namespace Service.Implementations
             return _borrowedProductAdapter.AdaptList(filteredProducts);
         }
 
+        public async Task<BorrowedProduct> BorrowProduct(BorrowedProduct borrowDetails)
+        {
+            var borrowedProduct = await _borrowedProductRepository.BorrowProduct(_borrowedProductAdapter.Adapt(borrowDetails));
+            return _borrowedProductAdapter.Adapt(borrowedProduct);
+        }
+
+        public async Task<IEnumerable<BorrowedProduct>> GetBorrowedByUserIdAsync(int userId)
+        {
+            var borrowedProduct = await _borrowedProductRepository.GetBorrowedProductsByUserIdAsync(userId);
+            return _borrowedProductAdapter.AdaptList(borrowedProduct);
+        }
+
+        public async Task<BorrowedProduct> ReturnBorrowedProduct(BorrowedProduct borrowDetails)
+        {
+            var returnedProduct = await _borrowedProductRepository.GiveBackProduct(_borrowedProductAdapter.Adapt(borrowDetails));
+            return _borrowedProductAdapter.Adapt(returnedProduct);
+        }
     }
 }
