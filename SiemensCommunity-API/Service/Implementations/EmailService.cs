@@ -13,6 +13,7 @@ namespace Service.Implementations
     {
         EmailConfiguration _emailConfiguration = null;
         private readonly ILogger _logger;
+
         public EmailService(IOptions<EmailConfiguration> options, ILoggerFactory logger)
         {
             _emailConfiguration = options.Value;

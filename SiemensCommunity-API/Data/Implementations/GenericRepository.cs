@@ -8,10 +8,12 @@ namespace Data.Implementations
     {
         protected readonly ProjectDbContext Context;
 
+
         protected GenericRepository(ProjectDbContext context)
         {
             Context = context;
         }
+
 
         public virtual async Task<T> AddAsync(T entity)
         {
@@ -19,6 +21,7 @@ namespace Data.Implementations
             await Context.SaveChangesAsync();
             return entity;
         }
+
 
         public virtual async Task<bool> DeleteByIdAsync(int id)
         {
@@ -33,10 +36,12 @@ namespace Data.Implementations
                 return false;
         }
 
+
         public virtual async Task<IEnumerable<T>> GetAsync()
         {
             return await Context.Set<T>().ToListAsync();
         }
+
 
         public virtual async Task<T> UpdateAsync(T entity, int id)
         {
@@ -45,7 +50,5 @@ namespace Data.Implementations
             await Context.SaveChangesAsync();
             return entity;
         }
-
     }
-
 }

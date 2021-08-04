@@ -38,7 +38,7 @@ namespace Service.Implementations
             var token = await _accountReposistory.ForgotPasswordAsync(email);
             var ulrEncodeToken = Uri.EscapeDataString(token);
             var url = "http://localhost:4200/resetpassword?token=" + ulrEncodeToken + "&email=" + email;
-            var emailBody= "Copy link to reset password: " + url;
+            var emailBody = "Copy link to reset password: " + url;
             var message = new EmailData
             {
                 EmailBody = emailBody,

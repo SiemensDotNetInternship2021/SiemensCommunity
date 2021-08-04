@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IBorrowedProducts } from 'src/app/Models/IBorrowedProducts';
+import { IProduct } from 'src/app/Models/IProduct';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class BorrowedItemsServiceService {
 
   getBorrowedProductsByCategoryId(category: number) {
     return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProductsByCategory?categoryId=' + category);
+  }
+
+  getAllBorrowedProducts() {
+    return this.http.get<IProduct[]>(this.rootUrl + '/Product/getProducts')
   }
 
   borrowProduct(productId: number, userId: number) {

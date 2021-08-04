@@ -1,10 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CheckboxControlValueAccessor } from '@angular/forms';
 import { IFavoriteProduct } from 'src/app/Models/IFavoriteProduct';
-import { IOptionDetails } from 'src/app/Models/IOptionDetails';
 import { IProduct } from 'src/app/Models/IProduct';
-import { IProducts } from 'src/app/Models/IProducts';
 import { DatePipe } from '@angular/common';
 
 @Injectable({
@@ -58,9 +55,4 @@ export class ProductService {
   getProduct(productId: number){
     return this.http.get<IProduct>(this.rootUrl + "/product/getproduct", {params:  {id: productId}});
   }
-
-  getAllProducts() {
-    return this.http.get<IProducts[]>(this.rootUrl + '/Product/getProducts')
-  }
-
 }

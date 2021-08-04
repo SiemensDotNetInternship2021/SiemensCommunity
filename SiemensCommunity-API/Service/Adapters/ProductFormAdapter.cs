@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using Service.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Adapters
 {
     public class ProductFormAdapter
     {
         private readonly IMapper _productFormDTOAdapter;
-        public ProductFormAdapter() 
+        public ProductFormAdapter()
         {
             var config = new MapperConfiguration(config =>
             {
@@ -24,12 +19,12 @@ namespace Service.Adapters
                 .ForMember(dest => dest.Category, act => act.MapFrom(src => src.Category))
                 .ForMember(dest => dest.Subcategory, act => act.MapFrom(src => src.SubCategory));
             });
-            _productFormDTOAdapter= config.CreateMapper();
+            _productFormDTOAdapter = config.CreateMapper();
         }
 
         public ProductFormDTO Adapt(Data.Models.ProductFormDTO product)
         {
-            return _productFormDTOAdapter.Map<Data.Models.ProductFormDTO,ProductFormDTO>(product);
+            return _productFormDTOAdapter.Map<Data.Models.ProductFormDTO, ProductFormDTO>(product);
         }
         public Data.Models.ProductFormDTO Adapt(ProductFormDTO product)
         {

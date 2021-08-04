@@ -1,3 +1,5 @@
+import { IDetail } from "./IDetail";
+
 export interface IFavoriteProduct {
     id : number,
     categoryName: string,
@@ -8,4 +10,5 @@ export interface IFavoriteProduct {
     imagePath: string,
     rating: number,
     details: string,
+    detailsList: IDetail[]
 }

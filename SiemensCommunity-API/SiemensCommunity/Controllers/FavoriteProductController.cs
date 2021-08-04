@@ -56,6 +56,5 @@ namespace SiemensCommunity.Controllers
                 return NotFound(productDetails);
             }
         }
-
     }
 }

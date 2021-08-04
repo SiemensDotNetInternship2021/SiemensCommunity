@@ -48,9 +48,14 @@ export class HomePageComponent implements OnInit {
   }
 
   getProducts() {
+    
     this.productService.getProducts(this.selectedCategory, this.selectedOption).subscribe((productsFromDb) => 
     {
-      this.products = productsFromDb;
+      this.products = [];
+      productsFromDb.forEach(product => {
+        product.detailsList = JSON.parse(product.details);
+        this.products.push(product);
+      })
     })
   }
 
@@ -61,7 +66,7 @@ export class HomePageComponent implements OnInit {
     })
   }
 
-  getSelected() {
+  getSelectedCategory() {
     this.selectedCategory = this.mySelectedCategory;
     this.favoriteProductsId = [];
     this.favoriteProducts = [];
@@ -81,6 +86,13 @@ export class HomePageComponent implements OnInit {
     this.productService.getFavoriteProducts(this.userId, this.selectedCategory, this.selectedOption).subscribe((favoriteProductsFromDB) => {
       favoriteProductsFromDB.forEach(favoriteProduct => this.favoriteProducts.push(favoriteProduct));
       favoriteProductsFromDB.forEach(favoriteProduct => this.favoriteProductsId.push(favoriteProduct.id))
+
+      this.favoriteProducts = [];
+
+      favoriteProductsFromDB.forEach(favoriteProduct => {
+        favoriteProduct.detailsList = JSON.parse(favoriteProduct.details);
+        this.favoriteProducts.push(favoriteProduct);
+      })
     })
   }
 
@@ -90,6 +102,7 @@ export class HomePageComponent implements OnInit {
       this.toastr.success("The product has been added to your favorite list");
       this.favoriteProductsId.push(productId);
       this.favoriteProducts =[];
+      
     },
     err=>{
       this.toastr.error("The product couldn`t be added to your favorite products list");
@@ -135,7 +148,6 @@ export class HomePageComponent implements OnInit {
     this.borrowedProductService.getBorrowedProducts(this.userId).subscribe((borrowedProds =>
       {
         borrowedProds.forEach(borrowProd => this.borrowedProductsId.push(borrowProd.productId));
-        console.log(this.borrowedProductsId);
       }))
   }
 
@@ -145,6 +157,8 @@ export class HomePageComponent implements OnInit {
      this.toastr.success("The product has been returned");
      this.borrowedProductsId = [];
      this.getBorrowedProducts();
+     this.getProducts();
+     this.getFavoriteProducts();
     },
     err => {
      this.toastr.error("Product couldn`t be returned");

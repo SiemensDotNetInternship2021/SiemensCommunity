@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IBorrowedProducts } from 'src/app/Models/IBorrowedProducts';
 import { ICategory } from 'src/app/Models/ICategory';
-import { IProducts } from 'src/app/Models/IProducts';
+import { IProduct } from 'src/app/Models/IProduct';
 import { BorrowedItemsServiceService } from 'src/app/Services/borrowed-items-service/borrowed-items-service.service';
 import { CategoriesService } from 'src/app/Services/categories-service/categories.service';
 import { ProductService } from 'src/app/Services/product-service/product.service';
@@ -20,7 +20,7 @@ export class BorrowedProductsPageComponent implements OnInit {
   page:number = 1;
   selectedCategory: number = 0;
   categoryId: number = 0;
-  products: IProducts[] = [];
+  products: IProduct[] = [];
   rating: number = 0;
   userId: number = 0;
 
@@ -57,7 +57,7 @@ export class BorrowedProductsPageComponent implements OnInit {
   }
 
   getProducts(){
-    this.productsService.getAllProducts().subscribe((prods) => {
+    this.borrowedProductsService.getAllBorrowedProducts().subscribe((prods) => {
       this.products = prods;
     })
   }

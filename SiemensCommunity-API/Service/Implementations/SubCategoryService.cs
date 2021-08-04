@@ -7,7 +7,6 @@ using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Service.Implementations
@@ -23,6 +22,7 @@ namespace Service.Implementations
             _subCategoryRepository = subCategoryRepository;
             _logger = logger.CreateLogger("SubCategoryService");
         }
+
         public async Task<IEnumerable<SubCategory>> GetAsync()
         {
             IEnumerable<SubCategory> subcategoriesReturned = new List<SubCategory>();
@@ -30,7 +30,8 @@ namespace Service.Implementations
             {
                 subcategoriesReturned = _subCategoyAdapter.AdaptList(await _subCategoryRepository.GetAsync());
                 _logger.LogInformation(MyLogEvents.ListItems, "Got {count} subcategories.", subcategoriesReturned.Count());
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.ListItems, "Error while getting the list: {error}", ex.Message);
             }

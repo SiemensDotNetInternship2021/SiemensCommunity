@@ -13,16 +13,19 @@ namespace Data.Implementations
         private UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
+
         public AccountRepository(ProjectDbContext context, UserManager<User> userManager, SignInManager<User> signInManager) : base(context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
+
         public Task<User> AddAsync(User entity)
         {
             throw new NotImplementedException();
         }
+
 
         public async Task<TokenDetails> VerifyLoginAsync(UserLoginCredentials user)
         {
@@ -49,6 +52,7 @@ namespace Data.Implementations
                 return null;
         }
 
+
         public async Task<int> RegisterAsync(User user, string password)
         {
             try
@@ -73,23 +77,21 @@ namespace Data.Implementations
             }
         }
 
-
+        
         Task<IEnumerable<User>> IGenericRepository<User>.GetAsync()
         {
             throw new NotImplementedException();
         }
 
+
         public async Task<string> ForgotPasswordAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 
-          /*  if (user == null)
-
-                 return error; */
-
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             return token;
         }
+
 
         public async Task<bool> ResetPasswordAsync(ResetPassword resetPassword)
         {

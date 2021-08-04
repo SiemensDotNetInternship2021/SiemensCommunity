@@ -11,14 +11,16 @@ namespace Data.Models
 
         [ForeignKey("User")]
         public int UserId { get; set; }
-        public User User { get; set; }
 
         [ForeignKey("Product")]
         public int ProductId { get; set; }
 
         public DateTime StartDate { get; set; }
+
         public DateTime EndDate { get; set; }
 
         public Product Product { get; set; }
+
+        public User User { get; set; }
     }
 }

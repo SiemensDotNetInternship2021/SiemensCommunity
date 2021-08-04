@@ -1,16 +1,12 @@
-﻿using AutoMapper;
-using Common;
+﻿using Common;
 using Data.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Service.Implementations
@@ -39,7 +35,7 @@ namespace Service.Implementations
 
         public async Task<Product> AddAsync(AddProduct addProduct)
         {
-            Data.Models.Product returnedProduct= new Data.Models.Product();
+            Data.Models.Product returnedProduct = new Data.Models.Product();
 
             var result = await _photoService.UploadPhotoAsync(addProduct.File);
             if (result == null || result.Error != null)
@@ -59,9 +55,11 @@ namespace Service.Implementations
                 var adaptedProduct = _productAdapter.AdaptAddProductToProduct(addProduct);
                 adaptedProduct.Photo = photoInDb;
                 adaptedProduct.PhotoId = photoInDb.Id;
+                adaptedProduct.IsAvailable = true;
                 returnedProduct = await _productRepository.AddAsync(adaptedProduct);
                 _logger.LogInformation(MyLogEvents.InsertItem, "Product successfully added");
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.InsertItem, "Error while inserting product wiht message " + ex.Message);
             }
@@ -76,7 +74,8 @@ namespace Service.Implementations
             {
                 result = await _productRepository.DeleteByIdAsync(id);
                 _logger.LogInformation(MyLogEvents.InsertItem, "Successful insertion of product with id={id}", id);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.InsertItem, "Error while deleting item with id={id}, with error {eroror}", id, ex.Message);
             }
@@ -90,7 +89,8 @@ namespace Service.Implementations
             {
                 returnedProducts = await _productRepository.GetAsync();
                 _logger.LogInformation(MyLogEvents.ListItems, "Got {count} products", returnedProducts.Count());
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.ListItems, "Error while getting product with message " + ex.Message);
             }
@@ -105,7 +105,7 @@ namespace Service.Implementations
                 returnedProduct = await _productRepository.FindById(id);
                 _logger.LogInformation(MyLogEvents.GetItem, "Getting item with id={id}", id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.GetItem, "Error while getting item with id={id}, with error {error}", id, ex.Message);
             }
@@ -131,25 +131,16 @@ namespace Service.Implementations
             }
             product.PhotoId = photoInDb.Id;
             var productUpdated = await _productRepository.UpdateAsync(_updateProductAdapter.Adapt(product), product.Id);
-            if(oldPhotoId != photoInDb.Id)
+            if (oldPhotoId != photoInDb.Id)
                 await _photoRepository.DeleteByIdAsync(photoInDb.Id);
 
             return _productAdapter.Adapt(productUpdated);
         }
-
-       /* public async Task<IEnumerable<Product>> GetByCategoryIdAsync(int categoryId)
-        {
-            var returnedProducts = await _productRepository.GetAsync();
-            var filtered = returnedProducts.Where(x => x.CategoryId == categoryId).ToList();
-
-            return _productAdapter.AdaptList(filtered);
-        }*/
 
         public async Task<List<ProductDTO>> GetFiltredProducts(int selectedCategory, int selectedOption)
         {
             var returnedProducts = await _productRepository.GetFiltredProducts(selectedCategory, selectedOption);
             return _productDTOAdapter.AdaptList(returnedProducts);
         }
-
     }
 }

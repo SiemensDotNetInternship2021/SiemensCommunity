@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using SiemensCommunity.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SiemensCommunity.Adapters
 {
@@ -37,10 +34,12 @@ namespace SiemensCommunity.Adapters
         {
             return _propertyAdapter.Map<Service.Models.Property, PropertyDTO>(property);
         }
+
         public IEnumerable<PropertyDTO> AdaptListToPropertyDTO(IEnumerable<Service.Models.Property> property)
         {
             return _propertyAdapter.Map<IEnumerable<Service.Models.Property>, IEnumerable<PropertyDTO>>(property);
         }
+
         public IEnumerable<Property> AdaptList(IEnumerable<Service.Models.Property> property)
         {
             return _propertyAdapter.Map<IEnumerable<Service.Models.Property>, IEnumerable<Property>>(property);

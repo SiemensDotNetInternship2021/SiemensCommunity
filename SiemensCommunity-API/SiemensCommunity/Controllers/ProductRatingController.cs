@@ -2,9 +2,6 @@
 using Service.Contracts;
 using SiemensCommunity.Adapters;
 using SiemensCommunity.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -15,7 +12,6 @@ namespace SiemensCommunity.Controllers
     public class ProductRatingController : ControllerBase
     {
         private readonly IProductRatingService _productRatingService;
-
         private readonly ProductRatingAdapter _productRatingAdapter = new ProductRatingAdapter();
 
         public ProductRatingController(IProductRatingService productRatingService)

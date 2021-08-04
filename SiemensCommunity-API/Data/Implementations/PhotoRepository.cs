@@ -16,6 +16,7 @@ namespace Data.Implementations
 
         }
 
+
         public async Task<Photo> FindByURL(string url)
         {
             return await Context.Photos.Where(p => p.Url == url).SingleOrDefaultAsync();

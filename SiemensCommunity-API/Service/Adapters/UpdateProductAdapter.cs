@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using Service.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Adapters
 {
@@ -26,10 +21,12 @@ namespace Service.Adapters
             _updateProductAdapter = config.CreateMapper();
         }
 
+
         public Data.Models.Product Adapt(UpdateProductDTO product)
         {
             return _updateProductAdapter.Map<UpdateProductDTO, Data.Models.Product>(product);
         }
+
 
         public UpdateProductDTO Adapt(Data.Models.Product product)
         {

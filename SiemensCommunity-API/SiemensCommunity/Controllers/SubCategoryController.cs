@@ -1,15 +1,12 @@
-﻿    using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SiemensCommunity.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SubCategoryController: ControllerBase
+    public class SubCategoryController : ControllerBase
     {
         private readonly ISubCategoryService _subcategoryService;
 

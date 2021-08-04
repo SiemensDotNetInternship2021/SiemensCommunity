@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Service.Contracts;
@@ -9,7 +8,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SiemensCommunity.Controllers
@@ -21,7 +19,6 @@ namespace SiemensCommunity.Controllers
         private readonly IAccountService _accountService;
         private readonly UserAdapter _userAdapter = new UserAdapter();
         private readonly ResetPasswordAdapter _resetPasswordAdapter = new ResetPasswordAdapter();
-      //  private readonly ApplicationSettings _applicationSettings;
 
         public AccountController(IAccountService accountService)
         {
@@ -75,7 +72,7 @@ namespace SiemensCommunity.Controllers
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                     var token = tokenHandler.WriteToken(securityToken);
-                    return Ok( new { token });
+                    return Ok(new { token });
                 }
                 else return BadRequest();
             }

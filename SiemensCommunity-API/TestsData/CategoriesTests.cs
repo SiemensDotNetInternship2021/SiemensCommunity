@@ -36,6 +36,7 @@ namespace Data.Tests
             repository = new CategoryRepository(dbContext);
         }
 
+
         [Test]
         public async Task GetCategories_ShouldReturnListOfCategory()
         {

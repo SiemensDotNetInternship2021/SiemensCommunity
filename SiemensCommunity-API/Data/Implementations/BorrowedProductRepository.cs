@@ -14,6 +14,7 @@ namespace Data.Implementations
 
         }
 
+
         public async Task<BorrowedProduct> BorrowProduct(BorrowedProduct borrowDetails)
         { 
             await Context.AddAsync(borrowDetails);
@@ -27,12 +28,14 @@ namespace Data.Implementations
             return borrowDetails;
         }
 
+
         public async Task<IEnumerable<BorrowedProduct>> GetBorrowedProductsByUserIdAsync(int userId)
         {
             var returnedBorrowedProducts = await Context.BorrowedProducts.Where(bp => bp.UserId == userId).ToListAsync();
 
             return returnedBorrowedProducts;
         }
+
 
         public async Task<BorrowedProduct> GiveBackProduct(BorrowedProduct borrowDetails)
         {

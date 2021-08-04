@@ -7,7 +7,6 @@ using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Service.Implementations
@@ -23,6 +22,7 @@ namespace Service.Implementations
             _propertyRepository = propertyRepository;
             _logger = logger.CreateLogger("PropertyService");
         }
+
         public async Task<IEnumerable<Property>> GetCategoryProperties(int categoryId)
         {
             IEnumerable<Property> adaptedProperties = new List<Property>();
@@ -31,7 +31,8 @@ namespace Service.Implementations
                 var returnedProperties = await _propertyRepository.GetCategoryProperties(categoryId);
                 adaptedProperties = _propertyAdapter.AdaptList(returnedProperties);
                 _logger.LogInformation(MyLogEvents.ListItems, "Got {count} properties", adaptedProperties.Count());
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.ListItems, "Error while getting list of properties: {error}", ex.Message);
             }

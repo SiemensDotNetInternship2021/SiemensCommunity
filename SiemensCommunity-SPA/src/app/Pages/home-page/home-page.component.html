@@ -2,7 +2,7 @@
 <div class="container h-100">
   <div class="row justify-content-center align-items-center">
    <div class="col-md-3">
-    <select class="form-control custom-select" [(ngModel)]="mySelectedCategory" (change)="getSelected()">
+    <select class="form-control custom-select" [(ngModel)]="mySelectedCategory" (change)="getSelectedCategory()">
       <option class="option-display" selected="selected" value=0 >All Categories</option>
       <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
     </select> 
@@ -31,7 +31,11 @@
               <h5 class="card-title">{{product.name}}</h5>
               <p class="card-text">Type: {{product.subCategoryName}}</p>
               <p class="card-text">Owner: {{product.user}}</p>
-              <p class="card-text">Details: {{product.details}}</p>
+              <p class="card-text">Details: </p>
+              <div *ngFor="let productDetails of product.detailsList">
+                <p class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
+              </div>
+              
               <p class="card-text">Rate: {{product.rating}}</p>
               <p class="card-text">Available: {{product.isAvailable}}</p>
             </div>
@@ -61,7 +65,12 @@
               <h5 class="card-title">{{favoriteProduct.name}}</h5>
               <p class="card-text">Type: {{favoriteProduct.subCategoryName}}</p>
               <p class="card-text">Owner: {{favoriteProduct.user}}</p>
-              <p class="card-text">Details: {{favoriteProduct.details}}</p>
+
+              <p class="card-text">Details: </p>
+              <div *ngFor="let favoriteProductDetails of favoriteProduct.detailsList">
+                <p class="card-text">{{favoriteProductDetails.name}} : {{ favoriteProductDetails.description}}</p>
+              </div>
+
               <p class="card-text">Rate: {{favoriteProduct.rating}}</p>
               <p class="card-text">Available: {{favoriteProduct.isAvailable}}</p>
               <ngb-rating  class="rating" [max]="5" (rateChange)="rateProduct(favoriteProduct.id, $event)"></ngb-rating>
@@ -69,7 +78,8 @@
             <div class="card-body">
                 <i *ngIf="favoriteProductsId.includes(favoriteProduct.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(favoriteProduct.id)"></i>
                 <i *ngIf="!favoriteProductsId.includes(favoriteProduct.id)" class="far fa-heart" (click)="addFavoriteProduct(favoriteProduct.id)"></i>
-              <button class="btn btn-primary" (click)="borrowProduct(favoriteProduct.id)">Borrow</button>
+                <button *ngIf="!borrowedProductsId.includes(favoriteProduct.id)" class="btn btn-primary" (click)="borrowProduct(favoriteProduct.id)">Borrow</button>
+                <button *ngIf="borrowedProductsId.includes(favoriteProduct.id)" class="btn btn-primary" (click)="giveBackBorrowedProduct(favoriteProduct.id)">Give Back</button>
             </div>
         </div>
     </div>

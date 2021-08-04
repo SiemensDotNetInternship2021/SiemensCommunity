@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using Service.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Adapters
 {
@@ -23,15 +19,18 @@ namespace Service.Adapters
             OptionDetailsDTO = config.CreateMapper();
         }
 
+
         public Data.Models.TokenDetails Adapt(TokenDetails optionDetailsDTO)
         {
             return OptionDetailsDTO.Map<TokenDetails, Data.Models.TokenDetails>(optionDetailsDTO);
         }
 
+
         public TokenDetails Adapt(Data.Models.TokenDetails optionDetailsDTO)
         {
             return OptionDetailsDTO.Map<Data.Models.TokenDetails, TokenDetails>(optionDetailsDTO);
         }
+
 
         public List<TokenDetails> AdaptList(List<Data.Models.TokenDetails> optionDetailsDTO)
         {

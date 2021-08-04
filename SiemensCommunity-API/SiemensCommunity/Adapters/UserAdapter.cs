@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 using SiemensCommunity.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SiemensCommunity.Adapters
 {
@@ -35,7 +31,7 @@ namespace SiemensCommunity.Adapters
 
         public Service.Models.UserLoginCredentials Adapt(UserLoginCredentials userLoginCredentials)
         {
-            return _userAdapter.Map<UserLoginCredentials, Service.Models.UserLoginCredentials > (userLoginCredentials);
+            return _userAdapter.Map<UserLoginCredentials, Service.Models.UserLoginCredentials>(userLoginCredentials);
         }
     }
 }

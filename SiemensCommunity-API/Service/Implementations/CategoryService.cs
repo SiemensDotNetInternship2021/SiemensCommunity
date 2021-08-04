@@ -2,13 +2,10 @@
 using Data.Contracts;
 using Microsoft.Extensions.Logging;
 using Service.Adapters;
-using Service.Models;
 using Service.Contracts;
 using Service.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 
@@ -18,8 +15,9 @@ namespace Service.Implementations
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-        private readonly CategoryAdapter _categoryAdapter= new CategoryAdapter();
+        private readonly CategoryAdapter _categoryAdapter = new CategoryAdapter();
         private readonly ILogger _logger;
+
         public CategoryService(ICategoryRepository categoryRepository, ILoggerFactory logger)
         {
             _categoryRepository = categoryRepository;

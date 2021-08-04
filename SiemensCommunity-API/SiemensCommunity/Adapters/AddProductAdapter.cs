@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 using SiemensCommunity.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SiemensCommunity.Adapters
 {
@@ -25,13 +21,12 @@ namespace SiemensCommunity.Adapters
 
         public Service.Models.AddProduct Adapt(AddProduct product)
         {
-        return _addProductAdapter.Map<AddProduct, Service.Models.AddProduct>(product);
+            return _addProductAdapter.Map<AddProduct, Service.Models.AddProduct>(product);
         }
 
         public AddProduct Adapt(Service.Models.AddProduct product)
         {
             return _addProductAdapter.Map<Service.Models.AddProduct, AddProduct>(product);
         }
-
     }
 }

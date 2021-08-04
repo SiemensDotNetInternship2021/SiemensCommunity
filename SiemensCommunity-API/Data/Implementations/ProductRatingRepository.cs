@@ -15,6 +15,7 @@ namespace Data.Implementations
 
         }
 
+
         public async Task<ProductRating> AddWithCheck(ProductRating ratingDetails)
         {
             var product = Context.ProductRatings.SingleOrDefault(pr => pr.ProductId == ratingDetails.ProductId && pr.UserId == ratingDetails.UserId);

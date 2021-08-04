@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Implementations
@@ -15,12 +14,13 @@ namespace Data.Implementations
         {
         }
 
+
         public async Task<ProductFormDTO> FindById(int id)
         {
             var product = await Context.Products.Where(p => p.Id == id)
                 .Include(p => p.Category)
                 .Include(p => p.SubCategory)
-                .Select( p => new ProductFormDTO
+                .Select(p => new ProductFormDTO
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -31,6 +31,7 @@ namespace Data.Implementations
                 }).SingleOrDefaultAsync();
             return product;
         }
+
 
         public async Task<List<ProductDTO>> GetFiltredProducts(int selectedCategory, int selectedOption)
         {
@@ -63,7 +64,8 @@ namespace Data.Implementations
 
                 return product;
             }
-            if (selectedOption == 0 && (selectedCategory == 1 || selectedCategory == 2))
+
+            if (selectedOption == 0 && (selectedCategory != 0))
             {
                 var product = await Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.CategoryId == selectedCategory)
                .Include(pr => pr.ProductRating).Include(pr => pr.Photo)
@@ -92,6 +94,7 @@ namespace Data.Implementations
 
                 return product;
             }
+
             if (selectedOption == 1 && (selectedCategory == 0))
             {
                 var product = await Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.IsAvailable == true)
@@ -121,7 +124,8 @@ namespace Data.Implementations
 
                 return product;
             }
-            if (selectedOption == 1 && (selectedCategory == 1 || selectedCategory == 2))
+
+            if (selectedOption == 1 && (selectedCategory != 0))
             {
                 var product = await Context.Products.Include(pr => pr.User).Include(pr => pr.Category).Include(pr => pr.SubCategory).Where(pr => pr.CategoryId == selectedCategory && pr.IsAvailable == true)
                 .Include(pr => pr.ProductRating).Include(pr => pr.Photo)
@@ -154,6 +158,6 @@ namespace Data.Implementations
             {
                 return null;
             }
-        } 
+        }
     }
 }

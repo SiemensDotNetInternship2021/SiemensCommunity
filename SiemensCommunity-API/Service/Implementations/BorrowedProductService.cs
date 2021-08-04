@@ -12,6 +12,7 @@ namespace Service.Implementations
     {
         private readonly IBorrowedProductRepository _borrowedProductRepository;
         private readonly IProductRepository _productRepository;
+
         private readonly BorrowedProductAdapter _borrowedProductAdapter = new BorrowedProductAdapter();
 
         public BorrowedProductService(IBorrowedProductRepository borrowedProductRepository, IProductRepository productRepository)
@@ -31,8 +32,6 @@ namespace Service.Implementations
             var borrowedProducts = await _borrowedProductRepository.GetAsync();
             var products = await _productRepository.GetAsync();
             var filteredProducts = borrowedProducts.Where(x => products.Any(p => p.Id == x.ProductId && p.CategoryId == categoryId));
-            //    products.Where(x => x.CategoryId == categoryId && borrowedProducts.Any(rp => rp.ProductId == x.Id));
-
             return _borrowedProductAdapter.AdaptList(filteredProducts);
         }
 

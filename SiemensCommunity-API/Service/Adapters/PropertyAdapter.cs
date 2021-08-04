@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
 using Service.Models;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Service.Adapters
 {
@@ -26,14 +22,19 @@ namespace Service.Adapters
             return _propertyAdapter.Map<Property, Data.Models.Property>(property);
         }
 
+
         public Property Adapt(Data.Models.Property property)
         {
             return _propertyAdapter.Map<Data.Models.Property, Property>(property);
         }
+
+
         public IEnumerable<Property> AdaptList(IEnumerable<Data.Models.Property> property)
         {
             return _propertyAdapter.Map<IEnumerable<Data.Models.Property>, IEnumerable<Property>>(property);
         }
+
+
         public IEnumerable<Data.Models.Property> AdaptList(IEnumerable<Property> property)
         {
             return _propertyAdapter.Map<IEnumerable<Property>, IEnumerable<Data.Models.Property>>(property);

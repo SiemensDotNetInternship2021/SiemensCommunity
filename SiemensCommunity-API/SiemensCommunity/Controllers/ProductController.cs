@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using SiemensCommunity.Adapters;
 using SiemensCommunity.Models;
@@ -13,12 +12,9 @@ namespace SiemensCommunity.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
-        private readonly UserAdapter _userAdapter = new UserAdapter();
         private readonly AddProductAdapter _addProductAdapter = new AddProductAdapter();
         private readonly UpdateProductAdapter _updateProductAdapter = new UpdateProductAdapter();
-        private readonly TokenDetailsAdapter _optionDetailsDTOAdapter = new TokenDetailsAdapter();
 
         public ProductController(IProductService productService)
         {
@@ -26,7 +22,7 @@ namespace SiemensCommunity.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromForm]AddProduct addProduct)
+        public async Task<IActionResult> Add([FromForm] AddProduct addProduct)
         {
 
             if (!(ModelState.IsValid))
@@ -46,6 +42,7 @@ namespace SiemensCommunity.Controllers
                 }
             }
         }
+
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromForm] UpdateProductDTO addProduct)
         {
@@ -101,8 +98,8 @@ namespace SiemensCommunity.Controllers
         [HttpGet("optionDetails")]
         public async Task<IActionResult> Get(int selectedCategory, int selectedOption)
         {
-           var filtredProducts = await _productService.GetFiltredProducts(selectedCategory, selectedOption);
-           return Ok(filtredProducts);
+            var filtredProducts = await _productService.GetFiltredProducts(selectedCategory, selectedOption);
+            return Ok(filtredProducts);
         }
     }
 }
