@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using SiemensCommunity.Adapters;
@@ -76,7 +77,7 @@ namespace SiemensCommunity.Controllers
             return Ok(product);
         }
 
-        [HttpDelete]
+        [HttpDelete("delete")]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _productService.DeleteByIdAsync(id);
@@ -98,11 +99,34 @@ namespace SiemensCommunity.Controllers
             return Ok(products);
         }
 
+
         [HttpGet("optionDetails")]
         public async Task<IActionResult> Get(int selectedCategory, int selectedOption)
         {
            var filtredProducts = await _productService.GetFiltredProducts(selectedCategory, selectedOption);
            return Ok(filtredProducts);
+        }
+
+        [HttpGet("getUserProducts")]
+        public async Task<IActionResult> GetUserProducts(int userId, int? categoryId)
+        {
+            var products = await _productService.GetUserProductsAsync(userId, categoryId);
+            return Ok(products);
+        }
+
+
+        [HttpGet("getUserAvailableProducts")]
+        public async Task<IActionResult> GetUserAvailableProducts(int userId, int? categoryId)
+        {
+            var products = await _productService.GetUserAvailableProductsAsync(userId, categoryId);
+            return Ok(products);
+        }
+
+        [HttpGet("getUserLentedProducts")]
+        public async Task<IActionResult> GetUserLentedProducts(int userId, int? categoryId)
+        {
+            var products = await _productService.GetUserLentedProductsAsync(userId, categoryId);
+            return Ok(products);
         }
     }
 }

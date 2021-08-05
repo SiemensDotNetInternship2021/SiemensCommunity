@@ -43,3 +43,11 @@ span.status-lent {
     border-radius:10px;
     font-size:15px;
 }
+.pagination{
+    justify-content: center!important;
+}
+
+h5{
+    font-size: large;
+    font-weight:500;
+}

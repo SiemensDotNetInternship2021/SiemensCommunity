@@ -12,5 +12,8 @@ namespace Service.Contracts
         public Task<ProductFormDTO> GetByIdAsync(int id);
         public Task<Product> UpdateAsync(UpdateProductDTO product);
         public Task<List<ProductDTO>> GetFiltredProducts(int selectedCategory, int selectedOption);
+        public Task<List<ProductDTO>> GetUserProductsAsync(int userId, int? selectedCategoryId);
+        public Task<List<ProductDTO>> GetUserAvailableProductsAsync(int userId, int? selectedCategory);
+        public Task<List<ProductDTO>> GetUserLentedProductsAsync(int userId, int? selectedCategory);
     }
 }

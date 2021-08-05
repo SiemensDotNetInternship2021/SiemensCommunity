@@ -151,5 +151,50 @@ namespace Service.Implementations
             return _productDTOAdapter.AdaptList(returnedProducts);
         }
 
+        public async Task<List<ProductDTO>> GetUserProductsAsync(int userId, int? selectedCategoryId)
+        {
+            if (selectedCategoryId == null)
+            {
+                var products = await _productRepository.GetUserProductsAsync(userId);
+                return _productDTOAdapter.AdaptList(products);
+            }
+            else
+            {
+                var products = await _productRepository.GetUserProductsByCategoryAsync(userId, selectedCategoryId.Value);
+                return _productDTOAdapter.AdaptList(products);
+            }
+        }
+
+        public async Task<List<ProductDTO>> GetUserAvailableProductsAsync(int userId, int? selectedCategory)
+        {
+
+            if (selectedCategory == null)
+            {
+               var products = await _productRepository.GetUserAvailableProductsAsync(userId);
+                return _productDTOAdapter.AdaptList(products);
+            }
+            else
+            {
+                var products = await _productRepository.GetUserAvailableProductsByCategoryAsync(userId, selectedCategory.Value);
+                return _productDTOAdapter.AdaptList(products);
+            }
+
+        }
+
+        public async Task<List<ProductDTO>> GetUserLentedProductsAsync(int userId, int? selectedCategory)
+        {
+
+            if (selectedCategory == null)
+            {
+                var products = await _productRepository.GetUserLentedProductsAsync(userId);
+                return _productDTOAdapter.AdaptList(products);
+            }
+            else
+            {
+                var products = await _productRepository.GetUserLentedProductsByCategoryAsync(userId, selectedCategory.Value);
+                return _productDTOAdapter.AdaptList(products);
+            }
+
+        }
     }
 }

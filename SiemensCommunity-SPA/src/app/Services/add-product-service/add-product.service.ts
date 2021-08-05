@@ -41,8 +41,8 @@ export class AddProductService {
     this.formData.append("SubCategoryId", this.addProductModel.value.SubCategory);
     this.formData.append("Details", JSON.stringify(properties));
     console.log(productImage);
-    this.formData.append("UserId", "1");
-    if(productId == undefined){
+    this.formData.append("UserId", "2");
+    if(productId == undefined || productId == 0){
       return this.http.post(this.rootUrl + '/Product/add', this.formData);
     }else{
       this.formData.append("ImageURL",((productImage === undefined)? "": productImage.toString()));

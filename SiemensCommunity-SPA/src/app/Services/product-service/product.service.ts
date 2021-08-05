@@ -60,7 +60,32 @@ export class ProductService {
   }
 
   getAllProducts() {
-    return this.http.get<IProducts[]>(this.rootUrl + '/Product/getProducts')
+    return this.http.get<IProduct[]>(this.rootUrl + '/Product/getProductsList');
   }
 
+  getUserProducts(userId: number, selectedCategoryId?: any) {
+    if(selectedCategoryId == null)
+      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserProducts?userId=' + userId);
+    else
+      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserProducts?userId=' + userId + "&categoryId=" +selectedCategoryId);
+  }
+
+  getUserAvailableProducts(userId: number, selectedCategoryId?: any){
+    if(selectedCategoryId == null)
+      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserAvailableProducts?userId=' + userId);
+    else
+      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserAvailableProducts?userId=' + userId + "&categoryId=" +selectedCategoryId);
+  }
+
+  getUserLentedProducts(userId: number, selectedCategoryId?: any){
+    if(selectedCategoryId == null)
+      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserLentedProducts?userId=' + userId);
+    else
+      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserLentedProducts?userId=' + userId + "&categoryId=" +selectedCategoryId);
+  }
+
+
+  deleteProduct(productId: any){
+    return this.http.delete<boolean>(this.rootUrl + "/product/delete?id=" + productId);
+  }
 }

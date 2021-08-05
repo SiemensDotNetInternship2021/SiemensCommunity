@@ -1,120 +1,51 @@
 <app-nav-bar></app-nav-bar>
 <div class="container h-100">
-
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-borrowed">Borrowed</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
+  <div class="row justify-content-center align-items-center">
+   <div class="col-md-3">
+    <select class="form-control custom-select" [(ngModel)]="mySelectedCategory" (change) = "onCategoryChanged()">
+      <option class="option-display" selected="selected" value=0 >All Categories</option>
+      <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
+    </select> 
+   </div>
+   <div class="col-md-3">
+     <form>
+      <label class="option"> All
+        <input value="0" [checked]="true" [(ngModel)]="mySelectedOption"  name = "option" (change)="checkboxChange($event)" type="radio">
+      </label>
+      <label class="option"> Available
+        <input value="1" name = "option"  [(ngModel)]="mySelectedOption"  (change)="checkboxChange($event)" type="radio">
+      </label>
+      <label class="option"> Lented
+        <input value="2" name = "option"  [(ngModel)]="mySelectedOption"  (change)="checkboxChange($event)" type="radio">
+      </label>
+     </form>
+   </div>
+  </div>
+  <div class="row justify-content-center align-items-center">
+    <div *ngFor="let product of products | paginate : 
+      {itemsPerPage: 8, 
+      currentPage: page}" class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <img src="{{product.imagePath}}" class="card-img-top" alt="{{product.name}}" >
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}}</h5>
+              <p class="card-text">Type: {{product.subCategoryName}}</p>
+              <p class="card-text">Owner: {{product.user}}</p>
+              <p class="card-text">Details: </p>
+              <div *ngFor="let productDetails of product.detailsList">
+                <p class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
               </div>
-              <div class="card-body">
-                <button class="btn btn-primary">Give back</button>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-lent">Lent</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-lent">Lent</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
+              <p class="card-text">Rate: {{product.rating}}</p>
+              <p class="card-text">Available: {{product.isAvailable}}</p>
+            </div>
+            <div class="card-body">
+              <a class="btn btn-primary" routerLink="/addproduct/{{product.id}}">Update</a>
+              <button class="btn btn-primary" (click)= "deleteProduct(product.id)">Delete</button>
+            </div>
+        </div>
     </div>
-  
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-lent">Lent</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3 align-item-center">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-borrowed">Borrowed</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-              <div class="card-body">
-                <button class="btn btn-primary">Give Back</button>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-lent">Lent</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
-    </div>
-  
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-borrowed">Borowed</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-              <div class="card-body">
-                <button class="btn btn-primary">Give Back</button>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-borrowed">Available</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-              <div class="card-body">
-                <button class="btn btn-primary">Give Back</button>
-              </div>
-          </div>
-      </div>
-  
-      <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
-              <img src="assets/unnamed.png" class="card-img-top" >
-              <span class="status-lent">Lent</span>
-              <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
-                <p class="card-text">Object Details</p>
-              </div>
-          </div>
-      </div>
+    <div class="pagination">
+      <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
+</div>
