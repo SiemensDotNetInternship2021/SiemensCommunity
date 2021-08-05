@@ -61,11 +61,13 @@ export class MycatalogPageComponent implements OnInit {
   }
 
   onCategoryChanged(){
-    console.log("kkkkkkkkk");
     this.getMyCatalogProducts(this.selectedOption, this.mySelectedCategory);
   }
 
   getMyCatalogProducts(optionValue: any, selectedCategory: any){
+    if(selectedCategory == 0){
+      selectedCategory = null;
+    }
     if(optionValue == 0){
       this.productService.getUserProducts(this.userId, selectedCategory).subscribe(products =>{
         this.products = products;
@@ -79,7 +81,6 @@ export class MycatalogPageComponent implements OnInit {
       this.productService.getUserLentedProducts(this.userId, selectedCategory).subscribe(products =>{
         this.products = products;
         console.log(this.products);
-        console.log(products);
       });
     }
   }
@@ -88,7 +89,7 @@ export class MycatalogPageComponent implements OnInit {
     this.productService.deleteProduct(productId).subscribe((res : any) =>
     {
       this.toastr.success("Product deleted successfully");
-      this.getProducts();
+      this.getMyCatalogProducts(this.selectedOption, this.mySelectedCategory);
     },
     err=>{
       this.toastr.error("The product could not be deleted");

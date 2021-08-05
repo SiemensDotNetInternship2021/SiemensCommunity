@@ -1,26 +1,29 @@
 <app-nav-bar></app-nav-bar>
 <div class="container h-100">
-  <div class="row justify-content-center align-items-center">
-   <div class="col-md-3">
-    <select class="form-control custom-select" [(ngModel)]="mySelectedCategory" (change) = "onCategoryChanged()">
-      <option class="option-display" selected="selected" value=0 >All Categories</option>
-      <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
-    </select> 
-   </div>
-   <div class="col-md-3">
-     <form>
-      <label class="option"> All
-        <input value="0" [checked]="true" [(ngModel)]="mySelectedOption"  name = "option" (change)="checkboxChange($event)" type="radio">
-      </label>
-      <label class="option"> Available
-        <input value="1" name = "option"  [(ngModel)]="mySelectedOption"  (change)="checkboxChange($event)" type="radio">
-      </label>
-      <label class="option"> Lented
-        <input value="2" name = "option"  [(ngModel)]="mySelectedOption"  (change)="checkboxChange($event)" type="radio">
-      </label>
-     </form>
-   </div>
+  <div class="nav-bar-ctn">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-3">
+       <select class="form-control custom-select" [(ngModel)]="mySelectedCategory" (change) = "onCategoryChanged()">
+         <option class="option-display" selected="selected" value=0 >All Categories</option>
+         <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
+       </select> 
+      </div>
+      <div class="col-md-3">
+        <form class="radio-form">
+         <label class="option"> All
+           <input value="0" [checked]="true" [(ngModel)]="mySelectedOption"  name = "option" (change)="checkboxChange($event)" type="radio">
+         </label>
+         <label class="option"> Available
+           <input value="1" name = "option"  [(ngModel)]="mySelectedOption"  (change)="checkboxChange($event)" type="radio">
+         </label>
+         <label class="option"> Lented
+           <input value="2" name = "option"  [(ngModel)]="mySelectedOption"  (change)="checkboxChange($event)" type="radio">
+         </label>
+        </form>
+      </div>
+     </div>
   </div>
+
   <div class="row justify-content-center align-items-center">
     <div *ngFor="let product of products | paginate : 
       {itemsPerPage: 8, 
@@ -38,14 +41,14 @@
               <p class="card-text">Rate: {{product.rating}}</p>
               <p class="card-text">Available: {{product.isAvailable}}</p>
             </div>
-            <div class="card-body">
-              <a class="btn btn-primary" routerLink="/addproduct/{{product.id}}">Update</a>
-              <button class="btn btn-primary" (click)= "deleteProduct(product.id)">Delete</button>
+            <div class="card-body inline-btns-ctn">
+              <a class="btn btn-warning" routerLink="/addproduct/{{product.id}}">Update</a>
+              <button class="btn btn-danger" (click)= "deleteProduct(product.id)">Delete</button>
             </div>
         </div>
     </div>
-    <div class="pagination">
+  </div>
+  <div class="pagination">
       <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
     </div>
-  </div>
 </div>
