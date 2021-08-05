@@ -32,7 +32,7 @@ namespace Service.Implementations
             var borrowedProducts = await _borrowedProductRepository.GetAsync();
             var products = await _productRepository.GetAsync();
             var filteredProducts = borrowedProducts.Where(x => products.Any(p => p.Id == x.ProductId && p.CategoryId == categoryId));
-            return _borrowedProductAdapter.AdaptList(filteredProducts);
+            return _borrowedProductAdapter.AdaptList(filteredProducts); 
         }
 
         public async Task<BorrowedProduct> BorrowProduct(BorrowedProduct borrowDetails)
