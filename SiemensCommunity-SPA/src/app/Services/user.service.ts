@@ -10,7 +10,9 @@ export class UserService {
 
   readonly rootUrl = 'http://localhost:52718/api';
   email: string = "";
-  token: string= "";
+  token: string = "";
+  userRole: string ="";
+  test: string = "Admin";
 
   registrationModel = this.form.group({
       FirstName: ['', Validators.required],
@@ -82,5 +84,45 @@ export class UserService {
     }
     console.log(resetPassworData.Email);
     return this.http.post(this.rootUrl + '/Account/resetpassword', resetPassworData);
+  }
+
+  getAndCheckUserRole() {
+    var token = localStorage.getItem('token');
+    var tokenDetails = "";
+    if(token != null) {
+      tokenDetails = window.atob(token.split('.')[1]);
+    }
+    console.log(tokenDetails);
+    this.userRole = tokenDetails.split(':')[2].split(',')[0].split('"').join('');
+    console.log("asta e role" + " " +  this.userRole);
+    if(this.userRole === "Admin")
+    {
+      return true;
+    }
+    else 
+    {
+      return false;
+    }
+  }
+
+  roleMatch(allowedRoles : string[]) : boolean{
+    var isMatch = false;
+    var token = localStorage.getItem('token');
+    var tokenDetails = "";
+    if(token != null) {
+      tokenDetails = window.atob(token.split('.')[1]);
+    }
+    this.userRole = tokenDetails.split(':')[2].split(',')[0].split('"').join('');
+    allowedRoles.forEach(allowedRole => {
+      if(this.userRole == allowedRole)
+      {
+        return isMatch = true;
+      }
+      else 
+      {
+        return isMatch = false;
+      }
+    });
+    return isMatch;
   }
 }

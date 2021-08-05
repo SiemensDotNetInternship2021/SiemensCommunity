@@ -18,6 +18,9 @@
         <li class="nav-item">
           <a class="nav-link " routerLink="/mycatalog">My catalog</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin" *ngIf="checkifAdmin == true">Admin Panel</a>
+        </li>
       </ul>
     <button class="btn btn-outline-dark" (click)="logout()">Logout</button>
   </div>

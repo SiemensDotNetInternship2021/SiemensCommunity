@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/Services/user.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,9 +9,12 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(public router: Router,) { }
+  checkifAdmin : boolean = false;
+  constructor(public router: Router, public service: UserService) { }
 
   ngOnInit(): void {
+    this.checkifAdmin = this.service.getAndCheckUserRole();
+    console.log(this.checkifAdmin);
   }
 
   logout() {

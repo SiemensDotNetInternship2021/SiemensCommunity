@@ -45,6 +45,7 @@ export class HomePageComponent implements OnInit {
       tokenDetails = window.atob(token.split('.')[1]);
     }
       this.userId = parseInt(tokenDetails.split(':')[1].split(',')[0].replace('"', ''));
+      console.log("asta e idu" + " " +this.userId);
   }
 
   getProducts() {
