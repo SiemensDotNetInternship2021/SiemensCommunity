@@ -18,8 +18,6 @@ namespace Service.Implementations
         private readonly IPhotoRepository _photoRepository;
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
         private readonly ProductDTOAdapter _productDTOAdapter = new ProductDTOAdapter();
-        private readonly TokenDetailsAdapter _optionDetailsDTOAdapter = new TokenDetailsAdapter();
-        private readonly ProductAdapter _addProductAdapter = new ProductAdapter();
         private readonly PhotoAdapter _photoAdapter = new PhotoAdapter();
         private readonly ProductFormAdapter _productFormDTOAdapter = new ProductFormAdapter();
         private readonly UpdateProductAdapter _updateProductAdapter = new UpdateProductAdapter();

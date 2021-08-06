@@ -1,1 +1,16 @@
 <app-nav-bar></app-nav-bar>
+   <div class="row justify-content-center align-items-center">
+    <div *ngFor="let user of users" class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">UserId:{{user.id}}</h5>
+              <p class="card-text">FirstName: {{user.firstName}}</p>
+              <p class="card-text">LastName: {{user.lastName}}</p>
+              <p class="card-text">Department: {{user.department}}</p>
+              <p class="card-text">OfficeFloor: {{user.officeFloor}}</p>
+            </div>
+        <button>Edit User details</button>
+        </div>
+    </div>
+   </div>
+   

@@ -40,11 +40,12 @@ export class HomePageComponent implements OnInit {
 
   getUserId() {
     var token = localStorage.getItem('token');
-    var tokenDetails = "";
+    var tokenDetails : any;
     if(token != null) {
       tokenDetails = window.atob(token.split('.')[1]);
     }
-      this.userId = parseInt(tokenDetails.split(':')[1].split(',')[0].replace('"', ''));
+      tokenDetails = JSON.parse(tokenDetails);
+      this.userId = tokenDetails.UserId;
       console.log("asta e idu" + " " +this.userId);
   }
 

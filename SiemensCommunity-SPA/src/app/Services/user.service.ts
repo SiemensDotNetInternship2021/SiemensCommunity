@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IUser } from '../Models/IUserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -88,13 +89,14 @@ export class UserService {
 
   getAndCheckUserRole() {
     var token = localStorage.getItem('token');
-    var tokenDetails = "";
+    var tokenDetails : any;
     if(token != null) {
       tokenDetails = window.atob(token.split('.')[1]);
     }
-    console.log(tokenDetails);
-    this.userRole = tokenDetails.split(':')[2].split(',')[0].split('"').join('');
-    console.log("asta e role" + " " +  this.userRole);
+    tokenDetails = JSON.parse(tokenDetails);
+    console.log(tokenDetails)
+    this.userRole = tokenDetails.role;
+    console.log("asta e roleu " + " " + this.userRole);
     if(this.userRole === "Admin")
     {
       return true;
@@ -107,15 +109,10 @@ export class UserService {
 
   roleMatch(allowedRoles : string[]) : boolean{
     var isMatch = false;
-    var token = localStorage.getItem('token');
-    var tokenDetails = "";
-    if(token != null) {
-      tokenDetails = window.atob(token.split('.')[1]);
-    }
-    this.userRole = tokenDetails.split(':')[2].split(',')[0].split('"').join('');
     allowedRoles.forEach(allowedRole => {
       if(this.userRole == allowedRole)
       {
+        console.log("User role din alta functie " + this.userRole)
         return isMatch = true;
       }
       else 
@@ -124,5 +121,9 @@ export class UserService {
       }
     });
     return isMatch;
+  }
+
+  getUsers() {
+    return this.http.get<IUser[]>(this.rootUrl + '/User/')
   }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IUser } from 'src/app/Models/IUserDTO';
+import { UserService } from 'src/app/Services/user.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPanelComponent implements OnInit {
 
-  constructor() { }
+
+  users: IUser[] = []
+  constructor(public service: UserService) { }
 
   ngOnInit(): void {
+    this.getUsers();
+  }
+
+  getUsers() {
+    this.service.getUsers().subscribe(usersFromDB => {
+      this.users = usersFromDB;
+    })
   }
 
 }

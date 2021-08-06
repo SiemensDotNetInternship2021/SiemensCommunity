@@ -21,5 +21,7 @@ namespace Data.Models
         public ICollection<FavoriteProduct> FavoriteProduct { get; set; }
 
         public ICollection<ProductRating> ProductRating { get; set; }
+
+        public ICollection<BorrowedProduct> BorrowedProducts { get; set; }
     }
 }
