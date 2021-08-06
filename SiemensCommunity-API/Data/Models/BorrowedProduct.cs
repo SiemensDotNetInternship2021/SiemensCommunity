@@ -13,7 +13,7 @@ namespace Data.Models
         public int UserId { get; set; }
 
         [ForeignKey("Product")]
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -22,5 +22,7 @@ namespace Data.Models
         public Product Product { get; set; }
 
         public User User { get; set; }
+
+        public Photo Photo { get; set; }
     }
 }

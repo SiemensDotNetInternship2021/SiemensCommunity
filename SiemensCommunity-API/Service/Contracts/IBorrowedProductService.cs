@@ -15,5 +15,7 @@ namespace Service.Contracts
         public Task<IEnumerable<BorrowedProduct>> GetBorrowedByUserIdAsync(int userId);
 
         public Task<BorrowedProduct> ReturnBorrowedProduct(BorrowedProduct borrowDetails);
+
+        public Task<IEnumerable<BorrowedProductDTO>> GetBorrowedAsync(int userId);
     }
 }

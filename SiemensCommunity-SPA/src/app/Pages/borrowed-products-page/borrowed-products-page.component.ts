@@ -23,6 +23,7 @@ export class BorrowedProductsPageComponent implements OnInit {
   products: IProduct[] = [];
   rating: number = 0;
   userId: number = 0;
+  borrowedProductsId: number[]=[];
 
   constructor(public borrowedProductsService: BorrowedItemsServiceService,
               public categoriesService: CategoriesService,
@@ -58,7 +59,11 @@ export class BorrowedProductsPageComponent implements OnInit {
 
   getProducts(){
     this.borrowedProductsService.getAllBorrowedProducts().subscribe((prods) => {
-      this.products = prods;
+      this.products = [];
+      prods.forEach(product => {
+        product.detailsList = JSON.parse(product.details);
+        this.products.push(product);
+      })
     })
   }
 

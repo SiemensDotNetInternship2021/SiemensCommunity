@@ -18,6 +18,10 @@ export class BorrowedItemsServiceService {
     return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProducts?userId=' + userId);
   } 
 
+  getBorrowedProductsThroughDTO(userId: number) {
+    return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProductsWithDTO?userId=' + userId);
+  } 
+
   getBorrowedProductsByCategoryId(category: number) {
     return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProductsByCategory?categoryId=' + category);
   }

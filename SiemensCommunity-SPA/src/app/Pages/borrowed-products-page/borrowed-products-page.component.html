@@ -21,12 +21,17 @@
       }" class="col-md-3">
           <div class="card" style="width: 18rem;">
 
-              <img src="assets/unnamed.png" class="card-img-top" >
+              <img src="{{borrowedProduct.imagePath}}" class="card-img-top" >
               <div class="card-body">
-                <h5 class="card-title">Object Name</h5>
+                <h5 class="card-title">{{borrowedProduct.name}}</h5>
                 <p class="card-text">{{borrowedProduct.id}}</p>
                 <p class="card-text">{{borrowedProduct.userId}}</p>
-                <p class="card-text">{{borrowedProduct.productId}}</p>
+
+                <p class="card-text">Details: </p>
+                <div *ngFor="let borrowedProductDetails of borrowedProduct.detailsList">
+                  <p class="card-text">{{borrowedProductDetails.name}} : {{ borrowedProductDetails.description}}</p>
+                </div>
+
                 <p class="card-text">{{borrowedProduct.startDate}}</p>
                 <p class="card-text">{{borrowedProduct.endDate}}</p>
               </div>

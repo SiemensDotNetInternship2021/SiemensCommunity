@@ -11,5 +11,7 @@ namespace Data.Contracts
         public Task<IEnumerable<BorrowedProduct>> GetBorrowedProductsByUserIdAsync(int userId);
 
         public Task<BorrowedProduct> GiveBackProduct(BorrowedProduct borrowDetails);
+
+        public Task<IEnumerable<BorrowedProductDTO>> GetBorrowedDTOAsync(int userId);
     }
 }
