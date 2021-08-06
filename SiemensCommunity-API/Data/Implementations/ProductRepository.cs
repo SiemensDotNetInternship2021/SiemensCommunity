@@ -196,7 +196,7 @@ namespace Data.Implementations
         }
 
 
-        public async Task<List<ProductDTO>> GetUserLentedProductsAsync(int userId)
+        public async Task<List<ProductDTO>> GetUserLendProductsAsync(int userId)
         {
             return await Context.Products.Where(p => p.UserId == userId && p.IsAvailable == false)
                 .Select(p => new ProductDTO
@@ -215,7 +215,7 @@ namespace Data.Implementations
         }
 
 
-        public async Task<List<ProductDTO>> GetUserLentedProductsByCategoryAsync(int userId, int categoryId)
+        public async Task<List<ProductDTO>> GetUserLendProductsByCategoryAsync(int userId, int categoryId)
         {
             return await Context.Products.Where(p => p.UserId == userId && p.CategoryId == categoryId && p.IsAvailable == false)
                         .Select(p => new ProductDTO

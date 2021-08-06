@@ -181,17 +181,17 @@ namespace Service.Implementations
 
         }
 
-        public async Task<List<ProductDTO>> GetUserLentedProductsAsync(int userId, int? selectedCategory)
+        public async Task<List<ProductDTO>> GetUserLendProductsAsync(int userId, int? selectedCategory)
         {
 
             if (selectedCategory == null)
             {
-                var products = await _productRepository.GetUserLentedProductsAsync(userId);
+                var products = await _productRepository.GetUserLendProductsAsync(userId);
                 return _productDTOAdapter.AdaptList(products);
             }
             else
             {
-                var products = await _productRepository.GetUserLentedProductsByCategoryAsync(userId, selectedCategory.Value);
+                var products = await _productRepository.GetUserLendProductsByCategoryAsync(userId, selectedCategory.Value);
                 return _productDTOAdapter.AdaptList(products);
             }
 

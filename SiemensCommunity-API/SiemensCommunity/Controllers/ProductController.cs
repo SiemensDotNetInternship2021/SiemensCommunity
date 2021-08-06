@@ -122,10 +122,10 @@ namespace SiemensCommunity.Controllers
             return Ok(products);
         }
 
-        [HttpGet("getUserLentedProducts")]
+        [HttpGet("getUserLendProducts")]
         public async Task<IActionResult> GetUserLentedProducts(int userId, int? categoryId)
         {
-            var products = await _productService.GetUserLentedProductsAsync(userId, categoryId);
+            var products = await _productService.GetUserLendProductsAsync(userId, categoryId);
             return Ok(products);
         }
     }

@@ -19,7 +19,7 @@ export class MycatalogPageComponent implements OnInit {
   selectedOption : number = 0;
   page : any;
   userId : number = 0;
-  mySelectedOption: any;
+  mySelectedOption: number= 0;
 
   constructor(private productService: ProductService,
    private toastr: ToastrService,
@@ -35,11 +35,12 @@ export class MycatalogPageComponent implements OnInit {
   //get user id form token
   getUserId() {
     var token = localStorage.getItem('token');
-    this.userId = 2;
+    var tokenDetails: any;
     if(token != null) {
-     // tokenDetails = window.atob(token.split('.')[1]);
+     tokenDetails = window.atob(token.split('.')[1]);
+     tokenDetails = JSON.parse(tokenDetails);
+     this.userId = tokenDetails.UserId;
     }
-      //this.userId = parseInt(tokenDetails.split(':')[1].split(',')[0].replace('"', ''));
   }
 
   getProducts() {
@@ -78,7 +79,7 @@ export class MycatalogPageComponent implements OnInit {
       });
 
     }else if(optionValue == 2){
-      this.productService.getUserLentedProducts(this.userId, selectedCategory).subscribe(products =>{
+      this.productService.getUserLendProducts(this.userId, selectedCategory).subscribe(products =>{
         this.products = products;
         console.log(this.products);
       });

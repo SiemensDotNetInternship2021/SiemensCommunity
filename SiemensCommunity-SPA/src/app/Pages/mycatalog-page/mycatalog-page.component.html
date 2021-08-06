@@ -11,13 +11,13 @@
       <div class="col-md-3">
         <form class="radio-form">
          <label class="option"> All
-           <input value="0" [checked]="true" [(ngModel)]="mySelectedOption"  name = "option" (change)="checkboxChange($event)" type="radio">
+           <input value="0" [checked]="true" name = "option" (change)="checkboxChange($event)" type="radio">
          </label>
          <label class="option"> Available
-           <input value="1" name = "option"  [(ngModel)]="mySelectedOption"  (change)="checkboxChange($event)" type="radio">
+           <input value="1" name = "option" (change)="checkboxChange($event)" type="radio">
          </label>
          <label class="option"> Lented
-           <input value="2" name = "option"  [(ngModel)]="mySelectedOption"  (change)="checkboxChange($event)" type="radio">
+           <input value="2" name = "option" (change)="checkboxChange($event)" type="radio">
          </label>
         </form>
       </div>
@@ -42,7 +42,7 @@
               <p class="card-text">Available: {{product.isAvailable}}</p>
             </div>
             <div class="card-body inline-btns-ctn">
-              <a class="btn btn-warning" routerLink="/addproduct/{{product.id}}">Update</a>
+              <a class="btn btn-info" routerLink="/addproduct/{{product.id}}">Update</a>
               <button class="btn btn-danger" (click)= "deleteProduct(product.id)">Delete</button>
             </div>
         </div>
