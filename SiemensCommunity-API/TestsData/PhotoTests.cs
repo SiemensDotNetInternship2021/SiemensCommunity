@@ -19,9 +19,9 @@ namespace Data.Tests
         //system under test
         private PhotoRepository repository;
         //mock
-        private Mock<IPhotoRepository> photoRepositoryMock;
         private ProjectDbContext dbContext;
-        private string photoUrl = Guid.NewGuid().ToString();
+        private string goodPhotoUrl = Guid.NewGuid().ToString();
+        private string badPhotoUrl = Guid.NewGuid().ToString();
         private string publicId = Guid.NewGuid().ToString();
         DbContextOptions<ProjectDbContext> options = new DbContextOptionsBuilder<ProjectDbContext>()
                                                              .UseInMemoryDatabase(databaseName: "SiemensCommunityTests")
@@ -40,22 +40,19 @@ namespace Data.Tests
 
             using (var context = new ProjectDbContext(options))
             {
-                context.Photos.Add(new Photo { Id = 1, Url = photoUrl, PublicId = publicId, IsMain = false });
+                context.Photos.Add(new Photo { Id = 1, Url = goodPhotoUrl, PublicId = publicId, IsMain = false });
                 context.Photos.Add(new Photo { Id = 2, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false });
                 context.Photos.Add(new Photo { Id = 3, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false });
                 context.SaveChanges();
             }
 
             dbContext = new ProjectDbContext(options);
-            photoRepositoryMock = new Mock<IPhotoRepository>();
             repository = new PhotoRepository(dbContext);
         }
 
         [Test]
         public async Task GetPhotos_ShouldReturnListOfPhotos()
         {
-            photoRepositoryMock.Setup(p => p.GetAsync()).ReturnsAsync(photos);
-
             var result = await repository.GetAsync();
                     
             Assert.IsInstanceOf<List<Photo>>(result);
@@ -65,10 +62,9 @@ namespace Data.Tests
         [Test]
         public async Task FindByURL_ShouldReturnPhoto()
         {
-            Photo photo = new Photo() { Id = 1, Url = photoUrl, PublicId = publicId,  IsMain = false  };
-            photoRepositoryMock.Setup(p => p.FindByURL(photoUrl.ToString())).ReturnsAsync(photo);
+            Photo photo = new Photo() { Id = 1, Url = goodPhotoUrl, PublicId = publicId,  IsMain = false  };
 
-            var expected = await repository.FindByURL(photoUrl);
+            var expected = await repository.FindByURL(goodPhotoUrl);
 
             Assert.AreEqual(expected.Id, photo.Id);
             Assert.AreEqual(expected.Url, photo.Url);
@@ -79,10 +75,7 @@ namespace Data.Tests
         [Test]
         public async Task FindByURL_ShouldReturnNull()
         {
-            Photo photo = new Photo { Id = 1, Url = photoUrl, PublicId = Guid.NewGuid().ToString(), IsMain = false};
-            photoRepositoryMock.Setup(p => p.FindByURL(photoUrl.ToString())).ReturnsAsync(photo);
-
-            var expected = await repository.FindByURL(photoUrl);
+            var expected = await repository.FindByURL(badPhotoUrl);
 
             Assert.IsNull(expected);
         }

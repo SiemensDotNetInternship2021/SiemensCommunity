@@ -15,7 +15,6 @@ namespace Data.Tests
     public class DepartmentsTests
     {
         private DepartmentRepository repository;
-        private Mock<IDepartmentRepository> departmentRepositoryMock;
         private List<Department> departments;
         DbContextOptions<ProjectDbContext> options = new DbContextOptionsBuilder<ProjectDbContext>()
                                              .UseInMemoryDatabase(databaseName: "SiemensCommunityTests")
@@ -32,7 +31,6 @@ namespace Data.Tests
                 context.Departments.Add(new Department { Id = 3, Name = "Department 3"});
                 context.SaveChanges();
             }
-            departmentRepositoryMock = new Mock<IDepartmentRepository>();
             dbContext = new ProjectDbContext(options);
             repository = new DepartmentRepository(dbContext);
         }
@@ -40,12 +38,9 @@ namespace Data.Tests
         [Test]
         public async Task GetDepartment_ShouldReturnListOfDepartments()
         {
-            departmentRepositoryMock.Setup(p => p.GetAsync()).Returns(Task.FromResult(departments.AsEnumerable()));
-
             var result = await repository.GetAsync();
 
-            Assert.IsInstanceOf<IEnumerable<Department>>(result);
-            Assert.AreEqual(result.Count(), 3);
+            Assert.AreEqual(3, result.Count());
         }
     }
 }

@@ -177,6 +177,7 @@ namespace Data.Implementations
         }
 
 
+
         public async Task<List<ProductDTO>> GetUserProductsByCategoryAsync(int userId, int categoryId)
         {
             var products = await Context.Products.Where(p => p.UserId == userId && p.CategoryId == categoryId)

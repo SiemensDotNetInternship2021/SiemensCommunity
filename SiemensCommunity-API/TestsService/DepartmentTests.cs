@@ -15,9 +15,14 @@ namespace Service.Tests
 {
     public class DepartmentTests
     {
+        //subject of test
         private DepartmentService departmentService;
+
         private Mock<IDepartmentService> departmentServiceMock;
-        private Mock<IDepartmentRepository> departmentRepository = new Mock<IDepartmentRepository>();
+        private Mock<IDepartmentRepository> departmentRepositoryMock = new Mock<IDepartmentRepository>();
+        Mock<ILoggerFactory> _loggerFactory;
+        Mock<ILogger> mockLogger = new Mock<ILogger>();
+
         private List<Data.Models.Department> dataDepartment = new List<Data.Models.Department> {
             new Data.Models.Department { Id = 1, Name = "department 1" },
             new Data.Models.Department {Id =2, Name = "department 2"}
@@ -32,19 +37,40 @@ namespace Service.Tests
         public void SetUp()
         {
             departmentServiceMock = new Mock<IDepartmentService>(MockBehavior.Strict);
-            departmentService = new DepartmentService(departmentRepository.Object, new Mock<ILoggerFactory>().Object);
+
+            mockLogger.Setup(
+                m => m.Log(
+                    LogLevel.Information,
+                    It.IsAny<EventId>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Exception>(),
+                    It.IsAny<Func<object, Exception, string>>()));
+            _loggerFactory = new Mock<ILoggerFactory>();
+            _loggerFactory.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(() => mockLogger.Object);
+
+            departmentService = new DepartmentService(departmentRepositoryMock.Object, _loggerFactory.Object);
         }
 
         [Test]
         public async Task GetDepartments_ShouldReturnListOfDepartments()
         {
-            departmentRepository.Setup(c => c.GetAsync()).Returns(Task.FromResult(dataDepartment.AsEnumerable()));
-            departmentServiceMock.Setup(p => p.GetAsync()).Returns(Task.FromResult(departments.AsEnumerable()));
+            departmentRepositoryMock.Setup(c => c.GetAsync()).Returns(Task.FromResult(dataDepartment.AsEnumerable()));
 
             var result = await departmentService.GetAsync();
 
             Assert.IsInstanceOf<IEnumerable<Department>>(result);
-            Assert.AreEqual(result.Count(), 2);
+            Assert.AreEqual(2, result.Count());
+        }
+
+        [Test]
+        public async Task GetDepartments_ShouldReturnEmptyListOfDepartments()
+        {
+            departmentRepositoryMock.Setup(c => c.GetAsync()).Returns(Task.FromResult(new List<Data.Models.Department>().AsEnumerable()));
+
+            var result = await departmentService.GetAsync();
+
+            Assert.IsInstanceOf<IEnumerable<Department>>(result);
+            Assert.IsEmpty(result);
         }
     }
 }

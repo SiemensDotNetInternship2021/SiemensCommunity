@@ -77,11 +77,11 @@ export class ProductService {
       return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserAvailableProducts?userId=' + userId + "&categoryId=" +selectedCategoryId);
   }
 
-  getUserLentedProducts(userId: number, selectedCategoryId?: any){
+  getUserLendProducts(userId: number, selectedCategoryId?: any){
     if(selectedCategoryId == null)
-      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserLentedProducts?userId=' + userId);
+      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserLendProducts?userId=' + userId);
     else
-      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserLentedProducts?userId=' + userId + "&categoryId=" +selectedCategoryId);
+      return this.http.get<IProduct[]>(this.rootUrl + '/Product/getUserLendProducts?userId=' + userId + "&categoryId=" +selectedCategoryId);
   }
 
 

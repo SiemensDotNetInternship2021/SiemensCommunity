@@ -67,9 +67,9 @@ namespace Data.Implementations
                 }
                 return user.Id;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw ;
             }
         }
 

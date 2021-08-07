@@ -13,7 +13,6 @@ namespace Data.Tests
     public class CategoriesTests
     {
         private CategoryRepository repository;
-        private Mock<ICategoryRepository> categoryRepositoryMock;
         private List<Category> categories;
         DbContextOptions<ProjectDbContext> options = new DbContextOptionsBuilder<ProjectDbContext>()
                                      .UseInMemoryDatabase(databaseName: "SiemensCommunityTests")
@@ -31,7 +30,6 @@ namespace Data.Tests
                 context.Categories.Add(new Category { Id = 3, Name = "Category 3" });
                 context.SaveChanges();
             }
-            categoryRepositoryMock = new Mock<ICategoryRepository>();
             dbContext = new ProjectDbContext(options);
             repository = new CategoryRepository(dbContext);
         }
@@ -39,12 +37,10 @@ namespace Data.Tests
         [Test]
         public async Task GetCategories_ShouldReturnListOfCategory()
         {
-            categoryRepositoryMock.Setup(p => p.GetAsync()).Returns(Task.FromResult(categories.AsEnumerable()));
 
             var result = await repository.GetAsync();
 
-            Assert.IsInstanceOf<IEnumerable<Category>>(result);
-            Assert.AreEqual(result.Count(), 3);
+            Assert.AreEqual(3, result.Count());
         }
     }
 }
