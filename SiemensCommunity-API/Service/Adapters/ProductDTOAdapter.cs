@@ -33,5 +33,10 @@ namespace Service.Adapters
         {
             return _productAdapter.Map<List<Data.Models.ProductDTO>, List<ProductDTO>>(products);
         }
+
+        public IEnumerable<ProductDTO> AdaptEnumerable(IEnumerable<Data.Models.ProductDTO> products)
+        {
+            return _productAdapter.Map<IEnumerable<Data.Models.ProductDTO>, IEnumerable<ProductDTO>>(products);
+        }
     }
 }

@@ -147,7 +147,7 @@ export class HomePageComponent implements OnInit {
   getBorrowedProducts(){
     this.borrowedProductService.getBorrowedProducts(this.userId).subscribe((borrowedProds =>
       {
-        borrowedProds.forEach(borrowProd => this.borrowedProductsId.push(borrowProd.productId));
+        borrowedProds.forEach(borrowProd => this.borrowedProductsId.push(borrowProd.id));
       }))
   }
 

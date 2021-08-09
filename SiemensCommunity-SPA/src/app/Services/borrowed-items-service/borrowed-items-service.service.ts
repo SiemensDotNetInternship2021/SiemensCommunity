@@ -15,16 +15,16 @@ export class BorrowedItemsServiceService {
               public date : DatePipe) { }
 
   getBorrowedProducts(userId: number) {
-    return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProducts?userId=' + userId);
+    return this.http.get<IProduct[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProducts?userId=' + userId);
   } 
 
-  getBorrowedProductsByCategoryId(category: number) {
-    return this.http.get<IBorrowedProducts[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProductsByCategory?categoryId=' + category);
+  getBorrowedProductsByCategoryId(userId: number, category: number) {
+    return this.http.get<IProduct[]>(this.rootUrl + '/BorrowedProduct/getBorrowedProductsByCategory?userId=' +userId+'&categoryId=' + category);
   }
 
-  getAllBorrowedProducts() {
-    return this.http.get<IProduct[]>(this.rootUrl + '/Product/getProducts')
-  }
+  // getAllBorrowedProducts() {
+  //   return this.http.get<IProduct[]>(this.rootUrl + '/Product/getProducts')
+  // }
 
   borrowProduct(productId: number, userId: number) {
 

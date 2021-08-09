@@ -13,6 +13,7 @@ namespace Service.Implementations
         private readonly IBorrowedProductRepository _borrowedProductRepository;
         private readonly IProductRepository _productRepository;
 
+        private readonly ProductDTOAdapter productDTOAdapter = new ProductDTOAdapter();
         private readonly BorrowedProductAdapter _borrowedProductAdapter = new BorrowedProductAdapter();
 
         public BorrowedProductService(IBorrowedProductRepository borrowedProductRepository, IProductRepository productRepository)
@@ -27,12 +28,10 @@ namespace Service.Implementations
             return _borrowedProductAdapter.AdaptList(returnedProducts);
         }
 
-        public async Task<IEnumerable<BorrowedProduct>> GetByCategoryIdAsync(int categoryId)
+        public async Task<IEnumerable<ProductDTO>> GetByCategoryIdAsync(int userId, int categoryId)
         {
-            var borrowedProducts = await _borrowedProductRepository.GetAsync();
-            var products = await _productRepository.GetAsync();
-            var filteredProducts = borrowedProducts.Where(x => products.Any(p => p.Id == x.ProductId && p.CategoryId == categoryId));
-            return _borrowedProductAdapter.AdaptList(filteredProducts);
+            var borrowedProducts = await _borrowedProductRepository.GetBorrowedProductsOfUserByCategoryIdAsync(userId, categoryId);
+            return productDTOAdapter.AdaptEnumerable(borrowedProducts);
         }
 
         public async Task<BorrowedProduct> BorrowProduct(BorrowedProduct borrowDetails)
@@ -41,15 +40,16 @@ namespace Service.Implementations
             return _borrowedProductAdapter.Adapt(borrowedProduct);
         }
 
-        public async Task<IEnumerable<BorrowedProduct>> GetBorrowedByUserIdAsync(int userId)
+        public async Task<IEnumerable<ProductDTO>> GetBorrowedByUserIdAsync(int userId)
         {
             var borrowedProduct = await _borrowedProductRepository.GetBorrowedProductsByUserIdAsync(userId);
-            return _borrowedProductAdapter.AdaptList(borrowedProduct);
+            return productDTOAdapter.AdaptEnumerable(borrowedProduct);
         }
 
         public async Task<BorrowedProduct> ReturnBorrowedProduct(BorrowedProduct borrowDetails)
         {
-            var returnedProduct = await _borrowedProductRepository.GiveBackProduct(_borrowedProductAdapter.Adapt(borrowDetails));
+            var adat = _borrowedProductAdapter.Adapt(borrowDetails);
+            var returnedProduct = await _borrowedProductRepository.GiveBackProduct(adat);
             return _borrowedProductAdapter.Adapt(returnedProduct);
         }
     }
