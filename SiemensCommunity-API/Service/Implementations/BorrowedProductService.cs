@@ -2,6 +2,7 @@
 using Service.Adapters;
 using Service.Contracts;
 using Service.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Service.Implementations
 
         private readonly ProductDTOAdapter productDTOAdapter = new ProductDTOAdapter();
         private readonly BorrowedProductAdapter _borrowedProductAdapter = new BorrowedProductAdapter();
+        private readonly BorrowedProductDTOAdapter _borrowedProductDTOAdapter = new BorrowedProductDTOAdapter();
 
         public BorrowedProductService(IBorrowedProductRepository borrowedProductRepository, IProductRepository productRepository)
         {
@@ -51,6 +53,20 @@ namespace Service.Implementations
             var adat = _borrowedProductAdapter.Adapt(borrowDetails);
             var returnedProduct = await _borrowedProductRepository.GiveBackProduct(adat);
             return _borrowedProductAdapter.Adapt(returnedProduct);
+        }
+
+        public async Task<IEnumerable<BorrowedProductDTO>> GetBorrowedAsync(int userId)
+        {
+            IEnumerable<Data.Models.BorrowedProductDTO> returnedFavoriteProducts = new List<Data.Models.BorrowedProductDTO>();
+            try
+            {
+                returnedFavoriteProducts = await _borrowedProductRepository.GetBorrowedDTOAsync(userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return _borrowedProductDTOAdapter.AdaptList(returnedFavoriteProducts);
         }
     }
 }

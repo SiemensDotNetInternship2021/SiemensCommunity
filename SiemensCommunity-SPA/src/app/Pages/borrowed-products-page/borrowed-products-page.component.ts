@@ -24,6 +24,7 @@ export class BorrowedProductsPageComponent implements OnInit {
   products: IProduct[] = [];
   rating: number = 0;
   userId: number = 0;
+  borrowedProductsId: number[]=[];
 
   constructor(public borrowedProductsService: BorrowedItemsServiceService,
               public categoriesService: CategoriesService,

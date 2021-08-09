@@ -25,6 +25,13 @@ namespace SiemensCommunity.Controllers
             return Ok(borrowedProductList);
         }
 
+        [HttpGet("getBorrowedProductsWithDTO")]
+        public async Task<IActionResult> GetBorrowedProductsThroughDTO(int userId)
+        {
+            var borrowedProductList = await _borrowedProductService.GetBorrowedAsync(userId);
+            return Ok(borrowedProductList);
+        }
+
         [HttpGet("getBorrowedProductsByCategory")]
         public async Task<IActionResult> GetBorrowedProductsByCategory(int userId, int categoryId)
         {
