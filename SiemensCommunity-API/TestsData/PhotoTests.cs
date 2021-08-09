@@ -36,15 +36,6 @@ namespace Data.Tests
         [SetUp]
         public void Setup()
         {
-            
-
-            using (var context = new ProjectDbContext(options))
-            {
-                context.Photos.Add(new Photo { Id = 1, Url = goodPhotoUrl, PublicId = publicId, IsMain = false });
-                context.Photos.Add(new Photo { Id = 2, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false });
-                context.Photos.Add(new Photo { Id = 3, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false });
-                context.SaveChanges();
-            }
 
             dbContext = new ProjectDbContext(options);
             repository = new PhotoRepository(dbContext);
@@ -53,6 +44,14 @@ namespace Data.Tests
         [Test]
         public async Task GetPhotos_ShouldReturnListOfPhotos()
         {
+            using (var context = new ProjectDbContext(options))
+            {
+                context.Photos.Add(new Photo { Id = 1, Url = goodPhotoUrl, PublicId = publicId, IsMain = false });
+                context.Photos.Add(new Photo { Id = 2, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false });
+                context.Photos.Add(new Photo { Id = 3, Url = Guid.NewGuid().ToString(), PublicId = "", IsMain = false });
+                context.SaveChanges();
+            }
+
             var result = await repository.GetAsync();
                     
             Assert.IsInstanceOf<List<Photo>>(result);

@@ -180,26 +180,38 @@ namespace Data.Implementations
 
         public async Task<List<ProductDTO>> GetUserProductsByCategoryAsync(int userId, int categoryId)
         {
-            var products = await Context.Products.Where(p => p.UserId == userId && p.CategoryId == categoryId)
-                     .Select(x => new ProductDTO
-                     {
-                         Id = x.Id,
-                         Details = x.Details,
-                         IsAvailable = x.IsAvailable,
-                         Name = x.Name,
-                         Rating = Math.Round(x.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
-                         User = x.User.UserName,
-                         CategoryName = x.Category.Name,
-                         SubCategoryName = x.SubCategory.Name,
-                         ImagePath = x.Photo.Url
-                     }).ToListAsync();
+            List<ProductDTO> products;
+            try
+            {
+                products = await Context.Products.Where(p => p.UserId == userId && p.CategoryId == categoryId)
+                                 .Select(x => new ProductDTO
+                                 {
+                                     Id = x.Id,
+                                     Details = x.Details,
+                                     IsAvailable = x.IsAvailable,
+                                     Name = x.Name,
+                                     Rating = Math.Round(x.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
+                                     User = x.User.UserName,
+                                     CategoryName = x.Category.Name,
+                                     SubCategoryName = x.SubCategory.Name,
+                                     ImagePath = x.Photo.Url
+                                 }).ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
             return products;
         }
 
 
         public async Task<List<ProductDTO>> GetUserLendProductsAsync(int userId)
         {
-            return await Context.Products.Where(p => p.UserId == userId && p.IsAvailable == false)
+            List<ProductDTO> products;
+            try
+            {
+                products = await Context.Products.Where(p => p.UserId == userId && p.IsAvailable == false)
                 .Select(p => new ProductDTO
                 {
                     Id = p.Id,
@@ -212,13 +224,22 @@ namespace Data.Implementations
                     SubCategoryName = p.SubCategory.Name,
                     ImagePath = p.Photo.Url
                 }).ToListAsync();
-
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return products;
         }
 
 
         public async Task<List<ProductDTO>> GetUserLendProductsByCategoryAsync(int userId, int categoryId)
         {
-            return await Context.Products.Where(p => p.UserId == userId && p.CategoryId == categoryId && p.IsAvailable == false)
+            List<ProductDTO> products;
+
+            try
+            {
+                products = await Context.Products.Where(p => p.UserId == userId && p.CategoryId == categoryId && p.IsAvailable == false)
                         .Select(p => new ProductDTO
                         {
                             Id = p.Id,
@@ -231,12 +252,22 @@ namespace Data.Implementations
                             SubCategoryName = p.SubCategory.Name,
                             ImagePath = p.Photo.Url
                         }).ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return products;
         }
 
 
         public async Task<List<ProductDTO>> GetUserAvailableProductsAsync(int userId)
         {
-            return await Context.Products.Where(p => p.UserId == userId && p.IsAvailable == true)
+            List<ProductDTO> products;
+            try
+            {
+                products = await Context.Products.Where(p => p.UserId == userId && p.IsAvailable == true)
                         .Select(p => new ProductDTO
                         {
                             Id = p.Id,
@@ -249,12 +280,21 @@ namespace Data.Implementations
                             SubCategoryName = p.SubCategory.Name,
                             ImagePath = p.Photo.Url
                         }).ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return products;
         }
 
 
         public async Task<List<ProductDTO>> GetUserAvailableProductsByCategoryAsync(int userId, int categoryId)
         {
-            return await Context.Products.Where(p => p.UserId == userId && p.CategoryId == categoryId && p.IsAvailable == true)
+            List<ProductDTO> products;
+            try
+            {
+                products = await Context.Products.Where(p => p.UserId == userId && p.CategoryId == categoryId && p.IsAvailable == true)
                         .Select(p => new ProductDTO
                         {
                             Id = p.Id,
@@ -267,6 +307,12 @@ namespace Data.Implementations
                             SubCategoryName = p.SubCategory.Name,
                             ImagePath = p.Photo.Url
                         }).ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return products;
         }
     }
 }

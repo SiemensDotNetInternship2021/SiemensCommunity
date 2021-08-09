@@ -24,13 +24,7 @@ namespace Data.Tests
         [SetUp]
         public void Setup()
         {
-            using (var context = new ProjectDbContext(options))
-            {
-                context.Departments.Add(new Department { Id = 1, Name = "Department 1"});
-                context.Departments.Add(new Department { Id = 2, Name = "Department 2" });
-                context.Departments.Add(new Department { Id = 3, Name = "Department 3"});
-                context.SaveChanges();
-            }
+
             dbContext = new ProjectDbContext(options);
             repository = new DepartmentRepository(dbContext);
         }
@@ -38,6 +32,14 @@ namespace Data.Tests
         [Test]
         public async Task GetDepartment_ShouldReturnListOfDepartments()
         {
+            using (var context = new ProjectDbContext(options))
+            {
+                context.Departments.Add(new Department { Id = 1, Name = "Department 1" });
+                context.Departments.Add(new Department { Id = 2, Name = "Department 2" });
+                context.Departments.Add(new Department { Id = 3, Name = "Department 3" });
+                context.SaveChanges();
+            }
+
             var result = await repository.GetAsync();
 
             Assert.AreEqual(3, result.Count());

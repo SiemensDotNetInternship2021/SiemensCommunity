@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +24,14 @@ namespace Data.Tests
         [SetUp]
         public void Setup()
         {
+            
+            dbContext = new ProjectDbContext(options);
+            repository = new CategoryRepository(dbContext);
+        }
+
+        [Test]
+        public async Task GetCategories_ShouldReturnListOfCategories()
+        {
             using (var context = new ProjectDbContext(options))
             {
                 context.Categories.Add(new Category { Id = 1, Name = "Category 1" });
@@ -30,17 +39,23 @@ namespace Data.Tests
                 context.Categories.Add(new Category { Id = 3, Name = "Category 3" });
                 context.SaveChanges();
             }
-            dbContext = new ProjectDbContext(options);
-            repository = new CategoryRepository(dbContext);
-        }
-
-        [Test]
-        public async Task GetCategories_ShouldReturnListOfCategory()
-        {
 
             var result = await repository.GetAsync();
 
             Assert.AreEqual(3, result.Count());
+        }
+
+        [Test]
+        public async Task GetCategories_ShouldReturnEmptyListOfCategories()
+        {
+            using (var context = new ProjectDbContext(options))
+            {
+                context.SaveChanges();
+            }
+
+            var result = await repository.GetAsync();
+
+            Assert.IsEmpty(result);
         }
     }
 }

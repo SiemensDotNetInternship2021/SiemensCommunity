@@ -156,42 +156,49 @@ namespace Service.Implementations
             if (selectedCategoryId == null)
             {
                 var products = await _productRepository.GetUserProductsAsync(userId);
+                _logger.LogInformation(products.Count() + "products found of all categories, of user with id " + userId);
                 return _productDTOAdapter.AdaptList(products);
             }
             else
             {
                 var products = await _productRepository.GetUserProductsByCategoryAsync(userId, selectedCategoryId.Value);
+                _logger.LogInformation(products.Count() + "products found of user with id " + userId + "category id " + selectedCategoryId);
                 return _productDTOAdapter.AdaptList(products);
             }
         }
 
-        public async Task<List<ProductDTO>> GetUserAvailableProductsAsync(int userId, int? selectedCategory)
+        public async Task<List<ProductDTO>> GetUserAvailableProductsAsync(int userId, int? selectedCategoryId)
         {
 
-            if (selectedCategory == null)
+            if (selectedCategoryId == null)
             {
                var products = await _productRepository.GetUserAvailableProductsAsync(userId);
+                _logger.LogInformation(products.Count() + "products found available of all categories, of user with id " + userId);
+                _logger.LogInformation(products.Count() + "products found available of all categories, of user with id " + userId);
                 return _productDTOAdapter.AdaptList(products);
             }
             else
             {
-                var products = await _productRepository.GetUserAvailableProductsByCategoryAsync(userId, selectedCategory.Value);
+                var products = await _productRepository.GetUserAvailableProductsByCategoryAsync(userId, selectedCategoryId.Value);
+                _logger.LogInformation(products.Count() + "products found of user with id " + userId + "category id " + selectedCategoryId);
                 return _productDTOAdapter.AdaptList(products);
             }
 
         }
 
-        public async Task<List<ProductDTO>> GetUserLendProductsAsync(int userId, int? selectedCategory)
+        public async Task<List<ProductDTO>> GetUserLendProductsAsync(int userId, int? selectedCategoryId)
         {
 
-            if (selectedCategory == null)
+            if (selectedCategoryId == null)
             {
                 var products = await _productRepository.GetUserLendProductsAsync(userId);
+                _logger.LogInformation(products.Count() + "products found lend of all categories, of user with id " + userId);
                 return _productDTOAdapter.AdaptList(products);
             }
             else
             {
-                var products = await _productRepository.GetUserLendProductsByCategoryAsync(userId, selectedCategory.Value);
+                var products = await _productRepository.GetUserLendProductsByCategoryAsync(userId, selectedCategoryId.Value);
+                _logger.LogInformation(products.Count() + "products found lend of user with id " + userId + "category id " + selectedCategoryId);
                 return _productDTOAdapter.AdaptList(products);
             }
 
