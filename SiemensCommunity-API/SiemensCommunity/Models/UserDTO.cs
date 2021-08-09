@@ -16,5 +16,7 @@ namespace SiemensCommunity.Models
         public string Department { get; set; }
 
         public int OfficeFloor { get; set; }
+
+        public string Role { get; set; }
     }
 }
