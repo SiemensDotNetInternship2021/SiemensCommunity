@@ -1,6 +1,14 @@
 <app-nav-bar></app-nav-bar>
-   <div class="row justify-content-center align-items-center">
-    <div *ngFor="let user of users" class="col-md-3">
+<div class="container h-100">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-3">
+      <div class="searchbar">
+        <input type="text" [(ngModel)]="userFilter.lastName">
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center align-items-center">
+    <div *ngFor="let user of users | filterBy : userFilter" class="col-md-3">
         <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">UserId:{{user.id}}</h5>
@@ -12,6 +20,9 @@
             </div>
         <button>Edit User details</button>
         </div>
-    </div>
+      </div>
+      <div class="noMatching" *ngIf="(users | filterBy: userFilter).length === 0">No matching vaues </div>
    </div>
+</div>
+  
    

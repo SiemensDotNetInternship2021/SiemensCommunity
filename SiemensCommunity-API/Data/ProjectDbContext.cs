@@ -27,37 +27,6 @@ namespace Data
                 .WithOne(x => x.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
-
-
-
-         /*   builder.Entity<User>()
-                .HasMany(e => e.UserRoles)
-                .WithOne()
-                .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<User>()
-             .HasMany(e => e.UserRoles)
-             .WithOne()
-             .HasForeignKey(e => e.RoleId)
-             .IsRequired()
-             .OnDelete(DeleteBehavior.Cascade);*/
-
-          /*  builder.Entity<AppRole>()
-              .HasMany(e => e.UserRoles)
-              .WithOne(e => e.Role)
-              .HasForeignKey(e => e.UserId)
-              .IsRequired()
-              .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<AppRole>()
-           .HasMany(e => e.UserRoles)
-           .WithOne(e => e.Role)
-           .HasForeignKey(e => e.RoleId)
-           .IsRequired()
-           .OnDelete(DeleteBehavior.Cascade);*/
-
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }

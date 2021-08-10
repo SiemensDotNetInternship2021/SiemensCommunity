@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FilterPipe } from 'ngx-filter-pipe';
 import { IUser } from 'src/app/Models/IUserDTO';
 import { UserService } from 'src/app/Services/user.service';
 
@@ -9,9 +10,10 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class AdminPanelComponent implements OnInit {
 
-
+  userFilter: any = {lastName: ''};
   users: IUser[] = []
-  constructor(public service: UserService) { }
+  constructor(public service: UserService, private filterPipe:FilterPipe) { 
+  }
 
   ngOnInit(): void {
     this.getUsers();
