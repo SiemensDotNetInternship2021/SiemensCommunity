@@ -16,6 +16,7 @@ namespace Service.Implementations
         private readonly IProductRepository _productRepository;
         private readonly IPhotoService _photoService;
         private readonly IPhotoRepository _photoRepository;
+        private readonly ILogService _logService;
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
         private readonly ProductDTOAdapter _productDTOAdapter = new ProductDTOAdapter();
         private readonly TokenDetailsAdapter _optionDetailsDTOAdapter = new TokenDetailsAdapter();
@@ -25,11 +26,12 @@ namespace Service.Implementations
         private readonly UpdateProductAdapter _updateProductAdapter = new UpdateProductAdapter();
         private readonly ILogger _logger;
 
-        public ProductService(IProductRepository productRepository, IPhotoService photoService, IPhotoRepository photoRepository, ILoggerFactory logger)
+        public ProductService(IProductRepository productRepository, IPhotoService photoService, IPhotoRepository photoRepository, ILoggerFactory logger, ILogService logService)
         {
             _productRepository = productRepository;
             _photoService = photoService;
             _photoRepository = photoRepository;
+            _logService = logService;
             _logger = logger.CreateLogger("ProductService");
         }
 
@@ -41,7 +43,6 @@ namespace Service.Implementations
             if (result == null || result.Error != null)
             {
                 _logger.LogError(MyLogEvents.ErrorUploadItem, "Error uploading photo with errors " + result.Error);
-                throw new NotImplementedException();
             }
             var image = new Photo
             {
@@ -70,21 +71,25 @@ namespace Service.Implementations
         public async Task<bool> DeleteByIdAsync(int id)
         {
             bool result = false;
+
             try
             {
                 result = await _productRepository.DeleteByIdAsync(id);
-                _logger.LogInformation(MyLogEvents.InsertItem, "Successful insertion of product with id={id}", id);
+                _logger.LogInformation(MyLogEvents.InsertItem, "Successful insertion of product with id = {id}", id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(MyLogEvents.InsertItem, "Error while deleting item with id={id}, with error {eroror}", id, ex.Message);
+                _logger.LogError(MyLogEvents.InsertItem, "Error while deleting item with id={id}, with error {eroror}.", id, ex.Message);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.InsertItem, ex.Message, ex.StackTrace);
             }
+
             return result;
         }
 
         public async Task<IEnumerable<Product>> GetAsync()
         {
             IEnumerable<Data.Models.Product> returnedProducts = new List<Data.Models.Product>();
+
             try
             {
                 returnedProducts = await _productRepository.GetAsync();
@@ -94,6 +99,7 @@ namespace Service.Implementations
             {
                 _logger.LogError(MyLogEvents.ListItems, "Error while getting product with message " + ex.Message);
             }
+
             return _productAdapter.AdaptList(returnedProducts);
         }
 
