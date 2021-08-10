@@ -42,10 +42,7 @@ export class UserService {
   })
 
   constructor(private http: HttpClient, private form:FormBuilder, private route: ActivatedRoute) {
-
    }
-
- 
 
   register() {
     var registerData = {
@@ -112,7 +109,7 @@ export class UserService {
     allowedRoles.forEach(allowedRole => {
       if(this.userRole == allowedRole)
       {
-        console.log("User role din alta functie " + this.userRole)
+        console.log("User role din alta functie " + this.userRole);
         return isMatch = true;
       }
       else 
@@ -124,6 +121,10 @@ export class UserService {
   }
 
   getUsers() {
-    return this.http.get<IUser[]>(this.rootUrl + '/User/')
+    return this.http.get<IUser[]>(this.rootUrl + '/User/');
+  }
+
+  getUserById(userId: number) {
+    return this.http.get<IUser>(this.rootUrl + '/User');
   }
 }

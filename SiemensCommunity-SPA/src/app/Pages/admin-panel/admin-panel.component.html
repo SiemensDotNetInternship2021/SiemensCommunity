@@ -18,7 +18,7 @@
               <p class="card-text">OfficeFloor: {{user.officeFloor}}</p>
               <p class="card-text">Roles: {{user.roles}}</p>
             </div>
-        <button>Edit User details</button>
+        <button (click)="openUserEditor(user.id)">Edit User details</button>
         </div>
       </div>
       <div class="noMatching" *ngIf="(users | filterBy: userFilter).length === 0">No matching vaues </div>

@@ -27,7 +27,8 @@ import { AdminPanelComponent } from './Pages/admin-panel/admin-panel.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { DatePipe } from '@angular/common';
-import { FilterPipeModule } from 'ngx-filter-pipe'
+import { FilterPipeModule } from 'ngx-filter-pipe';
+import { UserEditorComponent } from './Pages/user-editor/user-editor.component'
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { FilterPipeModule } from 'ngx-filter-pipe'
     ResetPasswordComponent,
     AddProductComponent,
     AdminPanelComponent,
+    UserEditorComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ import { LoginPageComponent } from './Pages/login-page/login-page.component';
 import { MycatalogPageComponent } from './Pages/mycatalog-page/mycatalog-page.component';
 import { RegisterPageComponent } from './Pages/register-page/register-page.component';
 import { ResetPasswordComponent } from './Pages/reset-password/reset-password.component';
+import { UserEditorComponent } from './Pages/user-editor/user-editor.component';
 import { WelcomePageComponent } from './Pages/welcome-page/welcome-page.component';
 import { PageGuard } from './Shared/page-guard/page.guard';
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'resetpassword', component: ResetPasswordComponent, canActivate: [PageGuard]},
   {path: 'addproduct', component: AddProductComponent, canActivate: [PageGuard]},
   {path: 'admin', component: AdminPanelComponent, canActivate: [PageGuard], data: {permittedRoles:['Admin']}},
+  {path: 'usereditor/:userId', component: UserEditorComponent, canActivate: [PageGuard], data: {permittedRoles:['Admin']}},
 ];
 
 @NgModule({
