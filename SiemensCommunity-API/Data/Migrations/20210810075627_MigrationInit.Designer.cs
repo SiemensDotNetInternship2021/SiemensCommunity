@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20210803101037_UpdateBorrowedProduct")]
-    partial class UpdateBorrowedProduct
+    [Migration("20210810075627_MigrationInit")]
+    partial class MigrationInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,19 +58,9 @@ namespace Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoleId1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("RoleId1");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("AspNetUserRoles");
                 });
@@ -95,6 +85,9 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -457,25 +450,17 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.AppUserRole", b =>
                 {
-                    b.HasOne("Data.Models.AppRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Data.Models.AppRole", "Role")
                         .WithMany("UserRoles")
-                        .HasForeignKey("RoleId1");
-
-                    b.HasOne("Data.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.User", "User")
                         .WithMany("UserRoles")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
 
@@ -484,11 +469,19 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.BorrowedProduct", b =>
                 {
+                    b.HasOne("Data.Models.Product", "Product")
+                        .WithOne("BorrowedProduct")
+                        .HasForeignKey("Data.Models.BorrowedProduct", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Models.User", "User")
-                        .WithMany()
+                        .WithMany("BorrowedProducts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });
@@ -644,6 +637,8 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Product", b =>
                 {
+                    b.Navigation("BorrowedProduct");
+
                     b.Navigation("FavoriteProduct");
 
                     b.Navigation("ProductRating");
@@ -651,6 +646,8 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.User", b =>
                 {
+                    b.Navigation("BorrowedProducts");
+
                     b.Navigation("FavoriteProduct");
 
                     b.Navigation("ProductRating");

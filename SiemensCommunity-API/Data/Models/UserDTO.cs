@@ -18,6 +18,6 @@ namespace Data.Models
 
         public int OfficeFloor { get; set; }
 
-        public IEnumerable<AppUserRole> Role { get; set; }
+        public List<string> Roles { get; set; }
     }
 }

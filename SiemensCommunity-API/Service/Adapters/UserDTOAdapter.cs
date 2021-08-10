@@ -11,16 +11,19 @@ namespace Service.Adapters
     public class UserDTOAdapter
     {
         private readonly IMapper _userDTOAdapter;
+
         public UserDTOAdapter()
         {
             var config = new MapperConfiguration(config =>
             {
                 config.CreateMap<UserDTO, Data.Models.UserDTO>();
                 config.CreateMap<Data.Models.UserDTO, UserDTO>();
+                
             });
 
             _userDTOAdapter = config.CreateMapper();
         }
+
 
         public Data.Models.UserDTO Adapt(UserDTO user)
         {

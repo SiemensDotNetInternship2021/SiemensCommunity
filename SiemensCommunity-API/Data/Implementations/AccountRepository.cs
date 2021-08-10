@@ -12,12 +12,14 @@ namespace Data.Implementations
     {
         private UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private RoleManager<AppRole> _roleManager;
 
 
-        public AccountRepository(ProjectDbContext context, UserManager<User> userManager, SignInManager<User> signInManager) : base(context)
+        public AccountRepository(ProjectDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<AppRole> roleManger) : base(context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManger;
         }
 
 
@@ -63,6 +65,11 @@ namespace Data.Implementations
                     try
                     {
                         await _userManager.AddToRoleAsync(user, "User");
+                     /*   Context.UserRoles.Add(new AppUserRole
+                        {
+                           RoleId1 = 2,
+                           UserId1 = user.Id,
+                        });*/
                     }
                     catch (Exception ex)
                     {

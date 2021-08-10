@@ -16,33 +16,48 @@ namespace Data
         {
             base.OnModelCreating(builder);
 
-            /*builder.Entity<Product>()
-                .HasMany(fp => fp.FavoriteProduct)
-                .WithOne(fp => fp.Product)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<FavoriteProduct>()
-                .HasOne(fp => fp.Product)
-                .WithMany(fp => fp.FavoriteProduct)
-                .OnDelete(DeleteBehavior.Restrict);*/
-
-            /*builder.Entity<Product>()
-            .HasOne(ur => ur.User)
-            .WithMany(u => u.Products)
-            .HasForeignKey(ur => ur.UserId);
-            *//*.IsRequired();*//*
+            builder.Entity<User>()
+                .HasMany(e => e.UserRoles)
+                .WithOne(e => e.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
 
             builder.Entity<AppRole>()
-            .HasMany(ur => ur.UserRoles)
-            .WithOne(u => u.Role)
-            .HasForeignKey(ur => ur.RoleId)
-            .IsRequired();*/
+                .HasMany(e => e.UserRoles)
+                .WithOne(x => x.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
 
-            /*builder.Entity<User>()
-            .HasMany(ur => ur.Products)
-            .WithOne(ur => ur.User)
-            .HasForeignKey(ur => ur.UserId)
-            .IsRequired();*/
+
+
+         /*   builder.Entity<User>()
+                .HasMany(e => e.UserRoles)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<User>()
+             .HasMany(e => e.UserRoles)
+             .WithOne()
+             .HasForeignKey(e => e.RoleId)
+             .IsRequired()
+             .OnDelete(DeleteBehavior.Cascade);*/
+
+          /*  builder.Entity<AppRole>()
+              .HasMany(e => e.UserRoles)
+              .WithOne(e => e.Role)
+              .HasForeignKey(e => e.UserId)
+              .IsRequired()
+              .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<AppRole>()
+           .HasMany(e => e.UserRoles)
+           .WithOne(e => e.Role)
+           .HasForeignKey(e => e.RoleId)
+           .IsRequired()
+           .OnDelete(DeleteBehavior.Cascade);*/
+
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }

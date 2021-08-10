@@ -4,4 +4,5 @@ export interface IUser{
     lastName : string,
     department : string,
     officeFloor : string,
+    roles: string[],
 }

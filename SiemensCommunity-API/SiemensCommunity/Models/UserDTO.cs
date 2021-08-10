@@ -17,6 +17,6 @@ namespace SiemensCommunity.Models
 
         public int OfficeFloor { get; set; }
 
-        public string Role { get; set; }
+        public List<string> Roles { get; set; }
     }
 }
