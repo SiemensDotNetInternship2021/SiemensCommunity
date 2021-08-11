@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using SiemensCommunity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,26 @@ namespace SiemensCommunity.Controllers
         {
             var users = await _userService.GetAsync();
             return Ok(users);
+        }
+
+        [HttpGet("getUser")]
+        public async Task<IActionResult> GetUserById(int userId)
+        {
+            var user = await _userService.GetUserById(userId);
+            return Ok(user);
+        }
+
+        [HttpGet("getRoles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roles = await _userService.GetRoles();
+            return Ok(roles);
+        }
+
+        [HttpPost("updateUser")]
+        public async Task<IActionResult> UpdateUser(UserDTO user)
+        {
+            return Ok(user);
         }
     }
 }

@@ -25,5 +25,17 @@ namespace Service.Implementations
             var returnedUsers = await _userReposistory.GetAsync();
             return _userDTOAdapter.AdaptList(returnedUsers);
         }
+
+        public async Task<UserDTO> GetUserById(int userId)
+        {
+            var returnedUser = await _userReposistory.GetUserById(userId);
+            return _userDTOAdapter.Adapt(returnedUser);
+        }
+
+        public async Task<IEnumerable<string>> GetRoles()
+        {
+            var returnedRoles = await _userReposistory.GetRoles();
+            return returnedRoles;
+        }
     }
 }

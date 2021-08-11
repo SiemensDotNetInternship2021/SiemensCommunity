@@ -9,5 +9,8 @@ namespace Data.Contracts
 {
     public interface IUserRepository : IGenericRepository<UserDTO>
     {
+        public Task<UserDTO> GetUserById(int userId);
+
+        public Task<IEnumerable<string>> GetRoles();
     }
 }

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, AbstractControl, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IUser } from '../Models/IUserDTO';
+import { IUserDTO } from '../Models/IUserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,7 @@ export class UserService {
   resetPasswordModel = this.form.group({
     Password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(".*[0-9].*")]],
     ConfirmPassword: ['', Validators.required],
-  })
+  });
 
   constructor(private http: HttpClient, private form:FormBuilder, private route: ActivatedRoute) {
    }
@@ -121,10 +121,29 @@ export class UserService {
   }
 
   getUsers() {
-    return this.http.get<IUser[]>(this.rootUrl + '/User/');
+    return this.http.get<IUserDTO[]>(this.rootUrl + '/User/');
   }
 
   getUserById(userId: number) {
-    return this.http.get<IUser>(this.rootUrl + '/User');
+    return this.http.get<IUserDTO>(this.rootUrl + '/User/getUser?userId='+ userId);
+  }
+
+  getRoles(){
+    return this.http.get(this.rootUrl + '/User/getRoles');
+  }
+
+  sendUpdatedUser(editUserModel : any) {
+    var userDetails = {
+      id : editUserModel.value.Id,
+      lastName : editUserModel.value.LastName,
+      firstName: editUserModel.value.FirstName,
+      userName : editUserModel.value.UserName,
+      department : editUserModel.value.Department,
+      officeFloor : editUserModel.value.OfficeFloor,
+      roles : editUserModel.value.Roles
+    }
+    console.log(userDetails.id);
+    console.log(userDetails.roles);
+    return this.http.post(this.rootUrl + '/User/updateUser', userDetails);
   }
 }

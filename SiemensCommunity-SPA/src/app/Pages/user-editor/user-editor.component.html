@@ -1,1 +1,35 @@
-<p>user-editor works!</p>
+<div class="container h-100">
+    <div class="row justify-content-center align-items-center">
+          <div class="card" style="width: 18rem;">
+          <h1 class="card-title">Edit user</h1>
+          <form [formGroup] = "editUserModel" (submit)="submitChanges()" autocomplete="off">
+            <div class="card-body">
+                <h2 class="card-subtitle">UserId:</h2>
+                <input class="input" formControlName="Id">
+                
+                <p class="card-text">FirstName:</p>
+                <input class="input" formControlName="FirstName">
+               
+                <p class="card-text">LastName:</p>
+                <input class="input" formControlName="LastName">
+                
+                <p class="card-text">Department:</p>
+                <select class="form-control custom-select" formControlName="Department">
+                    <option class="option-display" selected="selected" hidden></option>
+                    <option *ngFor = "let department of departments">{{department.name}}</option>
+                </select> 
+                
+                <p class="card-text">OfficeFloor</p>
+                <input class="input"  formControlName="OfficeFloor">
+                
+                <p class="card-text">Roles:</p>
+                <select class="form-control custom-select" formControlName="Roles"> 
+                    <option class="option-display" selected="selected" hidden></option>
+                    <option *ngFor = "let role of roles">{{role}}</option>
+                </select> 
+              </div>
+            <button>Submit</button>
+          </form>    
+          </div>
+     </div>
+  </div>

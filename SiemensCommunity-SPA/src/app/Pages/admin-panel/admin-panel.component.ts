@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FilterPipe } from 'ngx-filter-pipe';
-import { IUser } from 'src/app/Models/IUserDTO';
+import { IUserDTO } from 'src/app/Models/IUserDTO';
 import { UserService } from 'src/app/Services/user.service';
 import { UserEditorComponent } from '../user-editor/user-editor.component';
 
@@ -13,8 +13,11 @@ import { UserEditorComponent } from '../user-editor/user-editor.component';
 export class AdminPanelComponent implements OnInit {
 
   userFilter: any = {lastName: ''};
-  users: IUser[] = [];
+  users: IUserDTO[] = [];
   currentDialog: any = null;
+  temp = [];
+  columns : number = 6;
+  limit = 6;
   constructor(public service: UserService, private filterPipe:FilterPipe,
     public modalService: NgbModal) { 
   }
@@ -25,7 +28,7 @@ export class AdminPanelComponent implements OnInit {
 
   getUsers() {
     this.service.getUsers().subscribe(usersFromDB => {
-      this.users = usersFromDB;
+    this.users = usersFromDB;
     })
   }
 
@@ -35,4 +38,7 @@ export class AdminPanelComponent implements OnInit {
       this.currentDialog.componentInstance.userId = userId;
   }
 
+  searchUser(event: any) {
+   
+  }
 }

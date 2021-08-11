@@ -29,6 +29,7 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
 import { DatePipe } from '@angular/common';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { UserEditorComponent } from './Pages/user-editor/user-editor.component'
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { UserEditorComponent } from './Pages/user-editor/user-editor.component'
     MatCheckboxModule,
     NgxStarRatingModule,
     ToastrModule.forRoot(),
-    FilterPipeModule
+    FilterPipeModule,
+    NgxDatatableModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

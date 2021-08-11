@@ -13,6 +13,8 @@ namespace SiemensCommunity.Models
 
         public string LastName { get; set; }
 
+        public string Username { get; set; }
+
         public string Department { get; set; }
 
         public int OfficeFloor { get; set; }

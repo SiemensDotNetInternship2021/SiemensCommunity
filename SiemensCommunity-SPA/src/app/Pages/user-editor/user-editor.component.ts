@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { resetFakeAsyncZone } from '@angular/core/testing';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IUser } from 'src/app/Models/IUserDTO';
+import { ToastrService } from 'ngx-toastr';
+import { IDepartment } from 'src/app/Models/IDepartment';
+import { IUserDTO } from 'src/app/Models/IUserDTO';
+import { DepartmentService } from 'src/app/Services/department-service/department.service';
 import { UserService } from 'src/app/Services/user.service';
 
 @Component({
@@ -8,24 +13,74 @@ import { UserService } from 'src/app/Services/user.service';
   templateUrl: './user-editor.component.html',
   styleUrls: ['./user-editor.component.css']
 })
+
 export class UserEditorComponent implements OnInit {
 
-  user: any;
 
+  user !: IUserDTO 
+  departments: IDepartment[] =[]
   @Input() userId: number = 0;
+  roles : string[] =[]
+  editUserModel = this.form.group({
+    Id: ['', Validators.required],
+    FirstName: ['', Validators.required],
+    LastName: ['', Validators.required],
+    UserName : ['', Validators.required],
+    Department : ['', Validators.required],
+    OfficeFloor : ['', Validators.required],
+    Roles : ['', Validators.required]
+  })
+
   constructor(public modalService: NgbModal, public activeModal: NgbActiveModal,
-    public userService: UserService,) { 
-    
+    public userService: UserService, public departmentService: DepartmentService, 
+    private form:FormBuilder, public toastr: ToastrService) { 
     }
 
   ngOnInit(): void {
-    this.getUserById(this.userId)
+    this.getUserById(this.userId);
+    this.getDepartments();
+    this.getRoles();
   }
 
   getUserById(userId : number) {
-    this.userService.getUserById(userId).subscribe(res => {
-        this.user = res;
+    this.userService.getUserById(userId).subscribe((userFromDB) => {
+        this.user = userFromDB
+
+        this.editUserModel = this.form.group({
+          Id: [this.user.id, Validators.required],
+          FirstName: [this.user.firstName, Validators.required],
+          LastName: [this.user.lastName, Validators.required],
+          UserName : [this.user.userName, Validators.required],
+          Department : [this.user.department, Validators.required],
+          OfficeFloor : [this.user.officeFloor, Validators.required],
+          Roles : [this.user.roles, Validators.required]
+        })
     })
   }
 
+  getDepartments()
+  {
+      this.departmentService.getDepartments().subscribe((department) => {
+        department.forEach(value => this.departments.push(value));
+      })
+  }
+
+  getRoles()
+  {
+    this.userService.getRoles().subscribe((res : any) => {
+        this.roles = res;
+    })
+  }
+
+  submitChanges()
+  {
+    console.log(this.editUserModel);
+    this.userService.sendUpdatedUser(this.editUserModel).subscribe((res: any) => 
+    {
+      this.toastr.success("User details have been updated!");
+    },
+    err=>{
+      this.toastr.error("Oh no :( something went wrong");
+    });
+  }
 }
