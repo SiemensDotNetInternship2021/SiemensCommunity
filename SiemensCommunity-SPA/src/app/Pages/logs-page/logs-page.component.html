@@ -1,0 +1,66 @@
+<app-nav-bar></app-nav-bar>
+
+<!-- <div class="col-md-3">
+     <form>
+      <select class="form-control custom-select" [(ngModel)]="mySelectedLogLevel">
+        <option class="option-display" selected="selected" value=0 >All log levels</option>
+        <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
+      </select> 
+      <select class="form-control custom-select" [(ngModel)]="mySelectedCategory" (change)="getSelectedCategory()">
+        <option class="option-display" selected="selected" value=0 >All Categories</option>
+        <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
+      </select> 
+     </form>
+   </div> -->
+
+<div class="main-ctn">
+    <!-- <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Log Level</th>
+            <th scope="col">Log Event</th>
+            <th scope="col">Message</th>
+            <th scope="col">Stack tace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let log of logs | paginate: {
+            itemsPerPage: 4,
+            currentPage: page
+          }">
+            <td>{{log.logLevel}}</td>
+            <td>{{log.logEvent}}</td>
+            <td>{{log.logMessage}}</td>
+            <td>{{log.stackTrace}}</td>
+          </tr>
+        </tbody>
+      </table> -->
+
+    <ngx-datatable #myTable #myFilterTable class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+    [rowHeight]="'auto'" [scrollbarV]="false" [limit]= "10" [sorts]="[{prop: 'name', dir: 'desc'}]">
+
+        <ngx-datatable-column name="Log Level" [maxWidth] = "100" prop ="logLevel">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.logLevel}}
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Log Event" [maxWidth] = "100" prop ="logEvent">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.logEvent}}
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Message" [maxWidth] = "300" prop ="logMessage">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.logMessage}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column  name="Stack tace" prop ="stackTrace">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.stackTrace}}
+            </ng-template>
+        </ngx-datatable-column>
+
+    </ngx-datatable>
+</div>

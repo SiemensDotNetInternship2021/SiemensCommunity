@@ -63,6 +63,7 @@ namespace Service.Implementations
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.InsertItem, "Error while inserting product wiht message " + ex.Message);
+                _logService.SaveAsync(LogLevel.Error, MyLogEvents.InsertItem, ex.Message, ex.StackTrace);
             }
 
             return _productAdapter.Adapt(returnedProduct);
@@ -88,65 +89,82 @@ namespace Service.Implementations
 
         public async Task<IEnumerable<Product>> GetAsync()
         {
-            IEnumerable<Data.Models.Product> returnedProducts = new List<Data.Models.Product>();
+            IEnumerable<Product> products = new List<Product>();
 
             try
             {
-                returnedProducts = await _productRepository.GetAsync();
+                var returnedProducts = await _productRepository.GetAsync();
+                products = _productAdapter.AdaptList(returnedProducts);
                 _logger.LogInformation(MyLogEvents.ListItems, "Got {count} products", returnedProducts.Count());
             }
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.ListItems, "Error while getting product with message " + ex.Message);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.ListItems, ex.Message, ex.StackTrace);
             }
 
-            return _productAdapter.AdaptList(returnedProducts);
+            return products;
         }
 
         public async Task<ProductFormDTO> GetByIdAsync(int id)
         {
-            Data.Models.ProductFormDTO returnedProduct = new Data.Models.ProductFormDTO();
+            ProductFormDTO product = new ProductFormDTO();
             try
             {
-                returnedProduct = await _productRepository.FindById(id);
+                var returnedProduct = await _productRepository.FindById(id);
+                product = _productFormDTOAdapter.Adapt(returnedProduct);
                 _logger.LogInformation(MyLogEvents.GetItem, "Getting item with id={id}", id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.GetItem, "Error while getting item with id={id}, with error {error}", id, ex.Message);
+                _logService.SaveAsync(LogLevel.Error, MyLogEvents.GetItem, ex.Message, ex.StackTrace);
             }
-            return _productFormDTOAdapter.Adapt(returnedProduct);
+            return product;
         }
 
         public async Task<Product> UpdateAsync(UpdateProductDTO product)
         {
-            var image = new Photo();
             var photoInDb = await _photoRepository.FindByURL(product.ImageURL);
+
             var oldPhotoId = photoInDb.Id;
-            if (product.File != null)
+
+            var photo = _photoService.SavePhoto(product.File);
+            if(photo!= null)
             {
-                var result = await _photoService.UploadPhotoAsync(product.File);
-                if (result.Error != null)
-                {
-                    _logger.LogError(MyLogEvents.UploadItem, "Error while uploading photo: {error}", result.Error);
-                }
-                image.Url = result.SecureUrl.AbsoluteUri;
-                image.PublicId = result.PublicId;
-                image.IsMain = false;
-                photoInDb = await _photoRepository.AddAsync(_photoAdapter.Adapt(image));
+                product.PhotoId = photoInDb.Id;
             }
-            product.PhotoId = photoInDb.Id;
-            var productUpdated = await _productRepository.UpdateAsync(_updateProductAdapter.Adapt(product), product.Id);
+            Product updatedProduct = new Product();
+            try
+            {
+                var productReturned = await _productRepository.UpdateAsync(_updateProductAdapter.Adapt(product), product.Id);
+                updatedProduct = _productAdapter.Adapt(productReturned);
+            }catch(Exception ex)
+            {
+                _logger.LogError(MyLogEvents.UpdateItem, "Error while trying to update product with id=" + product.Id + " with message " + ex.Message);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.UpdateItem, ex.Message, ex.StackTrace);
+            }
+
             if (oldPhotoId != photoInDb.Id)
                 await _photoRepository.DeleteByIdAsync(photoInDb.Id);
 
-            return _productAdapter.Adapt(productUpdated);
+            return updatedProduct;
         }
 
         public async Task<List<ProductDTO>> GetFiltredProducts(int selectedCategory, int selectedOption)
         {
-            var returnedProducts = await _productRepository.GetFiltredProducts(selectedCategory, selectedOption);
-            return _productDTOAdapter.AdaptList(returnedProducts);
+            List<ProductDTO> products = new List<ProductDTO>();
+            try
+            {
+                var returnedProducts = await _productRepository.GetFiltredProducts(selectedCategory, selectedOption);
+                products = _productDTOAdapter.AdaptList(returnedProducts);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(MyLogEvents.ListItems, "Error while getting the filtered products of for home page ", ex.Message);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.ListItems, ex.Message, ex.StackTrace);
+            }
+            return products;
         }
     }
 }

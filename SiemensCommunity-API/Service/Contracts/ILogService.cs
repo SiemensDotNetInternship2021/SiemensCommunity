@@ -1,5 +1,6 @@
 ﻿using Common;
 using Microsoft.Extensions.Logging;
+using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Service.Contracts
     public interface ILogService
     {
         public Task<bool> SaveAsync(LogLevel logLevel, int logEvent, string message, string stackTrace);
+        public Task<IEnumerable<Log>> GetAsync();
     }
 }

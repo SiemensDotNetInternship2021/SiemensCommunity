@@ -15,14 +15,21 @@ namespace Service.Implementations
     public class LogService : ILogService
     {
         private readonly ILogRepository _logRepository;
-        private LogAdapter logAdapter = new LogAdapter();
+        private LogAdapter _logAdapter = new LogAdapter();
         public LogService(ILogRepository logRepository)
         {
             _logRepository = logRepository;
         }
+
+        public async Task<IEnumerable<Log>> GetAsync()
+        {
+            var logs = await _logRepository.GetAsync();
+            return _logAdapter.AdaptEnumerable(logs);
+        }
+
         public async Task<bool> SaveAsync(LogLevel logLevel, int logEvent, string message, string stackTrace)
         {
-            var log = logAdapter.Adapt(new Log
+            var log = _logAdapter.Adapt(new Log
             {
                 LogLevel = logLevel,
                 LogEvent = logEvent,
@@ -34,5 +41,6 @@ namespace Service.Implementations
 
             return (result!= null);
         }
+
     }
 }

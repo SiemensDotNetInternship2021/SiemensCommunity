@@ -21,8 +21,5 @@ namespace Common
         public const int TestItem = 3000;
         public const int UploadItem = 3001;
         public const int ErrorUploadItem = 3002;
-
-        public const int GetItemNotFound = 4000;
-        public const int UpdateItemNotFound = 4001;
     }
 }

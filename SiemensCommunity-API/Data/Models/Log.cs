@@ -13,7 +13,8 @@ namespace Data.Models
     {
         public int Id { get; set; }
 
-        public LogLevel LogLevel{ get; set; }
+        [ForeignKey("LogLevel")]
+        public int LogLevel{ get; set; }
 
         [ForeignKey("LogEvent")]
         public int LogEvent { get; set; }

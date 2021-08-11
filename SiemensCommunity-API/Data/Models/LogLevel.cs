@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class LogEvent
+    public class LogLevel
     {
         public int Id { get; set; }
         public int CodeId { get; set; }

@@ -36,5 +36,10 @@ namespace Service.Adapters
         {
             return _logAdapter.Map<Data.Models.Log, Log>(log);
         }
+
+        public IEnumerable<Log> AdaptEnumerable(IEnumerable<Data.Models.Log> logs)
+        {
+            return _logAdapter.Map<IEnumerable<Data.Models.Log>, IEnumerable<Log>>(logs);
+        }
     }
 }

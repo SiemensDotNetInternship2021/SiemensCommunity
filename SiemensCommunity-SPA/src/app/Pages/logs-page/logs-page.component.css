@@ -1,0 +1,15 @@
+.main-ctn{
+    width: 85%;
+    margin: 0 auto;
+}
+.ngx-datatable.material {
+    overflow-wrap: break-word;
+    }
+    .ngx-datatable{
+        margin-left: 0px;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: normal !important;
+        vertical-align: middle !important;
+        word-break: break-all;
+    }

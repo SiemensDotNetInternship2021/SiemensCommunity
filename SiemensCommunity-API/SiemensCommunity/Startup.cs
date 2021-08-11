@@ -51,6 +51,8 @@ namespace SiemensCommunity
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IPropertyRepository, PropertyRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<ILogEventRepository, LogEventRepository>();
+            services.AddScoped<ILogLevelRepository, LogLevelRepository>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAccountService, AccountService>();
@@ -64,6 +66,8 @@ namespace SiemensCommunity
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<ILogService, LogService>();
+            services.AddScoped<ILogEventsService, LogEventService>();
+            services.AddScoped<ILogLevelService, LogLevelService>();
 
             services.AddSingleton<ISystemClock, SystemClock>();
 

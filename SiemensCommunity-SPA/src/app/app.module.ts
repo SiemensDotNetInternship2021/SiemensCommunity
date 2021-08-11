@@ -27,6 +27,8 @@ import { AdminPanelComponent } from './Pages/admin-panel/admin-panel.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { DatePipe } from '@angular/common';
+import { LogsPageComponent } from './Pages/logs-page/logs-page.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -44,6 +46,7 @@ import { DatePipe } from '@angular/common';
     ResetPasswordComponent,
         AddProductComponent,
         AdminPanelComponent,
+        LogsPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,10 +61,9 @@ import { DatePipe } from '@angular/common';
     MatDialogModule,
     MatIconModule,
     NgbModule,
-    ToastrModule.forRoot(),
     MatCheckboxModule,
     NgxStarRatingModule,
-    ToastrModule.forRoot()
+    NgxDatatableModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

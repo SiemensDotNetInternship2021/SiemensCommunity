@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Models
+namespace Service.Models
 {
-    public class LogEvent
+    public class LogLevelModel
     {
         public int Id { get; set; }
         public int CodeId { get; set; }
