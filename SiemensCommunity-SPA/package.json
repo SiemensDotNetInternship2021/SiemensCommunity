@@ -26,6 +26,7 @@
     "bootstrap": "^5.0.2",
     "ng2-file-upload": "^1.4.0",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-datatable": "^1.0.3",
     "ngx-filter-pipe": "^2.1.2",
     "ngx-pagination": "^5.1.1",
     "ngx-star-rating": "^2.0.2",

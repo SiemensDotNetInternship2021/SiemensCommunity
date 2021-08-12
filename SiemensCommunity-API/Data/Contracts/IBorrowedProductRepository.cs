@@ -8,8 +8,9 @@ namespace Data.Contracts
     {
         public Task<BorrowedProduct> BorrowProduct(BorrowedProduct borrowDetails);
 
-        public Task<IEnumerable<BorrowedProduct>> GetBorrowedProductsByUserIdAsync(int userId);
+        public Task<IEnumerable<ProductDTO>> GetBorrowedProductsByUserIdAsync(int userId);
 
         public Task<BorrowedProduct> GiveBackProduct(BorrowedProduct borrowDetails);
+        public Task<IEnumerable<ProductDTO>> GetBorrowedProductsOfUserByCategoryIdAsync(int userId, int categoryId);
     }
 }

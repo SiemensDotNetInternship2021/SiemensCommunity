@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { IBorrowedProducts } from 'src/app/Models/IBorrowedProducts';
 import { ICategory } from 'src/app/Models/ICategory';
 import { IProduct } from 'src/app/Models/IProduct';
@@ -14,7 +15,7 @@ import { ProductService } from 'src/app/Services/product-service/product.service
 })
 export class BorrowedProductsPageComponent implements OnInit {
 
-  borrowedProducts: IBorrowedProducts[] = [];
+  borrowedProducts: IProduct[] = [];
   categories: ICategory[] = [];
   totalLength:any;
   page:number = 1;
@@ -23,10 +24,12 @@ export class BorrowedProductsPageComponent implements OnInit {
   products: IProduct[] = [];
   rating: number = 0;
   userId: number = 0;
+  borrowedProductsId: number[]=[];
 
   constructor(public borrowedProductsService: BorrowedItemsServiceService,
               public categoriesService: CategoriesService,
-              public productsService: ProductService) {
+              private toastr: ToastrService,
+              private productService: ProductService) {
     this.borrowedProducts = [];
     this.categories = [];
     this.products = [];
@@ -34,9 +37,9 @@ export class BorrowedProductsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserId();
-    this.getBorrowedProducts();
     this.getCategories();
-    this.getProducts();
+    this.getProducts(this.categoryId);
+    //    this.getProducts();
   }
 
   getUserId() {
@@ -53,18 +56,29 @@ export class BorrowedProductsPageComponent implements OnInit {
       {
         this.borrowedProducts = borrowedProds;
         this.totalLength = this.borrowedProducts.length;
-      }))
+        console.log(borrowedProds);
+      }));
+      console.log(this.borrowedProducts);
   }
 
-  getProducts(){
-    this.borrowedProductsService.getAllBorrowedProducts().subscribe((prods) => {
-      this.products = prods;
-    })
-  }
+  // getProducts(){
+  //   this.borrowedProductsService.getAllBorrowedProducts().subscribe((prods) => {
+  //     this.products = prods;
+  //   })
+  // }
 
   getSelectedCategory(){
     this.categoryId = this.selectedCategory;
-    this.getBorrowedProductsByCategoryId();
+    this.getProducts(this.categoryId);
+  }
+
+  getProducts(categoryId: number){
+    if(categoryId == 0){
+      this.getBorrowedProducts();
+    }else{
+        this.getBorrowedProductsByCategoryId(this.userId, this.categoryId);
+    }
+    console.log(this.borrowedProducts);
   }
 
   getCategories(){
@@ -74,10 +88,32 @@ export class BorrowedProductsPageComponent implements OnInit {
     })
   }
 
-  getBorrowedProductsByCategoryId(){
-    this.borrowedProductsService.getBorrowedProductsByCategoryId(this.categoryId).subscribe((prodsByCateg) => {
+  getBorrowedProductsByCategoryId(userId: number, categoryId: number){
+    this.borrowedProductsService.getBorrowedProductsByCategoryId(userId, categoryId).subscribe((prodsByCateg) => {
       this.borrowedProducts = prodsByCateg;
     })
   }
 
+  giveBackProduct(productId: number){
+    console.log(productId);
+    this.borrowedProductsService.returnedBorrowedProduct(this.userId, productId).subscribe((res) =>
+      {
+        this.toastr.success("The product has been returned.");
+        console.log("aaaaaaaaaaaaaaa");
+        this.getProducts(this.categoryId);
+      },
+      err=>{
+        this.toastr.error("The product could not be returned .");
+      });
+  }
+
+  rateProduct(productId : number, event : number) {
+    this.productService.rateProduct(productId, this.userId, event).subscribe((res : any) =>
+    {
+      this.toastr.success("The product has been rated");
+    },
+    err=> {
+      this.toastr.error("Product couldn`t be rated");
+    })
+  }
 }

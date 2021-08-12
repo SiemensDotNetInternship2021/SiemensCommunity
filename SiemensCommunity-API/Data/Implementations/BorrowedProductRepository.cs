@@ -1,6 +1,7 @@
 ﻿using Data.Contracts;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,9 +17,9 @@ namespace Data.Implementations
 
 
         public async Task<BorrowedProduct> BorrowProduct(BorrowedProduct borrowDetails)
-        { 
+        {
             await Context.AddAsync(borrowDetails);
-            
+
             var product = Context.Products.SingleOrDefault(p => p.Id == borrowDetails.ProductId);
 
             product.IsAvailable = false;
@@ -29,13 +30,45 @@ namespace Data.Implementations
         }
 
 
-        public async Task<IEnumerable<BorrowedProduct>> GetBorrowedProductsByUserIdAsync(int userId)
+        public async Task<IEnumerable<ProductDTO>> GetBorrowedProductsByUserIdAsync(int userId)
         {
-            var returnedBorrowedProducts = await Context.BorrowedProducts.Where(bp => bp.UserId == userId).ToListAsync();
+            var returnedBorrowedProducts = await Context.BorrowedProducts.Where(bp => bp.UserId == userId)
+                .Include(bp => bp.Product)
+                  .Select(x => new ProductDTO
+                  {
+                      Id = x.Product.Id,
+                      Details = x.Product.Details,
+                      Name = x.Product.Name,
+                      IsAvailable = x.Product.IsAvailable,
+                      Rating = Math.Round(x.Product.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
+                      User = x.User.UserName,
+                      CategoryName = x.Product.Category.Name,
+                      SubCategoryName = x.Product.SubCategory.Name,
+                      ImagePath = x.Product.Photo.Url,
+                  }).ToListAsync();
 
             return returnedBorrowedProducts;
         }
 
+        public async Task<IEnumerable<ProductDTO>> GetBorrowedProductsOfUserByCategoryIdAsync(int userId, int categoryId)
+        {
+            var returnedBorrowedProducts = await Context.BorrowedProducts.Where(bp => bp.UserId == userId && bp.Product.CategoryId == categoryId)
+                    .Include(bp => bp.Product)
+                      .Select(x => new ProductDTO
+                      {
+                          Id = x.Product.Id,
+                          Details = x.Product.Details,
+                          Name = x.Product.Name,
+                          IsAvailable = x.Product.IsAvailable,
+                          Rating = Math.Round(x.Product.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
+                          User = x.User.UserName,
+                          CategoryName = x.Product.Category.Name,
+                          SubCategoryName = x.Product.SubCategory.Name,
+                          ImagePath = x.Product.Photo.Url,
+                      }).ToListAsync();
+
+            return returnedBorrowedProducts;
+        }
 
         public async Task<BorrowedProduct> GiveBackProduct(BorrowedProduct borrowDetails)
         {
@@ -50,6 +83,24 @@ namespace Data.Implementations
             await Context.SaveChangesAsync();
 
             return borrowedProduct;
+        }
+
+        public async Task<IEnumerable<BorrowedProductDTO>> GetBorrowedDTOAsync(int userId)
+        {
+            var borrowedProduct = Context.BorrowedProducts.Where(bp => bp.UserId == userId).Include(bp => bp.Product).Include(bp => bp.Photo).Select(
+                x => new BorrowedProductDTO
+                {
+                    Id = x.ProductId.Value,
+                    Details = x.Product.Details,
+                    IsAvailable = x.Product.IsAvailable,
+                    Name = x.Product.Name,
+                    Rating = Math.Round(x.Product.ProductRating.Where(pr => pr.ProductId == x.ProductId).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
+                    User = x.Product.User.UserName,
+                    CategoryName = x.Product.Category.Name,
+                    SubCategoryName = x.Product.SubCategory.Name,
+                    ImagePath = x.Product.Photo.Url
+                });
+            return await borrowedProduct.ToListAsync();
         }
     }
 }

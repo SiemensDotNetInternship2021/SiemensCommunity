@@ -1,4 +1,3 @@
-import { VariableAst } from "@angular/compiler";
 import { IDetail } from "./IDetail";
 
 export interface IProduct {

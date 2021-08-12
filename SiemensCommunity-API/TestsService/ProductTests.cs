@@ -48,7 +48,7 @@ namespace Service.Tests
         {
             cloudinary = new Cloudinary(new Account( CloudName, ApiKey, ApiSecret));
             productServiceMock = new Mock<IProductService>(MockBehavior.Strict);
-            productService = new ProductService(productRepository.Object, photoServiceMock.Object, photoRepositoryMock.Object, new Mock<ILoggerFactory>().Object);
+            productService = new ProductService(productRepository.Object, photoServiceMock.Object, photoRepositoryMock.Object, new Mock<ILoggerFactory>().Object, new Mock<ILogService>().Object);
         }
 
         [Test]

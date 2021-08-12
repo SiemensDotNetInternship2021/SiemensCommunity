@@ -7,6 +7,7 @@ import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password
 import { HomePageComponent } from './Pages/home-page/home-page.component';
 import { LentProductsPageComponent } from './Pages/lent-products-page/lent-products-page.component';
 import { LoginPageComponent } from './Pages/login-page/login-page.component';
+import { LogsPageComponent } from './Pages/logs-page/logs-page.component';
 import { MycatalogPageComponent } from './Pages/mycatalog-page/mycatalog-page.component';
 import { RegisterPageComponent } from './Pages/register-page/register-page.component';
 import { ResetPasswordComponent } from './Pages/reset-password/reset-password.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'borrowed', component: BorrowedProductsPageComponent, canActivate:[PageGuard]},
   {path: 'mycatalog', component: MycatalogPageComponent, canActivate:[PageGuard]},
   {path: 'forgotpassword', component: ForgotPasswordComponent, canActivate:[PageGuard]},
+  {path: 'logs', component: LogsPageComponent, canActivate: [PageGuard], data:{permittedRoles:['Admin']} },
   {path: 'resetpassword', component: ResetPasswordComponent, canActivate: [PageGuard]},
   {path: 'addproduct', component: AddProductComponent, canActivate: [PageGuard]},
   {path: 'admin', component: AdminPanelComponent, canActivate: [PageGuard], data: {permittedRoles:['Admin']}},

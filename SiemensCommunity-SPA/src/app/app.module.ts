@@ -27,6 +27,7 @@ import { AdminPanelComponent } from './Pages/admin-panel/admin-panel.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { DatePipe } from '@angular/common';
+import { LogsPageComponent } from './Pages/logs-page/logs-page.component';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { UserEditorComponent } from './Pages/user-editor/user-editor.component'
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -45,6 +46,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     LentProductsPageComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+        AddProductComponent,
+        AdminPanelComponent,
+        LogsPageComponent,
     AddProductComponent,
     AdminPanelComponent,
     UserEditorComponent,
@@ -62,9 +66,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     MatDialogModule,
     MatIconModule,
     NgbModule,
-    ToastrModule.forRoot(),
     MatCheckboxModule,
     NgxStarRatingModule,
+    NgxDatatableModule,
     ToastrModule.forRoot(),
     FilterPipeModule,
     NgxDatatableModule

@@ -32,7 +32,7 @@ namespace Service.Tests
         public void SetUp()
         {
             photoServiceMock = new Mock<IPhotoService>(MockBehavior.Strict);
-            photoService = new PhotoService(options, new Mock<ILoggerFactory>().Object);
+            //photoService = new PhotoService(options, new Mock<ILoggerFactory>().Object);
         }
 
     }

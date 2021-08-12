@@ -1,0 +1,42 @@
+<app-nav-bar></app-nav-bar>
+<div class="filter-select-ctn">
+    <select class="form-control custom-select" [(ngModel)]="mySelectedLogLevel" (change)="getElements()">
+        <option class="option-display" selected="selected" value=0>All log levels</option>
+        <option value="{{logLevel.id}}" *ngFor="let logLevel of logLevels">{{logLevel.name}}</option>
+    </select>
+    <select class="form-control custom-select" [(ngModel)]="mySelectedLogEvent" (change)="getElements()">
+        <option class="option-display" selected="selected" value=0>All log events</option>
+        <option value="{{logEvent.id}}" *ngFor="let logEvent of logEvents">{{logEvent.name}}</option>
+    </select>
+</div>
+
+
+<div class="main-ctn">
+    <ngx-datatable #myTable #myFilterTable class="material" [rows]="logs" [columnMode]="'force'" [headerHeight]="50"
+        [footerHeight]="50" [rowHeight]="'auto'" [scrollbarV]="false" [limit]="10"
+        [sorts]="[{prop: 'name', dir: 'desc'}]">
+
+        <ngx-datatable-column name="Log Level" [maxWidth]="100" prop="logLevel">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.logLevel}}
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Log Event" [maxWidth]="100" prop="logEvent">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.logEvent}}
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Message" [maxWidth]="300" prop="logMessage">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.logMessage}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Stack tace" prop="stackTrace">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.stackTrace}}
+            </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+</div>

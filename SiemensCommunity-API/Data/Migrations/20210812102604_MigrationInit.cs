@@ -79,6 +79,34 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LogEvents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CodeId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogEvents", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LogLevels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CodeId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogLevels", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Photos",
                 columns: table => new
                 {
@@ -240,6 +268,34 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LogLevelId = table.Column<int>(type: "int", nullable: false),
+                    LogEventId = table.Column<int>(type: "int", nullable: false),
+                    LogMessage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StackTrace = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Logs_LogEvents_LogEventId",
+                        column: x => x.LogEventId,
+                        principalTable: "LogEvents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Logs_LogLevels_LogLevelId",
+                        column: x => x.LogLevelId,
+                        principalTable: "LogLevels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -290,9 +346,10 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PhotoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -304,11 +361,17 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
+                        name: "FK_BorrowedProducts_Photos_PhotoId",
+                        column: x => x.PhotoId,
+                        principalTable: "Photos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_BorrowedProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -371,6 +434,38 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "LogEvents",
+                columns: new[] { "Id", "CodeId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1000, "GenerateItems" },
+                    { 11, 3002, "ErrorUploadItem" },
+                    { 10, 3001, "UploadItem" },
+                    { 8, 2001, "ErrorEmailSent" },
+                    { 7, 2000, "EmailSent" },
+                    { 9, 3000, "TestItem" },
+                    { 5, 1004, "UpdateItem" },
+                    { 4, 1003, "InsertItem" },
+                    { 3, 1002, "GetItem" },
+                    { 2, 1001, "ListItems" },
+                    { 6, 1005, "DeleteItem" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "LogLevels",
+                columns: new[] { "Id", "CodeId", "Name" },
+                values: new object[,]
+                {
+                    { 6, 5, "Critical" },
+                    { 1, 0, "Trace" },
+                    { 2, 1, "Debug" },
+                    { 3, 2, "Information" },
+                    { 4, 3, "Warning" },
+                    { 5, 4, "Error" },
+                    { 7, 6, "None" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -411,10 +506,16 @@ namespace Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BorrowedProducts_PhotoId",
+                table: "BorrowedProducts",
+                column: "PhotoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BorrowedProducts_ProductId",
                 table: "BorrowedProducts",
                 column: "ProductId",
-                unique: true);
+                unique: true,
+                filter: "[ProductId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BorrowedProducts_UserId",
@@ -435,6 +536,16 @@ namespace Data.Migrations
                 name: "IX_FavoriteProducts_UserId",
                 table: "FavoriteProducts",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Logs_LogEventId",
+                table: "Logs",
+                column: "LogEventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Logs_LogLevelId",
+                table: "Logs",
+                column: "LogLevelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductRatings_ProductId",
@@ -504,6 +615,9 @@ namespace Data.Migrations
                 name: "FavoriteProducts");
 
             migrationBuilder.DropTable(
+                name: "Logs");
+
+            migrationBuilder.DropTable(
                 name: "ProductRatings");
 
             migrationBuilder.DropTable(
@@ -511,6 +625,12 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "LogEvents");
+
+            migrationBuilder.DropTable(
+                name: "LogLevels");
 
             migrationBuilder.DropTable(
                 name: "Products");

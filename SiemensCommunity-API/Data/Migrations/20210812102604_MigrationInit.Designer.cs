@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20210810075627_MigrationInit")]
+    [Migration("20210812102604_MigrationInit")]
     partial class MigrationInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,7 +75,10 @@ namespace Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("PhotoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
@@ -86,8 +89,11 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PhotoId");
+
                     b.HasIndex("ProductId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ProductId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -150,6 +156,182 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("FavoriteProducts");
+                });
+
+            modelBuilder.Entity("Data.Models.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LogEventId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LogLevelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LogMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StackTrace")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LogEventId");
+
+                    b.HasIndex("LogLevelId");
+
+                    b.ToTable("Logs");
+                });
+
+            modelBuilder.Entity("Data.Models.LogEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CodeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LogEvents");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CodeId = 1000,
+                            Name = "GenerateItems"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CodeId = 1001,
+                            Name = "ListItems"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CodeId = 1002,
+                            Name = "GetItem"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CodeId = 1003,
+                            Name = "InsertItem"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CodeId = 1004,
+                            Name = "UpdateItem"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CodeId = 1005,
+                            Name = "DeleteItem"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CodeId = 2000,
+                            Name = "EmailSent"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CodeId = 2001,
+                            Name = "ErrorEmailSent"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CodeId = 3000,
+                            Name = "TestItem"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CodeId = 3001,
+                            Name = "UploadItem"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CodeId = 3002,
+                            Name = "ErrorUploadItem"
+                        });
+                });
+
+            modelBuilder.Entity("Data.Models.LogLevel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CodeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LogLevels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CodeId = 0,
+                            Name = "Trace"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CodeId = 1,
+                            Name = "Debug"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CodeId = 2,
+                            Name = "Information"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CodeId = 3,
+                            Name = "Warning"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CodeId = 4,
+                            Name = "Error"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CodeId = 5,
+                            Name = "Critical"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CodeId = 6,
+                            Name = "None"
+                        });
                 });
 
             modelBuilder.Entity("Data.Models.Photo", b =>
@@ -469,17 +651,21 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.BorrowedProduct", b =>
                 {
+                    b.HasOne("Data.Models.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId");
+
                     b.HasOne("Data.Models.Product", "Product")
                         .WithOne("BorrowedProduct")
-                        .HasForeignKey("Data.Models.BorrowedProduct", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Data.Models.BorrowedProduct", "ProductId");
 
                     b.HasOne("Data.Models.User", "User")
                         .WithMany("BorrowedProducts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Photo");
 
                     b.Navigation("Product");
 
@@ -507,6 +693,25 @@ namespace Data.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Models.Log", b =>
+                {
+                    b.HasOne("Data.Models.LogEvent", "LogEvent")
+                        .WithMany()
+                        .HasForeignKey("LogEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.LogLevel", "LogLevel")
+                        .WithMany()
+                        .HasForeignKey("LogLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LogEvent");
+
+                    b.Navigation("LogLevel");
                 });
 
             modelBuilder.Entity("Data.Models.Product", b =>
