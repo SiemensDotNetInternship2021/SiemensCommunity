@@ -1,7 +1,9 @@
 export interface ILog{
     id: number,
-    logLevel:  number,
-    logEvent: number,
+    logLevelId:  number,
+    logEventId: number,
+    logLevel:  string,
+    logEvent: string,
     logMessage: string,
     stackTrace: string
 }

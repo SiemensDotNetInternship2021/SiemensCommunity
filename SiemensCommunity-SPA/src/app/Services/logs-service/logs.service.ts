@@ -15,4 +15,15 @@ export class LogsService {
     return this.http.get<ILog[]>(this.rootUrl + '/log/get');
   }
 
+  getLogsByLevelAndEvent(logLevelId: number, logEventId: number){
+    return this.http.get<ILog[]>(this.rootUrl + '/log/getLogsByLevelAndEvent?logLevelId='+ logLevelId+"&&logEventId=" + logEventId);
+  }
+
+  getLogsByLogEvent(logEventId: number){
+    return this.http.get<ILog[]>(this.rootUrl + '/log/getByLogEvent?logEventId='+ logEventId);
+  }
+
+  getLogsByLogLevel(logLevelId: number){
+    return this.http.get<ILog[]>(this.rootUrl + '/log/getByLogLevel?logLevelId='+ logLevelId);
+  }
 }

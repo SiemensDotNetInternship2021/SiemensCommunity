@@ -173,10 +173,10 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("LogEvent")
+                    b.Property<int>("LogEventId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LogLevel")
+                    b.Property<int>("LogLevelId")
                         .HasColumnType("int");
 
                     b.Property<string>("LogMessage")
@@ -186,6 +186,10 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LogEventId");
+
+                    b.HasIndex("LogLevelId");
 
                     b.ToTable("Logs");
                 });
@@ -705,6 +709,25 @@ namespace Data.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Models.Log", b =>
+                {
+                    b.HasOne("Data.Models.LogEvent", "LogEvent")
+                        .WithMany()
+                        .HasForeignKey("LogEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.LogLevel", "LogLevel")
+                        .WithMany()
+                        .HasForeignKey("LogLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LogEvent");
+
+                    b.Navigation("LogLevel");
                 });
 
             modelBuilder.Entity("Data.Models.Product", b =>

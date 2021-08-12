@@ -16,15 +16,34 @@ namespace Service.Implementations
     {
         private readonly ILogRepository _logRepository;
         private LogAdapter _logAdapter = new LogAdapter();
+        private LogDTOAdapter _logDTOAdapter = new LogDTOAdapter();
         public LogService(ILogRepository logRepository)
         {
             _logRepository = logRepository;
         }
 
-        public async Task<IEnumerable<Log>> GetAsync()
+        public async Task<IEnumerable<LogDTO>> GetAsync()
         {
-            var logs = await _logRepository.GetAsync();
-            return _logAdapter.AdaptEnumerable(logs);
+            var logs = await _logRepository.ShowAsync();
+            return _logDTOAdapter.AdaptEnumerable(logs);
+        }
+
+        public async Task<IEnumerable<LogDTO>> GetByLogEvent(int logEventId)
+        {
+            var logs = await _logRepository.GetByLogEvent(logEventId);
+            return _logDTOAdapter.AdaptEnumerable(logs);
+        }
+
+        public async Task<IEnumerable<LogDTO>> GetByLogLevel(int logLevelId)
+        {
+            var logs = await _logRepository.GetByLogLevel(logLevelId);
+            return _logDTOAdapter.AdaptEnumerable(logs);
+        }
+
+        public async Task<IEnumerable<LogDTO>> GetLogsByLevelAndEvent(int logLevelId, int logEventId)
+        {
+            var logs = await _logRepository.GetLogsByLevelAndEvent(logLevelId, logEventId);
+            return _logDTOAdapter.AdaptEnumerable(logs);
         }
 
         public async Task<bool> SaveAsync(LogLevel logLevel, int logEvent, string message, string stackTrace)

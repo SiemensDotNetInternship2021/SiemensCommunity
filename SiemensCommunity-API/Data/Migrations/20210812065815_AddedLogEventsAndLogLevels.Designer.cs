@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20210811105542_AddedLogEventsAndLogLevels")]
+    [Migration("20210812065815_AddedLogEventsAndLogLevels")]
     partial class AddedLogEventsAndLogLevels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,10 +175,10 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("LogEvent")
+                    b.Property<int>("LogEventId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LogLevel")
+                    b.Property<int>("LogLevelId")
                         .HasColumnType("int");
 
                     b.Property<string>("LogMessage")
@@ -188,6 +188,10 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LogEventId");
+
+                    b.HasIndex("LogLevelId");
 
                     b.ToTable("Logs");
                 });
@@ -208,6 +212,74 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LogEvents");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CodeId = 1000,
+                            Name = "GenerateItems"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CodeId = 1001,
+                            Name = "ListItems"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CodeId = 1002,
+                            Name = "GetItem"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CodeId = 1003,
+                            Name = "InsertItem"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CodeId = 1004,
+                            Name = "UpdateItem"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CodeId = 1005,
+                            Name = "DeleteItem"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CodeId = 2000,
+                            Name = "EmailSent"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CodeId = 2001,
+                            Name = "ErrorEmailSent"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CodeId = 3000,
+                            Name = "TestItem"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CodeId = 3001,
+                            Name = "UploadItem"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CodeId = 3002,
+                            Name = "ErrorUploadItem"
+                        });
                 });
 
             modelBuilder.Entity("Data.Models.LogLevel", b =>
@@ -226,6 +298,50 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LogLevels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CodeId = 0,
+                            Name = "Trace"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CodeId = 1,
+                            Name = "Debug"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CodeId = 2,
+                            Name = "Information"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CodeId = 3,
+                            Name = "Warning"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CodeId = 4,
+                            Name = "Error"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CodeId = 5,
+                            Name = "Critical"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CodeId = 6,
+                            Name = "None"
+                        });
                 });
 
             modelBuilder.Entity("Data.Models.Photo", b =>
@@ -595,6 +711,25 @@ namespace Data.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Models.Log", b =>
+                {
+                    b.HasOne("Data.Models.LogEvent", "LogEvent")
+                        .WithMany()
+                        .HasForeignKey("LogEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.LogLevel", "LogLevel")
+                        .WithMany()
+                        .HasForeignKey("LogLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LogEvent");
+
+                    b.Navigation("LogLevel");
                 });
 
             modelBuilder.Entity("Data.Models.Product", b =>

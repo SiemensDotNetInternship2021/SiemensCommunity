@@ -12,6 +12,9 @@ namespace Service.Contracts
     public interface ILogService
     {
         public Task<bool> SaveAsync(LogLevel logLevel, int logEvent, string message, string stackTrace);
-        public Task<IEnumerable<Log>> GetAsync();
+        public Task<IEnumerable<LogDTO>> GetAsync();
+        public Task<IEnumerable<LogDTO>> GetLogsByLevelAndEvent(int logLevelId, int logEventId);
+        public Task<IEnumerable<LogDTO>> GetByLogEvent(int logEventId);
+        public Task<IEnumerable<LogDTO>> GetByLogLevel(int logLevelId);
     }
 }
