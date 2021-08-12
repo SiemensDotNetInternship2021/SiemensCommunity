@@ -38,6 +38,8 @@ export class AddProductComponent implements OnInit {
   productId: number = 0;
   productImage: string = '';
 
+  userId: number = 0;
+
   constructor(public service: AddProductService, 
     public categoryService: CategoryService,
     public subcategoryService: SubcategoryService,
@@ -50,15 +52,24 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     this.productId = Number(routeParams.get('id'));
-    // this.route.queryParams.subscribe(params =>{
-    //   this.productId = params['id'];
-    // });
     if(this.productId == undefined ||  this.productId == 0){
       this.addProductPageConstructor();
     }else{
       this.modifyProductConstructor(this.productId);
     }
+    this.getUserId();
   }
+
+  getUserId() {
+    var token = localStorage.getItem('token');
+    var tokenDetails : any;
+    if(token != null) {
+      tokenDetails = window.atob(token.split('.')[1]);
+    }
+      tokenDetails = JSON.parse(tokenDetails);
+      this.userId = tokenDetails.UserId;
+  }
+
 //builds the page to add a new product
   addProductPageConstructor(){
     this.getCategories();
@@ -107,7 +118,7 @@ export class AddProductComponent implements OnInit {
   
   //call api
   addProduct() {
-    this.service.addProduct(this.properties, this.productId, this.productImage).subscribe((res: any) => 
+    this.service.addProduct(this.userId, this.properties, this.productId, this.productImage).subscribe((res: any) => 
     {
       this.toastr.success("Succsefull update.");
       this.router.navigateByUrl('/mycatalog');

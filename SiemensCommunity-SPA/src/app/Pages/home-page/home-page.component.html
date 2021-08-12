@@ -8,7 +8,7 @@
     </select> 
    </div>
    <div class="col-md-3">
-     <form>
+     <form class="radio-form">
       <label class="option"> All
         <input value="0" [checked]="true" name = "option" (change)="checkboxChange($event)" type="radio">
       </label>
@@ -24,27 +24,28 @@
   <div *ngIf="!(selectedOption == 2)" class="row justify-content-center align-items-center">
     <div *ngFor="let product of products | paginate : 
       {itemsPerPage: 8, 
-      currentPage: page}" class="col-md-3">
-        <div class="card" style="width: 18rem;">
+      currentPage: page}" class="col-md-3" style="margin-left: 10px;">
+        <div class="card" style="width: 18rem; height: 700px;">
             <img src="{{product.imagePath}}" class="card-img-top" >
             <div class="card-body">
               <h5 class="card-title">{{product.name}}</h5>
               <p class="card-text">Type: {{product.subCategoryName}}</p>
               <p class="card-text">Owner: {{product.user}}</p>
               <p class="card-text">Details: </p>
-              <div *ngFor="let productDetails of product.detailsList">
-                <p class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
+              <div class="card-details">
+                <p *ngFor="let productDetails of product.detailsList" class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
               </div>
-              
               <p class="card-text">Rate: {{product.rating}}</p>
               <p class="card-text">Available: {{product.isAvailable}}</p>
             </div>
-            <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(product.id, $event)"></ngb-rating>
-            <div class="card-body">
-                <i *ngIf="favoriteProductsId.includes(product.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(product.id)"></i>
-                <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart" (click)="addFavoriteProduct(product.id)"></i>
-              <button *ngIf="!borrowedProductsId.includes(product.id)" class="btn btn-primary" (click)="borrowProduct(product.id)">Borrow</button>
-              <button *ngIf="borrowedProductsId.includes(product.id)" class="btn btn-primary" (click)="giveBackBorrowedProduct(product.id)">Give Back</button>
+            <div class="card-bottom">
+              <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(product.id, $event)"></ngb-rating>
+              <div class="card-body">
+                  <i *ngIf="favoriteProductsId.includes(product.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(product.id)"></i>
+                  <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart" (click)="addFavoriteProduct(product.id)"></i>
+                <button *ngIf="!borrowedProductsId.includes(product.id)" class="btn btn-primary" (click)="borrowProduct(product.id)">Borrow</button>
+                <button *ngIf="borrowedProductsId.includes(product.id)" class="btn btn-primary" (click)="giveBackBorrowedProduct(product.id)">Give Back</button>
+              </div>
             </div>
         </div>
     </div>
@@ -58,8 +59,8 @@
     <div  *ngFor="let favoriteProduct of favoriteProducts | paginate : 
       {itemsPerPage: 8, 
       currentPage: page
-      }" class="col-md-3">
-        <div class="card" style="width: 18rem;">
+      }" class="col-md-3" style="margin-left: 10px;">
+        <div class="card" style="width: 18rem; height: 700px;">
             <img src="{{favoriteProduct.imagePath}}" class="card-img-top" >
             <div class="card-body">
               <h5 class="card-title">{{favoriteProduct.name}}</h5>
@@ -67,8 +68,8 @@
               <p class="card-text">Owner: {{favoriteProduct.user}}</p>
 
               <p class="card-text">Details: </p>
-              <div *ngFor="let favoriteProductDetails of favoriteProduct.detailsList">
-                <p class="card-text">{{favoriteProductDetails.name}} : {{ favoriteProductDetails.description}}</p>
+              <div class="card-details" >
+                <p  *ngFor="let favoriteProductDetails of favoriteProduct.detailsList" class="card-text">{{favoriteProductDetails.name}} : {{ favoriteProductDetails.description}}</p>
               </div>
 
               <p class="card-text">Rate: {{favoriteProduct.rating}}</p>

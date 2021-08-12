@@ -31,7 +31,7 @@ export class AddProductService {
     Properties: ['']
   });
 
-  addProduct(properties: any, productId: number, productImage: string) {
+  addProduct(userId: number,properties: any, productId: number, productImage: string) {
 
 
     //fill he form to send data in back
@@ -40,8 +40,7 @@ export class AddProductService {
     this.formData.append("CategoryId", this.addProductModel.value.Category);
     this.formData.append("SubCategoryId", this.addProductModel.value.SubCategory);
     this.formData.append("Details", JSON.stringify(properties));
-    console.log(productImage);
-    this.formData.append("UserId", "2");
+    this.formData.append("UserId", userId.toLocaleString());
     if(productId == undefined || productId == 0){
       return this.http.post(this.rootUrl + '/Product/add', this.formData);
     }else{

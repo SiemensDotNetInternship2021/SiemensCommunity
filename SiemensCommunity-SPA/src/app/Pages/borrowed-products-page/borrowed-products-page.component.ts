@@ -39,7 +39,6 @@ export class BorrowedProductsPageComponent implements OnInit {
     this.getUserId();
     this.getCategories();
     this.getProducts(this.categoryId);
-    //    this.getProducts();
   }
 
   getUserId() {
@@ -52,20 +51,17 @@ export class BorrowedProductsPageComponent implements OnInit {
   }
 
   getBorrowedProducts(){
-    this.borrowedProductsService.getBorrowedProducts(this.userId).subscribe((borrowedProds =>
+    this.borrowedProductsService.getBorrowedProducts(this.userId).subscribe((borrowedProds) =>
       {
-        this.borrowedProducts = borrowedProds;
-        this.totalLength = this.borrowedProducts.length;
-        console.log(borrowedProds);
-      }));
+        this.borrowedProducts = [];
+        borrowedProds.forEach(borrowedProduct =>{
+          borrowedProduct.detailsList = JSON.parse(borrowedProduct.details);
+        this.borrowedProducts.push(borrowedProduct);
+      });
+      this.totalLength = this.borrowedProducts.length;
+      });
       console.log(this.borrowedProducts);
   }
-
-  // getProducts(){
-  //   this.borrowedProductsService.getAllBorrowedProducts().subscribe((prods) => {
-  //     this.products = prods;
-  //   })
-  // }
 
   getSelectedCategory(){
     this.categoryId = this.selectedCategory;
@@ -83,23 +79,24 @@ export class BorrowedProductsPageComponent implements OnInit {
 
   getCategories(){
     this.categoriesService.getCategories().subscribe((category) => {
-      //category.forEach(value => this.categories.push(value));
       this.categories = category;
     })
   }
 
   getBorrowedProductsByCategoryId(userId: number, categoryId: number){
     this.borrowedProductsService.getBorrowedProductsByCategoryId(userId, categoryId).subscribe((prodsByCateg) => {
-      this.borrowedProducts = prodsByCateg;
+      this.borrowedProducts = [];
+      prodsByCateg.forEach(borrowedProduct =>{
+        borrowedProduct.detailsList = JSON.parse(borrowedProduct.details);
+      this.borrowedProducts.push(borrowedProduct);
     })
-  }
+  });}
 
   giveBackProduct(productId: number){
     console.log(productId);
     this.borrowedProductsService.returnedBorrowedProduct(this.userId, productId).subscribe((res) =>
       {
         this.toastr.success("The product has been returned.");
-        console.log("aaaaaaaaaaaaaaa");
         this.getProducts(this.categoryId);
       },
       err=>{

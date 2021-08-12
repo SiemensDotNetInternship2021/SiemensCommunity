@@ -2,9 +2,7 @@ p.title {
     font-size: 3.5em;
     text-align: center;
 }
-.card-title {
-    font-size: 2em;
-}
+
 div.card {
     margin-top: 50px;
 }
@@ -29,11 +27,6 @@ img {
     position: relative;
 }
 
-.option {
-    padding-left: 10px;
-    font-size: 20px;
-}
-
 .pagination {
     margin-top: 10px;
     justify-content: center;
@@ -55,4 +48,23 @@ img {
     font-size: 2em;
 }
 
+.radio-form{
+    display: flex;
+    justify-content: space-around;
+    font-size: 16px;
+    padding: 6px 12px;
+    line-height: 26px;
+}
+
+
+h5 {
+    font-size: large;
+    font-weight:500;
+}
+
+.card-details {
+    max-height: 80px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
 
