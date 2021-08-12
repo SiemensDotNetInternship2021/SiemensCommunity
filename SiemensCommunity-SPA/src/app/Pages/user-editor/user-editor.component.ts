@@ -22,6 +22,7 @@ export class UserEditorComponent implements OnInit {
   departments: IDepartment[] =[]
   @Input() userId: number = 0;
   roles : string[] =[]
+  userRoles : string[] =[]
   editUserModel = this.form.group({
     Id: ['', Validators.required],
     FirstName: ['', Validators.required],
@@ -29,7 +30,6 @@ export class UserEditorComponent implements OnInit {
     UserName : ['', Validators.required],
     Department : ['', Validators.required],
     OfficeFloor : ['', Validators.required],
-    Roles : ['', Validators.required]
   })
 
   constructor(public modalService: NgbModal, public activeModal: NgbActiveModal,
@@ -54,7 +54,6 @@ export class UserEditorComponent implements OnInit {
           UserName : [this.user.userName, Validators.required],
           Department : [this.user.department, Validators.required],
           OfficeFloor : [this.user.officeFloor, Validators.required],
-          Roles : [this.user.roles, Validators.required]
         })
     })
   }
@@ -69,19 +68,35 @@ export class UserEditorComponent implements OnInit {
   getRoles()
   {
     this.userService.getRoles().subscribe((res : any) => {
-        this.roles = res;
+      this.roles = res;
     })
   }
 
   submitChanges()
   {
-    console.log(this.editUserModel);
-    this.userService.sendUpdatedUser(this.editUserModel).subscribe((res: any) => 
+    this.userService.sendUpdatedUser(this.editUserModel, this.userRoles).subscribe((res: any) => 
     {
       this.toastr.success("User details have been updated!");
     },
     err=>{
       this.toastr.error("Oh no :( something went wrong");
     });
+  }
+
+  updateUserRole(event : any) 
+  {
+    this.userRoles = this.user.roles;
+    this.userRoles.push(event.target.value);
+    console.log(this.userRoles);
+  }
+
+  removeUserRole(event : any)
+  {
+    this.userRoles =this.user.roles;
+    const roleIndex = this.userRoles.indexOf(event.target.value);
+    if( roleIndex !== -1) {
+      this.userRoles.splice(roleIndex, 1);
+    }
+    console.log(this.userRoles);
   }
 }
