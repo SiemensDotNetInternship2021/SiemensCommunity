@@ -18,8 +18,13 @@
         <li class="nav-item">
           <a class="nav-link " routerLink="/mycatalog">My catalog</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin" *ngIf="checkifAdmin == true">Admin Panel</a>
+        <li class="nav-item dropdown" *ngIf="checkifAdmin == true">
+          <a class="nav-link dropbtn">Admin panel</a>
+          <div class="dropdown-content">
+            <a routerLink="/admin">Users</a>
+            <a href="#">Items</a>
+            <a href="#">Logs</a>
+          </div>
         </li>
       </ul>
     <button class="btn btn-outline-dark" (click)="logout()">Logout</button>
