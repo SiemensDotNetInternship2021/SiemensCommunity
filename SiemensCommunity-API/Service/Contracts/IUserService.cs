@@ -14,5 +14,7 @@ namespace Service.Contracts
         public Task<UserDTO> GetUserById(int userId);
 
         public Task<IEnumerable<string>> GetRoles();
+
+        public Task<UserDTO> UpdateUser(UserDTO userDetails);
     }
 }

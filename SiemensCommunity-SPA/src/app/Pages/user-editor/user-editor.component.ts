@@ -7,6 +7,7 @@ import { IDepartment } from 'src/app/Models/IDepartment';
 import { IUserDTO } from 'src/app/Models/IUserDTO';
 import { DepartmentService } from 'src/app/Services/department-service/department.service';
 import { UserService } from 'src/app/Services/user.service';
+import { ChangeValueValidator } from 'src/app/Shared/CustomValidators/changedvalue.validator';
 
 @Component({
   selector: 'app-user-editor',

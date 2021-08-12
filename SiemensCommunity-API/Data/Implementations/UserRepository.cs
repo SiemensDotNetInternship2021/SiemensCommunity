@@ -60,5 +60,19 @@ namespace Data.Implementations
             var roles = Context.Roles.Select(ur => ur.Name).ToListAsync();
             return await roles;
         }
+
+
+        public async Task<UserDTO> UpdateUser(UserDTO userDetails)
+        {
+          /*  var existing = Context.Set<UserDTO>().Find(userDetails.Id);
+            Context.Entry(existing).CurrentValues.SetValues(userDetails);
+            await Context.SaveChangesAsync();
+            return userDetails;*/
+
+            var existing = Context.Users.Find(userDetails.Id);
+            Context.Entry(existing).CurrentValues.SetValues(userDetails);
+            await Context.SaveChangesAsync();
+            return userDetails;
+        }
     }
 }

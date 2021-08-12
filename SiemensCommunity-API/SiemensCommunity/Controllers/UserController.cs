@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using SiemensCommunity.Adapters;
 using SiemensCommunity.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace SiemensCommunity.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly UserDTOAdapter _userDTOAdapter = new UserDTOAdapter();
+
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -42,6 +45,7 @@ namespace SiemensCommunity.Controllers
         [HttpPost("updateUser")]
         public async Task<IActionResult> UpdateUser(UserDTO user)
         {
+            var updatedUser = await _userService.UpdateUser(_userDTOAdapter.Adapt(user));
             return Ok(user);
         }
     }
