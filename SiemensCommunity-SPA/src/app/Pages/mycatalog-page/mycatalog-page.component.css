@@ -15,11 +15,13 @@ div.container {
 div.card {
     align-items: center;
     justify-content: center;
+    width: fit-content!important;
+    max-width: 400px;
 }
 
 div.row.justify-content-center.align-items-center {
     height: 100%;
-    min-height: 100%
+    min-height: 100%;
 }
 
 img {
@@ -42,4 +44,45 @@ span.status-lent {
     background-color: red;
     border-radius:10px;
     font-size:15px;
+}
+.pagination{
+    justify-content: center!important;
+}
+
+h5{
+    font-size: large;
+    font-weight:500;
+}
+
+.inline-btns-ctn{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.nav-bar-ctn{
+    margin-top: 30px;
+}
+
+.radio-form{
+    display: flex;
+    justify-content: space-around;
+    font-size: 16px;
+    padding: 6px 12px;
+    line-height: 26px;
+}
+.row > * {
+   max-width: 389px;
+}
+.items-ctn {
+    display: flex;
+    justify-content: center;
+} 
+
+div.card{
+    margin: 30px 0;
+}
+@media (min-width: 768px){
+    .col-md-3{
+        min-width: 300px;
+    }
 }

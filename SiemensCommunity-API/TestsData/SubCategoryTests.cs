@@ -13,7 +13,6 @@ namespace Data.Tests
     public class SubCategoryTests
     {
         private SubCategoryRepository repository;
-        private Mock<ISubCategoryRepository> subCategoryRepositoryMock;
         private List<SubCategory> subCategories;
         DbContextOptions<ProjectDbContext> options = new DbContextOptionsBuilder<ProjectDbContext>()
                                      .UseInMemoryDatabase(databaseName: "SiemensCommunityTests")
@@ -31,20 +30,17 @@ namespace Data.Tests
                 context.SubCategories.Add(new SubCategory { Id = 3, Name = "Category 3" });
                 context.SaveChanges();
             }
-            subCategoryRepositoryMock = new Mock<ISubCategoryRepository>();
             dbContext = new ProjectDbContext(options);
             repository = new SubCategoryRepository(dbContext);
         }
 
         [Test]
-        public async Task GetSubCategories_ShouldReturnListOfCategory()
+        public async Task GetSubCategories_ShouldReturnListOfSubCategories()
         {
-            subCategoryRepositoryMock.Setup(p => p.GetAsync()).Returns(Task.FromResult(subCategories.AsEnumerable()));
-
             var result = await repository.GetAsync();
 
-            Assert.IsInstanceOf<IEnumerable<SubCategory>>(result);
-            Assert.AreEqual(result.Count(), 3);
+            Assert.AreEqual(3, result.Count());
         }
+
     }
 }

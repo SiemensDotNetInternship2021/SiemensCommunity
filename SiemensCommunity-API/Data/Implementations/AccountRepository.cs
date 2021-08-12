@@ -60,7 +60,7 @@ namespace Data.Implementations
             try
             {
                 var result = await _userManager.CreateAsync(user, password);
-                if (result.Succeeded)
+                    if (result.Succeeded)
                 {
                     try
                     {
@@ -71,16 +71,16 @@ namespace Data.Implementations
                            UserId1 = user.Id,
                         });*/
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        throw ex;
+                        throw;
                     }
                 }
                 return user.Id;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw ;
             }
         }
 

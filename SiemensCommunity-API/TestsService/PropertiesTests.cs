@@ -15,9 +15,14 @@ namespace Service.Tests
 {
     public class PropertiesTests
     {
+        //subject of the test
         private PropertyService propertyService;
-        private Mock<IPropertyService> propertyServiceMock;
+
+        //mocks
         private Mock<IPropertyRepository> propertyRepositoryMock = new Mock<IPropertyRepository>();
+        Mock<ILoggerFactory> _loggerFactory;
+        Mock<ILogger> mockLogger = new Mock<ILogger>();
+
         private List<Data.Models.Property> dataProperty = new List<Data.Models.Property> {
             new Data.Models.Property { Id = 1, Name = "property 1", CategoryId = 1 },
             new Data.Models.Property { Id = 2, Name = "property 2", CategoryId = 2}
@@ -31,8 +36,18 @@ namespace Service.Tests
         [SetUp]
         public void SetUp()
         {
-            propertyServiceMock = new Mock<IPropertyService>(MockBehavior.Strict);
-            propertyService = new PropertyService(propertyRepositoryMock.Object, new Mock<ILoggerFactory>().Object);
+
+            mockLogger.Setup(
+                m => m.Log(
+                    LogLevel.Information,
+                    It.IsAny<EventId>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Exception>(),
+                    It.IsAny<Func<object, Exception, string>>()));
+            _loggerFactory = new Mock<ILoggerFactory>();
+            _loggerFactory.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(() => mockLogger.Object);
+
+            propertyService = new PropertyService(propertyRepositoryMock.Object, _loggerFactory.Object);
         }
 
 
@@ -40,10 +55,8 @@ namespace Service.Tests
         public async Task GetCategoryProperties_ShouldReturnListOfProperties()
         {
             var categoryId = 1;
-            var dataProperty = new List<Data.Models.Property>{ new Data.Models.Property { Id = 1, Name = "property 1", CategoryId = 1 } };
-            var property = new List<Property>{ new Property { Id = 1, Name = "property 1", CategoryId = 1 } };
-            propertyRepositoryMock.Setup(c => c.GetCategoryProperties(categoryId)).Returns(Task.FromResult(dataProperty.AsEnumerable()));
-            propertyServiceMock.Setup(p => p.GetCategoryProperties(categoryId)).Returns(Task.FromResult(property.AsEnumerable()));
+            propertyRepositoryMock.Setup(c => c.GetCategoryProperties(categoryId))
+                .Returns(Task.FromResult(dataProperty.Where(c => c.CategoryId == categoryId).AsEnumerable()));
 
             var result = await propertyService.GetCategoryProperties(categoryId);
 
@@ -52,15 +65,14 @@ namespace Service.Tests
 
 
         [Test]
-        public async Task GetCategoryProperties_ShouldNotReturnListOfProperties()
+        public async Task GetCategoryProperties_ShouldReturnEmptyListOfProperties()
         {
             var categoryId = 3;
-            propertyRepositoryMock.Setup(c => c.GetCategoryProperties(categoryId)).Returns(Task.FromResult(new List<Data.Models.Property>().AsEnumerable()));
-            propertyServiceMock.Setup(p => p.GetCategoryProperties(categoryId)).Returns(Task.FromResult(new List<Property>().AsEnumerable()));
+            propertyRepositoryMock.Setup(c => c.GetCategoryProperties(categoryId)).Returns(Task.FromResult(dataProperty.Where(p => p.CategoryId == categoryId)));
 
             var result = await propertyService.GetCategoryProperties(categoryId);
 
-            Assert.AreEqual(0, result.Count());
+            Assert.IsEmpty(result);
         }
     }
 }

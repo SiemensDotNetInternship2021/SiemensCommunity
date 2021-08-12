@@ -15,7 +15,6 @@ namespace Data.Tests
     public class PropertiesTests
     {
         private PropertyRepository repository;
-        private Mock<IPropertyRepository> propertyRepositoryMock;
         private List<Property> properties = new List<Property>
         {
             new Property { Id = 1, Name = "Category 1", CategoryId = 1},
@@ -27,19 +26,11 @@ namespace Data.Tests
                                                      .UseInMemoryDatabase(databaseName: "SiemensCommunityTests")
                                                      .Options;
         private ProjectDbContext dbContext;
-        int categoryId = 1;
 
         [SetUp]
         public void Setup()
         {
-            using (var context = new ProjectDbContext(options))
-            {
-                context.Properties.Add(new Property { Id = 1, Name = "Category 1", CategoryId = 1 });
-                context.Properties.Add(new Property { Id = 2, Name = "Category 2", CategoryId = 2 });
-                context.Properties.Add(new Property { Id = 3, Name = "Category 3", CategoryId = 3 });
-                context.SaveChanges();
-            }
-            propertyRepositoryMock = new Mock<IPropertyRepository>();
+
             dbContext = new ProjectDbContext(options);
             repository = new PropertyRepository(dbContext);
         }
@@ -47,23 +38,79 @@ namespace Data.Tests
         [Test]
         public async Task GetProperties_ShouldReturnListOfProperties()
         {
-            propertyRepositoryMock.Setup(p => p.GetAsync()).Returns(Task.FromResult(properties.AsEnumerable()));
+            int categoryId = 1;
+            using (var context = new ProjectDbContext(options))
+            {
+                context.Properties.Add(new Property { Id = 1, Name = "Category 1", CategoryId = 1 });
+                context.Properties.Add(new Property { Id = 2, Name = "Category 2", CategoryId = 2 });
+                context.Properties.Add(new Property { Id = 3, Name = "Category 3", CategoryId = 3 });
+                context.SaveChanges();
+            }
 
             var result = await repository.GetAsync();
 
-            Assert.IsInstanceOf<IEnumerable<Property>>(result);
             Assert.AreEqual(result.Count(), 3);
+        }
+
+        [Test]
+        public async Task GetProperties_ShouldReturnEmptyListOfProperties()
+        {
+            using (var context = new ProjectDbContext(options))
+            {
+                context.SaveChanges();
+            }
+
+            var result = await repository.GetAsync();
+
+            Assert.IsEmpty(result);
         }
 
         [Test]
         public async Task GetProperties_ShouldReturnListOfPropertiesbyCategoryId()
         {
-            propertyRepositoryMock.Setup(p => p.GetCategoryProperties(categoryId)).Returns(Task.FromResult(properties.Where(p => p.CategoryId == categoryId).AsEnumerable()));
+            int categoryId = 1;
+            using (var context = new ProjectDbContext(options))
+            {
+                context.Properties.Add(new Property { Id = 1, Name = "Category 1", CategoryId = 1 });
+                context.Properties.Add(new Property { Id = 2, Name = "Category 2", CategoryId = 2 });
+                context.Properties.Add(new Property { Id = 3, Name = "Category 3", CategoryId = 3 });
+                context.SaveChanges();
+            }
 
             var result = await repository.GetCategoryProperties(categoryId);
 
-            Assert.IsInstanceOf<IEnumerable<Property>>(result);
             Assert.AreEqual(result.Count(), 1);
+        }
+
+        [Test]
+        public async Task GetProperties_ShouldReturnEmptyListOfPropertiesbyCategoryIdIfCategoryIdDoesNotExists()
+        {
+            int categoryId = 4;
+            using (var context = new ProjectDbContext(options))
+            {
+                context.Properties.Add(new Property { Id = 1, Name = "Category 1", CategoryId = 1 });
+                context.Properties.Add(new Property { Id = 2, Name = "Category 2", CategoryId = 2 });
+                context.Properties.Add(new Property { Id = 3, Name = "Category 3", CategoryId = 3 });
+                context.SaveChanges();
+            }
+
+            var result = await repository.GetCategoryProperties(categoryId);
+
+            Assert.IsEmpty(result);
+        }
+
+        [Test]
+        public async Task GetProperties_ShouldReturnEmptyListOfPropertiesbyCategoryIdIFNoDataInProperties()
+        {
+            int categoryId = 4;
+            using (var context = new ProjectDbContext(options))
+            {
+                context.SaveChanges();
+            }
+
+            var result = await repository.GetCategoryProperties(categoryId);
+
+            Assert.IsEmpty(result);
         }
     }
 }

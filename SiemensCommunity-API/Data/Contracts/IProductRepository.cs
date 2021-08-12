@@ -9,5 +9,11 @@ namespace Data.Contracts
         public Task<List<ProductDTO>> GetFiltredProducts(int selectedCategory, int selectedOption);
 
         public Task<ProductFormDTO> FindById(int id);
+        public Task<List<ProductDTO>> GetUserProductsAsync(int userId);
+        public Task<List<ProductDTO>> GetUserProductsByCategoryAsync(int userId, int categoryId);
+        public Task<List<ProductDTO>> GetUserAvailableProductsAsync(int userId);
+        public Task<List<ProductDTO>> GetUserAvailableProductsByCategoryAsync(int userId, int categoryId);
+        public Task<List<ProductDTO>> GetUserLendProductsAsync(int userId);
+        public Task<List<ProductDTO>> GetUserLendProductsByCategoryAsync(int userId, int categoryId);
     }
 }

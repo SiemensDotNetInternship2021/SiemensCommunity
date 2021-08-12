@@ -48,10 +48,12 @@ export class AddProductComponent implements OnInit {
     public toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params =>{
-      this.productId = params['id'];
-    });
-    if(this.productId == undefined){
+    const routeParams = this.route.snapshot.paramMap;
+    this.productId = Number(routeParams.get('id'));
+    // this.route.queryParams.subscribe(params =>{
+    //   this.productId = params['id'];
+    // });
+    if(this.productId == undefined ||  this.productId == 0){
       this.addProductPageConstructor();
     }else{
       this.modifyProductConstructor(this.productId);
@@ -66,31 +68,22 @@ export class AddProductComponent implements OnInit {
 
   //build the page o edit a product 
   modifyProductConstructor(productId: number){
-    console.log("componenta product id " + productId);
     this.productService.getProduct(productId).subscribe((product) =>{
-      console.log(product);
       this.fillForm(product);
     });
   }
 
   //fiil the form un the product data
   fillForm(product: any){
-    console.log(product.details);
     this.properties =JSON.parse(product.details);
-    console.log(this.properties);
     this.service.addProductModel.value.Name = product.name;
     this.service.addProductModel.controls['Name'].setValue(product.name);
     this.properties = JSON.parse(product.details);
-    this.properties.forEach(property => {
-      console.log(property.description);
-    });
     this.getCategories();
     this.getSubCategories();
     this.service.addProductModel.controls['Category'].setValue(product.category.id);
     this.service.addProductModel.controls['SubCategory'].setValue(product.subcategory.id);
     this.productImage = product.photo;
-    console.log(product);
-    console.log(this.service.addProductModel.value.Image);
     this.selectedSubCategoryId = product.subcategory.id;
   }
 
@@ -116,8 +109,8 @@ export class AddProductComponent implements OnInit {
   addProduct() {
     this.service.addProduct(this.properties, this.productId, this.productImage).subscribe((res: any) => 
     {
-      this.toastr.success("Product added succsefully.");
-      this.router.navigateByUrl('/home');
+      this.toastr.success("Succsefull update.");
+      this.router.navigateByUrl('/mycatalog');
     },
     err =>{
       this.toastr.error("error");
@@ -133,8 +126,7 @@ export class AddProductComponent implements OnInit {
         this.selectedSubCategories.push(subcategory);
       }
     });
-    console.log(this.productId);
-    if(this.productId == undefined){
+    if(this.productId == undefined || this.productId == 0){
       if(typeof(selectedCategoryId) == 'string' || typeof(selectedCategoryId) == 'number'){
         this.getProperties(selectedCategoryId);
       }
@@ -146,7 +138,6 @@ export class AddProductComponent implements OnInit {
 
   //when a subcategory has been changed
   onSubCategoryChanged(selectedSubCategoryId: any){
-    console.log("in subcategory changed")
     this.selectedSubCategoryId = selectedSubCategoryId;
     this.selectedSubCategories.forEach(subcategory => {
       if(subcategory.id == selectedSubCategoryId){

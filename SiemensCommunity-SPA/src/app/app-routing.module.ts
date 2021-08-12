@@ -24,6 +24,7 @@ const routes: Routes = [
   {path: 'borrowed', component: BorrowedProductsPageComponent, canActivate:[PageGuard]},
   {path: 'mycatalog', component: MycatalogPageComponent, canActivate:[PageGuard]},
   {path: 'forgotpassword', component: ForgotPasswordComponent, canActivate:[PageGuard]},
+  {path: 'addproduct/:id', component: AddProductComponent, canActivate: [PageGuard] },
   {path: 'logs', component: LogsPageComponent, canActivate: [PageGuard], data:{permittedRoles:['Admin']} },
   {path: 'resetpassword', component: ResetPasswordComponent, canActivate: [PageGuard]},
   {path: 'addproduct', component: AddProductComponent, canActivate: [PageGuard]},
