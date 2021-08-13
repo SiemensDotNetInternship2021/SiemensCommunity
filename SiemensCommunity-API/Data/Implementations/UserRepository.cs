@@ -19,7 +19,7 @@ namespace Data.Implementations
             _userManager = userManager;
             _roleManager = roleManager;
 
-          
+
         }
 
         public override async Task<IEnumerable<UserDTO>> GetAsync()
@@ -64,10 +64,15 @@ namespace Data.Implementations
 
         public async Task<UserDTO> UpdateUser(UserDTO userDetails)
         {
-         
+
             var existing = Context.Users.Find(userDetails.Id);
             Context.Entry(existing).CurrentValues.SetValues(userDetails);
-            await Context.SaveChangesAsync();
+
+            foreach (var role in userDetails.Roles)
+            {
+                await _userManager.AddToRoleAsync(existing, role);
+                await Context.SaveChangesAsync();
+            }
             return userDetails;
         }
     }

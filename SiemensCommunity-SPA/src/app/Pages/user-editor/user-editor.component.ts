@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { resetFakeAsyncZone } from '@angular/core/testing';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
@@ -22,7 +23,8 @@ export class UserEditorComponent implements OnInit {
   departments: IDepartment[] =[]
   @Input() userId: number = 0;
   roles : string[] =[]
-  userRoles : string[] =[]
+  userRolesToUpdate : string[] =[]
+  userRolesToRemove: string[] =[]
   editUserModel = this.form.group({
     Id: ['', Validators.required],
     FirstName: ['', Validators.required],
@@ -74,7 +76,7 @@ export class UserEditorComponent implements OnInit {
 
   submitChanges()
   {
-    this.userService.sendUpdatedUser(this.editUserModel, this.userRoles).subscribe((res: any) => 
+    this.userService.sendUpdatedUser(this.editUserModel, this.userRolesToUpdate).subscribe((res: any) => 
     {
       this.toastr.success("User details have been updated!");
     },
@@ -85,18 +87,20 @@ export class UserEditorComponent implements OnInit {
 
   updateUserRole(event : any) 
   {
-    this.userRoles = this.user.roles;
-    this.userRoles.push(event.target.value);
-    console.log(this.userRoles);
+      this.userRolesToUpdate.push(event.target.value);
+    // if(this.userRolesToRemove.length > 0)
+    // {
+    //   const roleToRemoveIndex = this.userRolesToRemove.indexOf(event.target.value);
+    //   this.userRolesToRemove.splice(roleToRemoveIndex, 1);
+    // }
+
   }
 
   removeUserRole(event : any)
   {
-    this.userRoles =this.user.roles;
-    const roleIndex = this.userRoles.indexOf(event.target.value);
-    if( roleIndex !== -1) {
-      this.userRoles.splice(roleIndex, 1);
-    }
-    console.log(this.userRoles);
+    //this.userRolesToRemove.push(event.target.value);
+    const roleIndex = this.userRolesToUpdate.indexOf(event.target.value);
+    this.userRolesToUpdate.splice(roleIndex, 1);
+
   }
 }
