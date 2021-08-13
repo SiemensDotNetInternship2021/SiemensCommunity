@@ -13,7 +13,11 @@
 
                 <p class="card-text">LastName:</p>
                 <input class="input" formControlName="LastName">
-                <label class="text-danger" *ngIf="editUserModel.get('LastName')?.touched && editUserModel.get('LastName')?.errors?.required">LastName can`t be empty!</label>
+                <label class="text-danger" *ngIf="editUserModel.get('LastName')?.touched && editUserModel.get('LastName')?.errors?.required">Lastname can`t be empty!</label>
+
+                <p class="card-text">Username:</p>
+                <input class="input" formControlName="UserName">
+                <label class="text-danger" *ngIf="editUserModel.get('UserName')?.touched && editUserModel.get('UserName')?.errors?.required">Username can`t be empty!</label>
 
                 <p class="card-text">Department:</p>
                 <select class="form-control custom-select" formControlName="Department">
@@ -25,10 +29,12 @@
                 <input class="input"  formControlName="OfficeFloor">
                 <label class="text-danger" *ngIf="editUserModel.get('OfficeFloor')?.touched && editUserModel.get('OfficeFloor')?.errors?.required">OfficeFloor can`t be empty!</label>
                 <p class="card-text">Roles:</p>
-                <select class="form-control custom-select" formControlName="Roles"> 
-                    <option class="option-display" selected="selected" hidden>{{user.roles}}</option>
-                    <option *ngFor = "let role of roles">{{role}}</option>
-                </select> 
+                <div  *ngFor = "let role of roles"> 
+                  <label> {{role}}
+                   <input type="checkbox" *ngIf="!user.roles.includes(role)" value="{{role}}" (change)="updateUserRole($event)">
+                   <input type="checkbox" *ngIf="user.roles.includes(role)" [checked]="true" value="{{role}}" (change)="removeUserRole($event)">
+                  </label>
+                </div> 
               </div>
             <button class="btn btn-dark" [disabled]= "editUserModel.invalid">Submit</button>
           </form>    

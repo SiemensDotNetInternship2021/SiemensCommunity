@@ -132,7 +132,7 @@ export class UserService {
     return this.http.get(this.rootUrl + '/User/getRoles');
   }
 
-  sendUpdatedUser(editUserModel : any) {
+  sendUpdatedUser(editUserModel : any, userRoles : string[]) {
     var userDetails = {
       id : editUserModel.value.Id,
       lastName : editUserModel.value.LastName,
@@ -140,9 +140,8 @@ export class UserService {
       userName : editUserModel.value.UserName,
       department : editUserModel.value.Department,
       officeFloor : editUserModel.value.OfficeFloor,
-      roles : editUserModel.value.Roles
+      roles : userRoles,
     }
-    console.log(userDetails.id);
     console.log(userDetails.roles);
     return this.http.post(this.rootUrl + '/User/updateUser', userDetails);
   }

@@ -20,7 +20,6 @@ const routes: Routes = [
   {path: 'register', component: RegisterPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'home', component: HomePageComponent, canActivate:[PageGuard]},
-  {path: 'lent', component: LentProductsPageComponent, canActivate:[PageGuard]},
   {path: 'borrowed', component: BorrowedProductsPageComponent, canActivate:[PageGuard]},
   {path: 'mycatalog', component: MycatalogPageComponent, canActivate:[PageGuard]},
   {path: 'forgotpassword', component: ForgotPasswordComponent, canActivate:[PageGuard]},

@@ -39,7 +39,6 @@ export class BorrowedProductsPageComponent implements OnInit {
     this.getUserId();
     this.getCategories();
     this.getProducts(this.categoryId);
-    //    this.getProducts();
   }
 
   getUserId() {
@@ -52,7 +51,7 @@ export class BorrowedProductsPageComponent implements OnInit {
   }
 
   getBorrowedProducts(){
-    this.borrowedProductsService.getBorrowedProducts(this.userId).subscribe((borrowedProds =>
+    this.borrowedProductsService.getBorrowedProducts(this.userId).subscribe((borrowedProds) =>
       {
         this.borrowedProducts = [];
         borrowedProds.forEach(prod =>{
@@ -82,7 +81,6 @@ export class BorrowedProductsPageComponent implements OnInit {
 
   getCategories(){
     this.categoriesService.getCategories().subscribe((category) => {
-      //category.forEach(value => this.categories.push(value));
       this.categories = category;
     })
   }
@@ -97,14 +95,13 @@ export class BorrowedProductsPageComponent implements OnInit {
       })
       this.totalLength = this.borrowedProducts.length;
     })
-  }
+  });}
 
   giveBackProduct(productId: number){
     console.log(productId);
     this.borrowedProductsService.returnedBorrowedProduct(this.userId, productId).subscribe((res) =>
       {
         this.toastr.success("The product has been returned.");
-        console.log("aaaaaaaaaaaaaaa");
         this.getProducts(this.categoryId);
       },
       err=>{

@@ -71,19 +71,27 @@ export class MycatalogPageComponent implements OnInit {
     }
     if(optionValue == 0){
       this.productService.getUserProducts(this.userId, selectedCategory).subscribe(products =>{
-        this.products = products;
+        this.products = [];
+        products.forEach(product =>{
+        product.detailsList = JSON.parse(product.details);
+        this.products.push(product);
+      })
       });
     }else if(optionValue == 1){
       this.productService.getUserAvailableProducts(this.userId, selectedCategory).subscribe(products =>{
-        this.products = products;
+        this.products = [];
+        products.forEach(product =>{
+        product.detailsList = JSON.parse(product.details);
+        this.products.push(product);
       });
-
-    }else if(optionValue == 2){
+    });}else if(optionValue == 2){
       this.productService.getUserLendProducts(this.userId, selectedCategory).subscribe(products =>{
-        this.products = products;
-        console.log(this.products);
+        this.products = [];
+        products.forEach(product =>{
+        product.detailsList = JSON.parse(product.details);
+        this.products.push(product);
       });
-    }
+    });}
   }
 
   deleteProduct(productId: number){
