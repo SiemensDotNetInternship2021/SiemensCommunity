@@ -68,12 +68,32 @@ namespace Data.Implementations
             var existing = Context.Users.Find(userDetails.Id);
             Context.Entry(existing).CurrentValues.SetValues(userDetails);
 
-            foreach (var role in userDetails.Roles)
+            var userRoles = await _userManager.GetRolesAsync(existing);
+            if(userRoles.Count() <= 0)
             {
-                await _userManager.AddToRoleAsync(existing, role);
-                await Context.SaveChangesAsync();
+                foreach (var role in userDetails.Roles)
+                {
+                    await _userManager.AddToRoleAsync(existing, role);
+                    await Context.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                foreach (var role in userDetails.Roles)
+                {
+                    if (!userRoles.Contains(role))
+                    {
+                        await _userManager.AddToRoleAsync(existing, role);
+                    }
+                    if (userRoles.Contains(role))
+                    {
+                        await _userManager.RemoveFromRoleAsync(existing, role);
+                    }
+                    await Context.SaveChangesAsync();
+                }
             }
             return userDetails;
         }
     }
 }
+

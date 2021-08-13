@@ -32,7 +32,7 @@
                 <div  *ngFor = "let role of roles"> 
                   <label> {{role}}
                    <input type="checkbox" *ngIf="!user.roles.includes(role)" value="{{role}}" (change)="updateUserRole($event)">
-                   <input type="checkbox" *ngIf="user.roles.includes(role)" [checked]="true" value="{{role}}" (change)="removeUserRole($event)">
+                   <input type="checkbox" *ngIf="user.roles.includes(role)" [checked]="true" value="{{role}}" (change)="updateUserRole($event)">
                   </label>
                 </div> 
               </div>

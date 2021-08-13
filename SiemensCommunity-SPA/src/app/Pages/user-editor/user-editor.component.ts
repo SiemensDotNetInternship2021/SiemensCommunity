@@ -22,9 +22,8 @@ export class UserEditorComponent implements OnInit {
   user !: IUserDTO 
   departments: IDepartment[] =[]
   @Input() userId: number = 0;
-  roles : string[] =[]
-  userRolesToUpdate : string[] =[]
-  userRolesToRemove: string[] =[]
+  roles : string[] =[];
+  userRolesToUpdate : string[] = [];
   editUserModel = this.form.group({
     Id: ['', Validators.required],
     FirstName: ['', Validators.required],
@@ -87,20 +86,16 @@ export class UserEditorComponent implements OnInit {
 
   updateUserRole(event : any) 
   {
+    if(!this.userRolesToUpdate.includes(event.target.value))
+    {
       this.userRolesToUpdate.push(event.target.value);
-    // if(this.userRolesToRemove.length > 0)
-    // {
-    //   const roleToRemoveIndex = this.userRolesToRemove.indexOf(event.target.value);
-    //   this.userRolesToRemove.splice(roleToRemoveIndex, 1);
-    // }
-
-  }
-
-  removeUserRole(event : any)
-  {
-    //this.userRolesToRemove.push(event.target.value);
-    const roleIndex = this.userRolesToUpdate.indexOf(event.target.value);
-    this.userRolesToUpdate.splice(roleIndex, 1);
+    }
+    else if(this.userRolesToUpdate.includes(event.target.value))
+    {
+      const roleIndex = this.userRolesToUpdate.indexOf(event.target.value);
+      this.userRolesToUpdate.splice(roleIndex, 1);
+    }
+    console.log(this.userRolesToUpdate);
 
   }
 }
