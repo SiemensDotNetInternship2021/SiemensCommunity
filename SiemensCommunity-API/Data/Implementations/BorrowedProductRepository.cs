@@ -30,11 +30,11 @@ namespace Data.Implementations
         }
 
 
-        public async Task<IEnumerable<ProductDTO>> GetBorrowedProductsByUserIdAsync(int userId)
+        public async Task<IEnumerable<BorrowedProductDTO>> GetBorrowedProductsByUserIdAsync(int userId)
         {
             var returnedBorrowedProducts = await Context.BorrowedProducts.Where(bp => bp.UserId == userId)
-                .Include(bp => bp.Product)
-                  .Select(x => new ProductDTO
+                    .Include(bp => bp.Product)
+                  .Select(x => new BorrowedProductDTO
                   {
                       Id = x.Product.Id,
                       Details = x.Product.Details,
@@ -45,16 +45,18 @@ namespace Data.Implementations
                       CategoryName = x.Product.Category.Name,
                       SubCategoryName = x.Product.SubCategory.Name,
                       ImagePath = x.Product.Photo.Url,
+                      StartDate = x.StartDate,
+                      EndDate = x.EndDate
                   }).ToListAsync();
 
             return returnedBorrowedProducts;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetBorrowedProductsOfUserByCategoryIdAsync(int userId, int categoryId)
+        public async Task<IEnumerable<BorrowedProductDTO>> GetBorrowedProductsOfUserByCategoryIdAsync(int userId, int categoryId)
         {
             var returnedBorrowedProducts = await Context.BorrowedProducts.Where(bp => bp.UserId == userId && bp.Product.CategoryId == categoryId)
                     .Include(bp => bp.Product)
-                      .Select(x => new ProductDTO
+                      .Select(x => new BorrowedProductDTO
                       {
                           Id = x.Product.Id,
                           Details = x.Product.Details,
@@ -65,6 +67,8 @@ namespace Data.Implementations
                           CategoryName = x.Product.Category.Name,
                           SubCategoryName = x.Product.SubCategory.Name,
                           ImagePath = x.Product.Photo.Url,
+                          EndDate = x.EndDate,
+                          StartDate = x.StartDate
                       }).ToListAsync();
 
             return returnedBorrowedProducts;

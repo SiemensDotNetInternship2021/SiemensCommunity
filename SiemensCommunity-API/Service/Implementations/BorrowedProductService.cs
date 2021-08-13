@@ -14,7 +14,7 @@ namespace Service.Implementations
         private readonly IBorrowedProductRepository _borrowedProductRepository;
         private readonly IProductRepository _productRepository;
 
-        private readonly ProductDTOAdapter productDTOAdapter = new ProductDTOAdapter();
+        private readonly ProductDTOAdapter _productDTOAdapter = new ProductDTOAdapter();
         private readonly BorrowedProductAdapter _borrowedProductAdapter = new BorrowedProductAdapter();
         private readonly BorrowedProductDTOAdapter _borrowedProductDTOAdapter = new BorrowedProductDTOAdapter();
 
@@ -30,10 +30,10 @@ namespace Service.Implementations
             return _borrowedProductAdapter.AdaptList(returnedProducts);
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetByCategoryIdAsync(int userId, int categoryId)
+        public async Task<IEnumerable<BorrowedProductDTO>> GetByCategoryIdAsync(int userId, int categoryId)
         {
             var borrowedProducts = await _borrowedProductRepository.GetBorrowedProductsOfUserByCategoryIdAsync(userId, categoryId);
-            return productDTOAdapter.AdaptEnumerable(borrowedProducts);
+            return _borrowedProductDTOAdapter.AdaptEnumerable(borrowedProducts);
         }
 
         public async Task<BorrowedProduct> BorrowProduct(BorrowedProduct borrowDetails)
@@ -42,10 +42,10 @@ namespace Service.Implementations
             return _borrowedProductAdapter.Adapt(borrowedProduct);
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetBorrowedByUserIdAsync(int userId)
+        public async Task<IEnumerable<BorrowedProductDTO>> GetBorrowedByUserIdAsync(int userId)
         {
             var borrowedProduct = await _borrowedProductRepository.GetBorrowedProductsByUserIdAsync(userId);
-            return productDTOAdapter.AdaptEnumerable(borrowedProduct);
+            return _borrowedProductDTOAdapter.AdaptEnumerable(borrowedProduct);
         }
 
         public async Task<BorrowedProduct> ReturnBorrowedProduct(BorrowedProduct borrowDetails)
@@ -55,18 +55,11 @@ namespace Service.Implementations
             return _borrowedProductAdapter.Adapt(returnedProduct);
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetBorrowedAsync(int userId)
+        public async Task<IEnumerable<BorrowedProductDTO>> GetBorrowedAsync(int userId)
         {
-            IEnumerable<Data.Models.ProductDTO> returnedFavoriteProducts = new List<Data.Models.ProductDTO>();
-            try
-            {
-                returnedFavoriteProducts = await _borrowedProductRepository.GetBorrowedProductsByUserIdAsync(userId);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return productDTOAdapter.AdaptEnumerable(returnedFavoriteProducts);
+            var returnedFavoriteProducts = await _borrowedProductRepository.GetBorrowedProductsByUserIdAsync(userId);
+
+            return _borrowedProductDTOAdapter.AdaptEnumerable(returnedFavoriteProducts);
         }
     }
 }

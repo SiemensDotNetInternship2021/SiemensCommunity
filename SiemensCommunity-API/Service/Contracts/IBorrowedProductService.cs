@@ -8,14 +8,14 @@ namespace Service.Contracts
     {
         public Task<IEnumerable<BorrowedProduct>> GetAsync();
 
-        public Task<IEnumerable<ProductDTO>> GetByCategoryIdAsync(int userId, int categoryId);
+        public Task<IEnumerable<BorrowedProductDTO>> GetByCategoryIdAsync(int userId, int categoryId);
 
         public Task<BorrowedProduct> BorrowProduct(BorrowedProduct borrowDetails);
 
-        public Task<IEnumerable<ProductDTO>> GetBorrowedByUserIdAsync(int userId);
+        public Task<IEnumerable<BorrowedProductDTO>> GetBorrowedByUserIdAsync(int userId);
 
         public Task<BorrowedProduct> ReturnBorrowedProduct(BorrowedProduct borrowDetails);
 
-        public Task<IEnumerable<ProductDTO>> GetBorrowedAsync(int userId);
+        public Task<IEnumerable<BorrowedProductDTO>> GetBorrowedAsync(int userId);
     }
 }

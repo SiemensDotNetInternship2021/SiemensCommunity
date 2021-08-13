@@ -15,7 +15,7 @@ import { ProductService } from 'src/app/Services/product-service/product.service
 })
 export class BorrowedProductsPageComponent implements OnInit {
 
-  borrowedProducts: IProduct[] = [];
+  borrowedProducts: IBorrowedProducts[] = [];
   categories: ICategory[] = [];
   totalLength:any;
   page:number = 1;
@@ -54,18 +54,17 @@ export class BorrowedProductsPageComponent implements OnInit {
   getBorrowedProducts(){
     this.borrowedProductsService.getBorrowedProducts(this.userId).subscribe((borrowedProds =>
       {
-        this.borrowedProducts = borrowedProds;
+        this.borrowedProducts = [];
+        borrowedProds.forEach(prod =>{
+          prod.startDate =  prod.startDate.split('T')[0];
+          prod.endDate = prod.endDate.split('T')[0];
+          this.borrowedProducts.push(prod);
+        })
         this.totalLength = this.borrowedProducts.length;
         console.log(borrowedProds);
       }));
       console.log(this.borrowedProducts);
   }
-
-  // getProducts(){
-  //   this.borrowedProductsService.getAllBorrowedProducts().subscribe((prods) => {
-  //     this.products = prods;
-  //   })
-  // }
 
   getSelectedCategory(){
     this.categoryId = this.selectedCategory;
@@ -90,7 +89,13 @@ export class BorrowedProductsPageComponent implements OnInit {
 
   getBorrowedProductsByCategoryId(userId: number, categoryId: number){
     this.borrowedProductsService.getBorrowedProductsByCategoryId(userId, categoryId).subscribe((prodsByCateg) => {
-      this.borrowedProducts = prodsByCateg;
+      this.borrowedProducts = [];
+      prodsByCateg.forEach(prod =>{
+        prod.startDate =  prod.startDate.split('T')[0];
+        prod.endDate = prod.endDate.split('T')[0];
+        this.borrowedProducts.push(prod);
+      })
+      this.totalLength = this.borrowedProducts.length;
     })
   }
 

@@ -33,9 +33,13 @@ namespace Service.Adapters
             return _borrowedProductDTOAdapter.Map<Data.Models.BorrowedProductDTO, BorrowedProductDTO>(borrowedProduct);
         }
 
-        public IEnumerable<BorrowedProductDTO> AdaptList(IEnumerable<Data.Models.BorrowedProductDTO> borrowedProducts)
+        public IEnumerable<BorrowedProductDTO> AdaptEnumerable(IEnumerable<Data.Models.BorrowedProductDTO> borrowedProducts)
         {
             return _borrowedProductDTOAdapter.Map<IEnumerable<Data.Models.BorrowedProductDTO>, IEnumerable<BorrowedProductDTO>>(borrowedProducts);
+        }
+        public IEnumerable<Data.Models.BorrowedProductDTO>  AdaptEnumerable(IEnumerable<BorrowedProductDTO> borrowedProducts)
+        {
+            return _borrowedProductDTOAdapter.Map<IEnumerable<BorrowedProductDTO>, IEnumerable<Data.Models.BorrowedProductDTO>>(borrowedProducts);
         }
     }
 }
