@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { resetFakeAsyncZone } from '@angular/core/testing';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
@@ -22,6 +23,8 @@ export class UserEditorComponent implements OnInit {
   departments: IDepartment[] =[]
   @Input() userId: number = 0;
   roles : string[] =[]
+  userRolesToUpdate : string[] =[]
+  userRolesToRemove: string[] =[]
   editUserModel = this.form.group({
     Id: ['', Validators.required],
     FirstName: ['', Validators.required],
@@ -29,7 +32,6 @@ export class UserEditorComponent implements OnInit {
     UserName : ['', Validators.required],
     Department : ['', Validators.required],
     OfficeFloor : ['', Validators.required],
-    Roles : ['', Validators.required]
   })
 
   constructor(public modalService: NgbModal, public activeModal: NgbActiveModal,
@@ -54,7 +56,6 @@ export class UserEditorComponent implements OnInit {
           UserName : [this.user.userName, Validators.required],
           Department : [this.user.department, Validators.required],
           OfficeFloor : [this.user.officeFloor, Validators.required],
-          Roles : [this.user.roles, Validators.required]
         })
     })
   }
@@ -69,19 +70,37 @@ export class UserEditorComponent implements OnInit {
   getRoles()
   {
     this.userService.getRoles().subscribe((res : any) => {
-        this.roles = res;
+      this.roles = res;
     })
   }
 
   submitChanges()
   {
-    console.log(this.editUserModel);
-    this.userService.sendUpdatedUser(this.editUserModel).subscribe((res: any) => 
+    this.userService.sendUpdatedUser(this.editUserModel, this.userRolesToUpdate).subscribe((res: any) => 
     {
       this.toastr.success("User details have been updated!");
     },
     err=>{
       this.toastr.error("Oh no :( something went wrong");
     });
+  }
+
+  updateUserRole(event : any) 
+  {
+      this.userRolesToUpdate.push(event.target.value);
+    // if(this.userRolesToRemove.length > 0)
+    // {
+    //   const roleToRemoveIndex = this.userRolesToRemove.indexOf(event.target.value);
+    //   this.userRolesToRemove.splice(roleToRemoveIndex, 1);
+    // }
+
+  }
+
+  removeUserRole(event : any)
+  {
+    //this.userRolesToRemove.push(event.target.value);
+    const roleIndex = this.userRolesToUpdate.indexOf(event.target.value);
+    this.userRolesToUpdate.splice(roleIndex, 1);
+
   }
 }
