@@ -4,7 +4,11 @@ p.title {
 }
 
 div.card {
-  margin-top: 50px;
+  margin: 25px auto;
+  width: 65%;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
 }
 
 div.container {
@@ -13,10 +17,6 @@ height: 100%;
 margin-top: 30px;
 }
 
-div.card {
-  align-items: center;
-  justify-content: center;
-}
 
 div.row.justify-content-center.align-items-center {
   height: 100%;
@@ -63,8 +63,17 @@ h5 {
 }
 
 .card-details {
-  max-height: 80px;
+  max-height: 100px;
   overflow: scroll;
   overflow-x: hidden;
 }
 
+
+@media (min-width: 768px){
+  .col-md-3 {
+      width: 310px!important;
+  }
+  div.card {
+      width: 256px;
+  }
+}

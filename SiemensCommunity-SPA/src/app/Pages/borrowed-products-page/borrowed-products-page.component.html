@@ -14,21 +14,25 @@
       <div *ngFor = "let borrowedProduct of borrowedProducts | paginate: {
         itemsPerPage: 4,
         currentPage: page
-      }" class="col-md-3" style="margin-left: 10px;">
-        <div class="card" style="width: 18rem; height: 700px;">
+      }" class="col-md-3" style="margin-left: 20px;">
+        <div class="card" >
             <img src="{{borrowedProduct.imagePath}}" class="card-img-top" alt ="{{borrowedProduct.name}}">
               <div class="card-body">
-                <h5 class="card-title">{{borrowedProduct.name}}</h5>
-                <p class="card-text">Type: {{borrowedProduct.subCategoryName}}</p>
-                <p class="card-text">Owner: {{borrowedProduct.user}}</p>
-                <p class="card-text">Start date: {{borrowedProduct.startDate}}</p>
-                <p class="card-text">Start end: {{borrowedProduct.endDate}}</p>
+                <div card="card-info">
+                  <h5 class="card-title">{{borrowedProduct.name}}</h5>
+                  <p class="card-text">Type: {{borrowedProduct.subCategoryName}}</p>
+                  <p class="card-text">Owner: {{borrowedProduct.user}}</p>
+                  <p class="card-text">Start date: {{borrowedProduct.startDate}}</p>
+                  <p class="card-text">Start end: {{borrowedProduct.endDate}}</p>
+                </div>
                 <p class="card-text">Details: </p>
                 <div class="card-details">
                   <p  *ngFor="let productDetails of borrowedProduct.detailsList" class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
                 </div>
-                <p class="card-text">Rate: {{borrowedProduct.rating}}</p>
-                <p class="card-text">Available: {{borrowedProduct.isAvailable}}</p>
+                <div>
+                  <p class="card-text">Rate: {{borrowedProduct.rating}}</p>
+                  <p class="card-text">Available: {{borrowedProduct.isAvailable}}</p>
+                </div>
               </div>
               <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(borrowedProduct.id, $event)"></ngb-rating>
               <div class="card-body">

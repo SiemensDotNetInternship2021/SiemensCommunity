@@ -1,88 +1,83 @@
 p.title {
     font-size: 3.5em;
     text-align: center;
-}
-
-div.card {
-    margin-top: 50px;
-}
-
-div.container {
-  text-align: center;
-  height: 100%;
-}
-
-div.card {
+  }
+  
+  div.card {
+    margin: 25px auto;
+    width: 65%;
     align-items: center;
     justify-content: center;
-    width: fit-content!important;
-    max-width: 400px;
-}
-
-div.row.justify-content-center.align-items-center {
+    font-size: 15px;
+  }
+  
+  div.container {
+  text-align: center;
+  height: 100%;
+  margin-top: 30px;
+  }
+  
+  
+  div.row.justify-content-center.align-items-center {
     height: 100%;
-    min-height: 100%;
-}
-
-img {
+    min-height: 100%
+  }
+  
+  img {
     position: relative;
-}
-
-span.status-borrowed {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    background-color: lightgreen;
-    border-radius:10px;
-    font-size:15px;
-}
-
-span.status-lent {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    background-color: red;
-    border-radius:10px;
-    font-size:15px;
-}
-.pagination{
-    justify-content: center!important;
-}
-
-h5{
-    font-size: large;
-    font-weight:500;
-}
-
-.inline-btns-ctn{
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-}
-.nav-bar-ctn{
-    margin-top: 30px;
-}
-
-.radio-form{
+  }
+  
+  .pagination {
+    margin-top: 10px;
+    justify-content: center;
+  }
+  
+  .fa-heart {
+    font-size: 25px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .rating {
+    color: green;
+    font-size: 35px;
+  }
+  
+  .no-products {
+    margin-top: 100px;
+    font-size: 2em;
+  }
+  
+  .radio-form{
     display: flex;
     justify-content: space-around;
     font-size: 16px;
     padding: 6px 12px;
     line-height: 26px;
-}
-.row > * {
-   max-width: 389px;
-}
-.items-ctn {
+  }
+  
+  
+  h5 {
+    font-size: large;
+    font-weight:500;
+  }
+  
+  .card-details {
+    max-height: 100px;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  .inline-btns-ctn{
     display: flex;
-    justify-content: center;
-} 
-
-div.card{
-    margin: 30px 0;
+    width: 100%;
+    justify-content: space-evenly;
 }
-@media (min-width: 768px){
-    .col-md-3{
-        min-width: 300px;
+  
+  @media (min-width: 768px){
+    .col-md-3 {
+        width: 310px!important;
     }
-}
+    div.card {
+        width: 256px;
+    }
+  }

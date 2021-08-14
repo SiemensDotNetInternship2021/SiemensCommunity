@@ -24,19 +24,23 @@
   <div *ngIf="!(selectedOption == 2)" class="row justify-content-center align-items-center">
     <div *ngFor="let product of products | paginate : 
       {itemsPerPage: 8, 
-      currentPage: page}" class="col-md-3" style="margin-left: 10px;">
-        <div class="card" style="width: 18rem; height: 700px;">
+      currentPage: page}" class="col-md-3" style="margin-left: 20px;">
+        <div class="card" >
             <img src="{{product.imagePath}}" class="card-img-top" >
             <div class="card-body">
-              <h5 class="card-title">{{product.name}}</h5>
-              <p class="card-text">Type: {{product.subCategoryName}}</p>
-              <p class="card-text">Owner: {{product.user}}</p>
-              <p class="card-text">Details: </p>
+              <div class="card-info">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">Type: {{product.subCategoryName}}</p>
+                <p class="card-text">Owner: {{product.user}}</p>
+                <p class="card-text">Details: </p>
+              </div>
               <div class="card-details">
                 <p *ngFor="let productDetails of product.detailsList" class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
               </div>
-              <p class="card-text">Rate: {{product.rating}}</p>
-              <p class="card-text">Available: {{product.isAvailable}}</p>
+              <div>
+                <p class="card-text">Rate: {{product.rating}}</p>
+                <p class="card-text">Available: {{product.isAvailable}}</p>
+              </div>
             </div>
             <div class="card-bottom">
               <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(product.id, $event)"></ngb-rating>

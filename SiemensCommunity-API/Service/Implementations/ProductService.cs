@@ -38,11 +38,13 @@ namespace Service.Implementations
             Data.Models.Product returnedProduct = new Data.Models.Product();
 
             var result = await _photoService.UploadPhotoAsync(addProduct.File);
+            var image = new Photo();
             if (result == null || result.Error != null)
             {
                 _logger.LogError(MyLogEvents.ErrorUploadItem, "Error uploading photo with errors " + result.Error);
+
             }
-            var image = new Photo
+            image = new Photo
             {
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
@@ -61,7 +63,7 @@ namespace Service.Implementations
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.InsertItem, "Error while inserting product wiht message " + ex.Message);
-                _logService.SaveAsync(LogLevel.Error, MyLogEvents.InsertItem, ex.Message, ex.StackTrace);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.InsertItem, ex.Message, ex.StackTrace);
             }
 
             return _productAdapter.Adapt(returnedProduct);

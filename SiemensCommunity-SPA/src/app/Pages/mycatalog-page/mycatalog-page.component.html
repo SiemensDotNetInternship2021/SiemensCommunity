@@ -28,7 +28,7 @@
     <div *ngFor="let product of products | paginate : 
       {itemsPerPage: 8, 
       currentPage: page}" class="col-md-3">
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <img src="{{product.imagePath}}" class="card-img-top" alt="{{product.name}}" >
             <div class="card-body">
               <h5 class="card-title">{{product.name}}</h5>
