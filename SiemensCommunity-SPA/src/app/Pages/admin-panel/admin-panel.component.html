@@ -1,74 +1,50 @@
 <app-nav-bar></app-nav-bar>
-<!-- <div class="container h-100">
-  <div class="row justify-content-center align-items-center">
-    <div class="col-md-3">
-      <div class="searchbar">
-        <input type="text" [(ngModel)]="userFilter.lastName">
-      </div>
-    </div>
+
+  <div class="main-ctn">
+    <ngx-datatable class="material" [rows]="users" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+    [rowHeight]="50" [scrollbarV]="true" [limit]="10" [sorts]="[{prop: 'name', dir: 'desc'}]" [scrollbarV]="false" >
+    <ngx-datatable-column name="UserId" prop="id">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row.id}}
+        <button class="btn-dark" (click)="openUserEditor(row.id)">Edit User Details</button>
+      </ng-template>
+    </ngx-datatable-column>
+  
+    <ngx-datatable-column name="FirstName">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row.firstName}}
+      </ng-template>
+    </ngx-datatable-column>
+  
+    <ngx-datatable-column name="LastName">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row.lastName}}
+      </ng-template>
+    </ngx-datatable-column>
+  
+    <ngx-datatable-column name="UserName">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row.userName}}
+      </ng-template>
+    </ngx-datatable-column>
+  
+    <ngx-datatable-column name="Department">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row.department}}
+      </ng-template>
+    </ngx-datatable-column>
+  
+    <ngx-datatable-column name="OfficeFloor">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row.officeFloor}}
+      </ng-template>
+    </ngx-datatable-column>
+  
+    <ngx-datatable-column name="Roles">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row.roles}}
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
   </div>
-  <div class="row justify-content-center align-items-center">
-    <div *ngFor="let user of users | filterBy : userFilter" class="col-md-3">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">UserId:{{user.id}}</h5>
-              <p class="card-text">FirstName: {{user.firstName}}</p>
-              <p class="card-text">LastName: {{user.lastName}}</p>
-              <p class="card-text">Department: {{user.department}}</p>
-              <p class="card-text">OfficeFloor: {{user.officeFloor}}</p>
-              <p class="card-text">Roles: {{user.roles}}</p>
-            </div>
-        <button (click)="openUserEditor(user.id)">Edit User details</button>
-        </div>
-      </div>
-      <div class="noMatching" *ngIf="(users | filterBy: userFilter).length === 0">No matching vaues </div>
-   </div>
-</div> -->
-
-<input type="text"  placeholder="Search user" (keyup)="searchUser($event)"  />
-<ngx-datatable class="material" [rows]="users" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
-  [rowHeight]="50" [scrollbarV]="true" [limit]="10" [sorts]="[{prop: 'name', dir: 'desc'}]" [scrollbarV]="false" >
-
-  <ngx-datatable-column name="UserId" prop="id">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{row.id}}
-      <button class="btn-dark" (click)="openUserEditor(row.id)">Edit User Details</button>
-    </ng-template>
-  </ngx-datatable-column>
-
-  <ngx-datatable-column name="FirstName">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{row.firstName}}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <ngx-datatable-column name="LastName">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{row.lastName}}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <ngx-datatable-column name="UserName">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{row.userName}}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <ngx-datatable-column name="Department">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{row.department}}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <ngx-datatable-column name="OfficeFloor">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{row.officeFloor}}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <ngx-datatable-column name="Roles">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{row.roles}}
-    </ng-template>
-  </ngx-datatable-column>
-</ngx-datatable>
+  

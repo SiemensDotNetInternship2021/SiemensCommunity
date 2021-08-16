@@ -1,5 +1,6 @@
 ﻿using Data.Contracts;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,11 @@ namespace Data.Implementations
         public LogEventRepository(ProjectDbContext context): base(context)
         {
 
+        }
+
+        public async Task<int> GetLogEventIdAsync(int logEvent)
+        {
+            return await Context.LogEvents.Where(l => l.CodeId == logEvent).Select(l => l.Id).SingleOrDefaultAsync();
         }
     }
 }

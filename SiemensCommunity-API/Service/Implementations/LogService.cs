@@ -15,11 +15,17 @@ namespace Service.Implementations
     public class LogService : ILogService
     {
         private readonly ILogRepository _logRepository;
+        private readonly ILogEventRepository _logEventRepository;
+        private readonly ILogLevelRepository _logLevelRepository;
+        
+
         private LogAdapter _logAdapter = new LogAdapter();
         private LogDTOAdapter _logDTOAdapter = new LogDTOAdapter();
-        public LogService(ILogRepository logRepository)
+        public LogService(ILogRepository logRepository, ILogLevelRepository logLevelRepository, ILogEventRepository logEventRepository)
         {
             _logRepository = logRepository;
+            _logEventRepository = logEventRepository;
+            _logLevelRepository = logLevelRepository;
         }
 
         public async Task<IEnumerable<LogDTO>> GetAsync()
@@ -48,10 +54,12 @@ namespace Service.Implementations
 
         public async Task<bool> SaveAsync(LogLevel logLevel, int logEvent, string message, string stackTrace)
         {
+            var logLevelId =  await _logLevelRepository.GetLogLevelIdAsync(logLevel.ToString());
+            var logEventId = await _logEventRepository.GetLogEventIdAsync(logEvent);
             var log = _logAdapter.Adapt(new Log
             {
-                LogLevel = logLevel,
-                LogEvent = logEvent,
+                LogLevelId = logLevelId,
+                LogEventId = logEventId,
                 LogMessage = message,
                 StackTrace = stackTrace
             });

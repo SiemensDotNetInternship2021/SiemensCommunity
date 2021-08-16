@@ -13,8 +13,8 @@ namespace Service.Models
         public int Id { get; set; }
 
         public int UserId { get; set; }
-        public LogLevel LogLevel { get; set; }
-        public int LogEvent { get; set; }
+        public int LogLevelId { get; set; }
+        public int LogEventId { get; set; }
         public string LogMessage { get; set; }
         public string StackTrace { get; set; }
     }

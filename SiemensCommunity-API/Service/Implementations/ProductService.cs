@@ -38,11 +38,13 @@ namespace Service.Implementations
             Data.Models.Product returnedProduct = new Data.Models.Product();
 
             var result = await _photoService.UploadPhotoAsync(addProduct.File);
+            var image = new Photo();
             if (result == null || result.Error != null)
             {
                 _logger.LogError(MyLogEvents.ErrorUploadItem, "Error uploading photo with errors " + result.Error);
+
             }
-            var image = new Photo
+            image = new Photo
             {
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
@@ -61,7 +63,7 @@ namespace Service.Implementations
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.InsertItem, "Error while inserting product wiht message " + ex.Message);
-                _logService.SaveAsync(LogLevel.Error, MyLogEvents.InsertItem, ex.Message, ex.StackTrace);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.InsertItem, ex.InnerException.ToString(), ex.StackTrace);
             }
 
             return _productAdapter.Adapt(returnedProduct);
@@ -116,7 +118,7 @@ namespace Service.Implementations
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.GetItem, "Error while getting item with id={id}, with error {error}", id, ex.Message);
-                _logService.SaveAsync(LogLevel.Error, MyLogEvents.GetItem, ex.Message, ex.StackTrace);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.GetItem, ex.Message, ex.StackTrace);
             }
             return product;
         }
@@ -167,55 +169,100 @@ namespace Service.Implementations
 
         public async Task<List<ProductDTO>> GetUserProductsAsync(int userId, int? selectedCategoryId)
         {
+            List<ProductDTO> products = new List<ProductDTO>();
+
             if (selectedCategoryId == null)
             {
-                var products = await _productRepository.GetUserProductsAsync(userId);
-                _logger.LogInformation(products.Count() + "products found of all categories, of user with id " + userId);
-                return _productDTOAdapter.AdaptList(products);
+                try
+                {
+                    var productsRetuned = await _productRepository.GetUserProductsAsync(userId);
+                    products = _productDTOAdapter.AdaptList(productsRetuned);
+                }catch(Exception ex)
+                {
+                    _logger.LogError(MyLogEvents.ListItems, "Error while getting the filtered products of for home page ", ex.Message);
+                    await _logService.SaveAsync(LogLevel.Error, MyLogEvents.ListItems, ex.Message, ex.StackTrace);
+                }
             }
             else
             {
-                var products = await _productRepository.GetUserProductsByCategoryAsync(userId, selectedCategoryId.Value);
-                _logger.LogInformation(products.Count() + "products found of user with id " + userId + "category id " + selectedCategoryId);
-                return _productDTOAdapter.AdaptList(products);
+                try
+                {
+                    var productsReturned = await _productRepository.GetUserProductsByCategoryAsync(userId, selectedCategoryId.Value);
+                    products = _productDTOAdapter.AdaptList(productsReturned);
+                }catch(Exception ex)
+                {
+                    _logger.LogError(MyLogEvents.ListItems, "Error while getting the filtered products of for home page ", ex.Message);
+                    await _logService.SaveAsync(LogLevel.Error, MyLogEvents.ListItems, ex.Message, ex.StackTrace);
+                }
             }
+            return products;
         }
 
         public async Task<List<ProductDTO>> GetUserAvailableProductsAsync(int userId, int? selectedCategoryId)
         {
+            List<ProductDTO> products = new List<ProductDTO>();
 
             if (selectedCategoryId == null)
             {
-               var products = await _productRepository.GetUserAvailableProductsAsync(userId);
-                _logger.LogInformation(products.Count() + "products found available of all categories, of user with id " + userId);
-                _logger.LogInformation(products.Count() + "products found available of all categories, of user with id " + userId);
-                return _productDTOAdapter.AdaptList(products);
+                try
+                {
+                    var productsReturned = await _productRepository.GetUserAvailableProductsAsync(userId);
+                    products = _productDTOAdapter.AdaptList(productsReturned);
+                    _logger.LogInformation(products.Count() + "products found available of all categories, of user with id " + userId);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError("Get user available products error with message " + ex.Message + ex.StackTrace);
+                    await _logService.SaveAsync(LogLevel.Error, MyLogEvents.GetItem, ex.Message, ex.StackTrace);
+                }
+
             }
             else
             {
-                var products = await _productRepository.GetUserAvailableProductsByCategoryAsync(userId, selectedCategoryId.Value);
-                _logger.LogInformation(products.Count() + "products found of user with id " + userId + "category id " + selectedCategoryId);
-                return _productDTOAdapter.AdaptList(products);
+                try
+                {
+                    var productsReturned = await _productRepository.GetUserAvailableProductsByCategoryAsync(userId, selectedCategoryId.Value);
+                    products = _productDTOAdapter.AdaptList(productsReturned);
+                    _logger.LogInformation(products.Count() + "products found of user with id " + userId + "category id " + selectedCategoryId);
+                }catch(Exception ex)
+                {
+                    _logger.LogError("Get user available products error with message " + ex.Message + ex.StackTrace);
+                    await _logService.SaveAsync(LogLevel.Error, MyLogEvents.GetItem, ex.Message, ex.StackTrace);
+                }
             }
 
+            return products;
         }
 
         public async Task<List<ProductDTO>> GetUserLendProductsAsync(int userId, int? selectedCategoryId)
         {
+            List<ProductDTO> products = new List<ProductDTO>();
 
             if (selectedCategoryId == null)
             {
-                var products = await _productRepository.GetUserLendProductsAsync(userId);
-                _logger.LogInformation(products.Count() + "products found lend of all categories, of user with id " + userId);
-                return _productDTOAdapter.AdaptList(products);
+                try
+                {
+                    var productsReturned = await _productRepository.GetUserLendProductsAsync(userId);
+                    products = _productDTOAdapter.AdaptList(productsReturned);
+                }catch(Exception ex)
+                {
+                    _logger.LogError("Get user available products error with message " + ex.Message + ex.StackTrace);
+                    await _logService.SaveAsync(LogLevel.Error, MyLogEvents.GetItem, ex.Message, ex.StackTrace);
+                }
             }
             else
             {
-                var products = await _productRepository.GetUserLendProductsByCategoryAsync(userId, selectedCategoryId.Value);
-                _logger.LogInformation(products.Count() + "products found lend of user with id " + userId + "category id " + selectedCategoryId);
-                return _productDTOAdapter.AdaptList(products);
+                try
+                {
+                    var productsReturned = await _productRepository.GetUserLendProductsByCategoryAsync(userId, selectedCategoryId.Value);
+                    products = _productDTOAdapter.AdaptList(productsReturned);
+                }catch(Exception ex)
+                {
+                    _logger.LogError("Get user available products error with message " + ex.Message + ex.StackTrace);
+                    await _logService.SaveAsync(LogLevel.Error, MyLogEvents.GetItem, ex.Message, ex.StackTrace);
+                }
             }
-
+            return products;
         }
     }
 }

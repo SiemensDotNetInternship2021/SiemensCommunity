@@ -4,7 +4,11 @@ p.title {
 }
 
 div.card {
-  margin-top: 50px;
+  margin: 25px auto;
+  width: 65%;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
 }
 
 div.container {
@@ -13,10 +17,6 @@ height: 100%;
 margin-top: 30px;
 }
 
-div.card {
-  align-items: center;
-  justify-content: center;
-}
 
 div.row.justify-content-center.align-items-center {
   height: 100%;
@@ -66,5 +66,43 @@ h5 {
   max-height: 80px;
   overflow: scroll;
   overflow-x: hidden;
+  width: 200px;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+  padding-left: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: grey; 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+.card-bottom {
+  padding-bottom: 10px;
+}
+
+.available-icon {
+  color: green
+}
+
+@media (min-width: 768px){
+  .col-md-3 {
+      width: 310px!important;
+  }
+  div.card {
+      width: 256px;
+      height: 650px;
+  }
+}

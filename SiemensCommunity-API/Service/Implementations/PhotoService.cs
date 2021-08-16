@@ -44,6 +44,8 @@ namespace Service.Implementations
                 {
                     File = new FileDescription(file.FileName, stream),
                     Transformation = new Transformation()
+                                                .Height(500)
+                                                .Width(500)
                                                 .Crop("fill")
                                                 .Gravity("face")
                 };
@@ -51,6 +53,7 @@ namespace Service.Implementations
                 {
                     uploadResult = await _cloudinary.UploadAsync(uploadParams);
                     _logger.LogInformation(MyLogEvents.UpdateItem, "Image upload.");
+                    await _logService.SaveAsync(LogLevel.Information, MyLogEvents.UploadItem, "Image uploaded successfully.", Environment.StackTrace);
                 }
                 catch (Exception ex)
                 {

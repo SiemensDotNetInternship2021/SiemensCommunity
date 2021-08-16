@@ -47,7 +47,7 @@ namespace Service.Tests
             _loggerFactory = new Mock<ILoggerFactory>();
             _loggerFactory.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(() => mockLogger.Object);
 
-            propertyService = new PropertyService(propertyRepositoryMock.Object, _loggerFactory.Object);
+            propertyService = new PropertyService(propertyRepositoryMock.Object, new Mock<ILogService>().Object, _loggerFactory.Object);
         }
 
 

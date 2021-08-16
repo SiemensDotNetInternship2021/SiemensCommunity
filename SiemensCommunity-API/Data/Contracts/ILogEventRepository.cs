@@ -9,5 +9,6 @@ namespace Data.Contracts
 {
     public interface ILogEventRepository: IGenericRepository<LogEvent>
     {
+        public Task<int> GetLogEventIdAsync(int longEventCode);
     }
 }

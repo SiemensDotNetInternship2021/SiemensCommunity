@@ -51,7 +51,7 @@ namespace Service.Tests
             _loggerFactory = new Mock<ILoggerFactory>();
             _loggerFactory.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(() => mockLogger.Object);
 
-            categoryService = new CategoryService(categoryRepositoryMock.Object, _loggerFactory.Object);
+            categoryService = new CategoryService(categoryRepositoryMock.Object, new Mock<ILogService>().Object , _loggerFactory.Object);
         }
 
         [Test]

@@ -9,5 +9,6 @@ namespace Data.Contracts
 {
     public interface ILogLevelRepository : IGenericRepository<LogLevel>
     {
+        public Task<int> GetLogLevelIdAsync(string longLevel);
     }
 }

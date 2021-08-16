@@ -21,3 +21,9 @@ button {
     cursor: pointer;
     margin-left: 5px;
   }
+
+  .main-ctn{
+    width: 85%;
+    margin: 0 auto;
+    padding-top: 50px;
+}

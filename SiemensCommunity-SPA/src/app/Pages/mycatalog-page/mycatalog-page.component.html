@@ -10,39 +10,40 @@
       </div>
       <div class="col-md-3">
         <form class="radio-form">
-         <label class="option"> All
-           <input value="0" [checked]="true" name = "option" (change)="checkboxChange($event)" type="radio">
-         </label>
-         <label class="option"> Available
-           <input value="1" name = "option" (change)="checkboxChange($event)" type="radio">
-         </label>
-         <label class="option"> Lent
-           <input value="2" name = "option" (change)="checkboxChange($event)" type="radio">
-         </label>
+          <label class="option"> All
+            <input value="0" [checked]="true" name = "option" (change)="checkboxChange($event)" type="radio">
+          </label>
+          <label class="option"> Available
+            <input value="1" name = "option" (change)="checkboxChange($event)" type="radio">
+          </label>
+          <label class="option"> Lent
+            <input value="2" name = "option" (change)="checkboxChange($event)" type="radio">
+          </label>
         </form>
       </div>
      </div>
+     <a class="btn btn-outline-dark btn-light" routerLink="/addproduct">New product</a>
   </div>
 
   <div class="row justify-content-center align-items-center">
     <div *ngFor="let product of products | paginate : 
       {itemsPerPage: 8, 
       currentPage: page}" class="col-md-3">
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <img src="{{product.imagePath}}" class="card-img-top" alt="{{product.name}}" >
             <div class="card-body">
               <h5 class="card-title">{{product.name}}</h5>
               <p class="card-text">Type: {{product.subCategoryName}}</p>
               <p class="card-text">Owner: {{product.user}}</p>
               <p class="card-text">Details: </p>
-              <div *ngFor="let productDetails of product.detailsList">
-                <p class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
+              <div class="card-details">
+                <p *ngFor="let productDetails of product.detailsList" class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
               </div>
               <p class="card-text">Rate: {{product.rating}}</p>
               <p class="card-text" *ngIf="product.isAvailable == true, hidden">Product is available<mat-icon class="available-icon">check_circle</mat-icon></p>
               <p class="card-text" *ngIf="product.isAvailable == false, hidden">Product is borrowed by an user<mat-icon color = "warn">unpublished</mat-icon></p>
             </div>
-            <div class="card-body inline-btns-ctn">
+            <div class="card-bottom">
               <a class="btn btn-info" routerLink="/addproduct/{{product.id}}">Update</a>
               <button class="btn btn-danger" (click)= "deleteProduct(product.id)">Delete</button>
             </div>

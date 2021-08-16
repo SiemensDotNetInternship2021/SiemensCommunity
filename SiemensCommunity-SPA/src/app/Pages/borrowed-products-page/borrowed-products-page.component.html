@@ -5,41 +5,43 @@
     
       <div class="col-md-3" >
         <select class="form-control custom-select" [(ngModel)]="selectedCategory" (change)="getSelectedCategory()">
-          <option class="option-display" selected="selected" value=0>Select a category</option>
+          <option class="option-display" selected="selected" value=0>All categories</option>
           <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
         </select> 
        </div>
       <section class="example-section">
       </section>
-      <div *ngFor = "let borrowedProduct of borrowedProducts | paginate: {
-        itemsPerPage: 4,
-        currentPage: page
-      }" class="col-md-3" style="margin-left: 10px;">
-        <div class="card" style="width: 18rem; height: 700px;">
-            <img src="{{borrowedProduct.imagePath}}" class="card-img-top" alt ="{{borrowedProduct.name}}">
-              <div class="card-body">
+
+      <div class="no-products" *ngIf="borrowedProducts.length <= 0">You have no borrowed products</div>
+      <div *ngFor="let borrowedProduct of borrowedProducts | paginate : 
+      {itemsPerPage: 8, 
+      currentPage: page}" class="col-md-3" style="margin-left: 20px;">
+        <div class="card" >
+            <img src="{{borrowedProduct.imagePath}}" class="card-img-top" >
+            <div class="card-body">
+              <div class="card-info">
                 <h5 class="card-title">{{borrowedProduct.name}}</h5>
                 <p class="card-text">Type: {{borrowedProduct.subCategoryName}}</p>
                 <p class="card-text">Owner: {{borrowedProduct.user}}</p>
-                <p class="card-text">Start date: {{borrowedProduct.startDate}}</p>
-                <p class="card-text">Start end: {{borrowedProduct.endDate}}</p>
                 <p class="card-text">Details: </p>
-                <div class="card-details">
-                  <p  *ngFor="let productDetails of borrowedProduct.detailsList" class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
-                </div>
-                <p class="card-text">Rate: {{borrowedProduct.rating}}</p>
               </div>
-              <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(borrowedProduct.id, $event)"></ngb-rating>
-              <div class="card-body">
-                <button class="btn btn-primary" (click) = "giveBackProduct(borrowedProduct.id)" >Give Back</button>
+              <div class="card-details">
+                <p *ngFor="let productDetails of borrowedProduct.detailsList" class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
               </div>
-
+              <p class="card-text" *ngIf="borrowedProduct.isAvailable == true, hidden">Item is available<mat-icon class="available-icon">check_circle</mat-icon></p>
+              <p class="card-text" *ngIf="borrowedProduct.isAvailable == false, hidden">Item is not available<mat-icon color = "warn">unpublished</mat-icon></p>
+            </div>
+            <div class="card-bottom">
+              <ngb-rating class="rating" [max]="5"  [(ngModel)]="borrowedProduct.rating" (click)="rateProduct(borrowedProduct.id, borrowedProduct.rating)"></ngb-rating>
+              <p class="card-text">Rate: {{borrowedProduct.rating}}</p>
+                <button  class="btn btn-primary" (click)="giveBackProduct(borrowedProduct.id)">Give Back</button>
+              </div>
+            </div>
         </div>
-      </div>
     </div>
   </div>
 
-      <div class="pagination">
+      <div *ngIf="borrowedProducts.length > 0" class="pagination">
         <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
       </div>
 

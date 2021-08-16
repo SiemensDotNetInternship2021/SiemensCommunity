@@ -24,72 +24,73 @@
   <div *ngIf="!(selectedOption == 2)" class="row justify-content-center align-items-center">
     <div *ngFor="let product of products | paginate : 
       {itemsPerPage: 8, 
-      currentPage: page}" class="col-md-3" style="margin-left: 10px;">
-        <div class="card" style="width: 18rem; height: 700px;">
+      currentPage: page}" class="col-md-3" style="margin-left: 20px;">
+        <div class="card" >
             <img src="{{product.imagePath}}" class="card-img-top" >
             <div class="card-body">
-              <h5 class="card-title">{{product.name}}</h5>
-              <p class="card-text">Type: {{product.subCategoryName}}</p>
-              <p class="card-text">Owner: {{product.user}}</p>
-              <p class="card-text">Details: </p>
+              <div class="card-info">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">Type: {{product.subCategoryName}}</p>
+                <p class="card-text">Owner: {{product.user}}</p>
+                <p class="card-text">Details: </p>
+              </div>
               <div class="card-details">
                 <p *ngFor="let productDetails of product.detailsList" class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
               </div>
-              <p class="card-text">Rate: {{product.rating}}</p>
-              <p class="card-text" *ngIf="product.isAvailable == true, hidden">Product is available<mat-icon class="available-icon" color>check_circle</mat-icon></p>
-              <p class="card-text" *ngIf="product.isAvailable == false, hidden">Product is borrowed by an user<mat-icon color = "warn">unpublished</mat-icon></p>
+              <p class="card-text" *ngIf="product.isAvailable == true, hidden">Item is available<mat-icon class="available-icon">check_circle</mat-icon></p>
+              <p class="card-text" *ngIf="product.isAvailable == false, hidden">Item is already borrowed<mat-icon color = "warn">unpublished</mat-icon></p>
             </div>
             <div class="card-bottom">
-              <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(product.id, $event)"></ngb-rating>
-              <div class="card-body">
+              <ngb-rating class="rating" [max]="5"  [(ngModel)]="product.rating" (click)="rateProduct(product.id, product.rating)"></ngb-rating>
+              <p class="card-text">Rate: {{product.rating}}</p>
                   <i *ngIf="favoriteProductsId.includes(product.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(product.id)"></i>
                   <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart" (click)="addFavoriteProduct(product.id)"></i>
                 <button *ngIf="!borrowedProductsId.includes(product.id) && product.isAvailable == true" class="btn btn-primary" (click)="borrowProduct(product.id)">Borrow</button>
                 <button *ngIf="borrowedProductsId.includes(product.id)" class="btn btn-primary" (click)="giveBackBorrowedProduct(product.id)">Give Back</button>
               </div>
             </div>
+      </div>
+      <div class="no-products" *ngIf="products.length <= 0">You have no products</div>
+        <div *ngIf="products.length > 0" class="pagination">
+          <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
         </div>
     </div>
-    <div class="pagination">
-      <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
-    </div>
-  </div>
+   
 
-  <div *ngIf="selectedOption == 2" class="row justify-content-center align-items-center">
-    <div class="no-products" *ngIf="favoriteProducts.length <= 0">You have no favorite products</div>
-    <div  *ngFor="let favoriteProduct of favoriteProducts | paginate : 
-      {itemsPerPage: 8, 
-      currentPage: page
-      }" class="col-md-3" style="margin-left: 10px;">
-        <div class="card" style="width: 18rem; height: 700px;">
-            <img src="{{favoriteProduct.imagePath}}" class="card-img-top" >
-            <div class="card-body">
-              <h5 class="card-title">{{favoriteProduct.name}}</h5>
-              <p class="card-text">Type: {{favoriteProduct.subCategoryName}}</p>
-              <p class="card-text">Owner: {{favoriteProduct.user}}</p>
+    <div *ngIf="selectedOption == 2" class="row justify-content-center align-items-center">
+      <div  *ngFor="let favoriteProduct of favoriteProducts | paginate : 
+        {itemsPerPage: 8, 
+        currentPage: page
+        }" class="col-md-3" style="margin-left: 20px;">
+          <div class="card">
+              <img src="{{favoriteProduct.imagePath}}" class="card-img-top" >
+              <div class="card-body">
+                <h5 class="card-title">{{favoriteProduct.name}}</h5>
+                <p class="card-text">Type: {{favoriteProduct.subCategoryName}}</p>
+                <p class="card-text">Owner: {{favoriteProduct.user}}</p>
+  
+                <p class="card-text">Details: </p>
+                <div class="card-details" >
+                  <p  *ngFor="let favoriteProductDetails of favoriteProduct.detailsList" class="card-text">{{favoriteProductDetails.name}} : {{ favoriteProductDetails.description}}</p>
+                </div>
 
-              <p class="card-text">Details: </p>
-              <div class="card-details" >
-                <p  *ngFor="let favoriteProductDetails of favoriteProduct.detailsList" class="card-text">{{favoriteProductDetails.name}} : {{ favoriteProductDetails.description}}</p>
+                
+                <p class="card-text" *ngIf="favoriteProduct.isAvailable == true, hidden">Item is available<mat-icon class="available-icon">check_circle</mat-icon></p>
+                <p class="card-text" *ngIf="favoriteProduct.isAvailable == false, hidden">Item is already borrowed<mat-icon color = "warn">unpublished</mat-icon></p>
               </div>
-
-              <p class="card-text">Rate: {{favoriteProduct.rating}}</p>
-              <p class="card-text" *ngIf="favoriteProduct.isAvailable == true, hidden">Item is available<mat-icon class="available-icon">check_circle</mat-icon></p>
-              <p class="card-text" *ngIf="favoriteProduct.isAvailable == false, hidden">Item is not available<mat-icon color = "warn">unpublished</mat-icon></p>
-              <ngb-rating  class="rating" [max]="5" (rateChange)="rateProduct(favoriteProduct.id, $event)"></ngb-rating>
-            </div>
-            <div class="card-body">
-                <i *ngIf="favoriteProductsId.includes(favoriteProduct.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(favoriteProduct.id)"></i>
-                <i *ngIf="!favoriteProductsId.includes(favoriteProduct.id)" class="far fa-heart" (click)="addFavoriteProduct(favoriteProduct.id)"></i>
-                <button *ngIf="!borrowedProductsId.includes(favoriteProduct.id) && favoriteProduct.isAvailable == true" class="btn btn-primary" (click)="borrowProduct(favoriteProduct.id)">Borrow</button>
-                <button *ngIf="borrowedProductsId.includes(favoriteProduct.id)" class="btn btn-primary" (click)="giveBackBorrowedProduct(favoriteProduct.id)">Give Back</button>
-            </div>
-        </div>
-    </div>
-    <div *ngIf="favoriteProducts.length > 0" class="pagination">
-      <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
-    </div>
+              <div class="card-bottom">
+                  <ngb-rating class="rating" [max]="5"  [(ngModel)]="favoriteProduct.rating" (click)="rateProduct(favoriteProduct.id, favoriteProduct.rating)"></ngb-rating>
+                  <p class="card-text">Rate: {{favoriteProduct.rating}}</p>  
+                  <i *ngIf="favoriteProductsId.includes(favoriteProduct.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(favoriteProduct.id)"></i>
+                  <i *ngIf="!favoriteProductsId.includes(favoriteProduct.id)" class="far fa-heart" (click)="addFavoriteProduct(favoriteProduct.id)"></i>
+                  <button *ngIf="!borrowedProductsId.includes(favoriteProduct.id) && favoriteProduct.isAvailable == true" class="btn btn-primary" (click)="borrowProduct(favoriteProduct.id)">Borrow</button>
+                  <button *ngIf="borrowedProductsId.includes(favoriteProduct.id)" class="btn btn-primary" (click)="giveBackBorrowedProduct(favoriteProduct.id)">Give Back</button>
+              </div>
+          </div>
+      </div>
+      <div class="no-products" *ngIf="favoriteProducts.length <= 0">You have no favorite products</div>
+      <div *ngIf="favoriteProducts.length > 0" class="pagination">
+        <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
+      </div>
   </div>
 </div>
- 
-
