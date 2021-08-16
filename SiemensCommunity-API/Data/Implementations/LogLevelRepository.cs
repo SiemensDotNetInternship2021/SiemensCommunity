@@ -1,5 +1,6 @@
 ﻿using Data.Contracts;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,11 @@ namespace Data.Implementations
         public LogLevelRepository(ProjectDbContext context): base(context)
         {
 
+        }
+
+        public async Task<int> GetLogLevelIdAsync(string logLevel)
+        {
+            return await Context.LogLevels.Where(l => l.Name == logLevel).Select(l => l.Id).SingleOrDefaultAsync();
         }
     }
 }

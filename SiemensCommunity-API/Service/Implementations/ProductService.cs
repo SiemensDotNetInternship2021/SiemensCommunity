@@ -63,7 +63,7 @@ namespace Service.Implementations
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.InsertItem, "Error while inserting product wiht message " + ex.Message);
-                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.InsertItem, ex.Message, ex.StackTrace);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.InsertItem, ex.InnerException.ToString(), ex.StackTrace);
             }
 
             return _productAdapter.Adapt(returnedProduct);

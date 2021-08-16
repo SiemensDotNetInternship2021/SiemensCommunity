@@ -34,8 +34,8 @@ export class AddProductService {
   addProduct(userId: number,properties: any, productId: number, productImage: string) {
 
 
-    //fill he form to send data in back
-    this.formData.append("Id", productId=== undefined? "0": productId.toLocaleString());
+    //fill he form to send data in back productId=== undefined? "0": productId.toLocaleString()
+    this.formData.append("Id", "33" );
     this.formData.append("Name", this.addProductModel.value.Name);
     this.formData.append("CategoryId", this.addProductModel.value.Category);
     this.formData.append("SubCategoryId", this.addProductModel.value.SubCategory);
