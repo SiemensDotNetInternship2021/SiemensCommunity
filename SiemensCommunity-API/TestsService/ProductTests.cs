@@ -58,7 +58,7 @@ namespace Service.Tests
                     It.IsAny<Func<object, Exception, string>>()));
             _loggerFactory = new Mock<ILoggerFactory>();
             _loggerFactory.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(() => mockLogger.Object);
-            productService = new ProductService(productRepository.Object, photoServiceMock.Object, photoRepositoryMock.Object, new Mock<ILoggerFactory>().Object, new Mock<ILogService>().Object);
+            productService = new ProductService(productRepository.Object, photoServiceMock.Object, photoRepositoryMock.Object, new Mock<ILoggerFactory>().Object, new Mock<ILogService>().Object, new Mock<IFavoriteProductRepository>().Object);
         }
 
         [Test]

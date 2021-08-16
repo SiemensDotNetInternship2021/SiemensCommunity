@@ -17,11 +17,13 @@ namespace Service.Implementations
         private readonly FavoriteProductAdapter _favoriteProductAdapter = new FavoriteProductAdapter();
         private readonly FavoriteProductDTOAdapter _favoriteProductDTOAdapter = new FavoriteProductDTOAdapter();
         private readonly ILogger _logger;
+        private readonly ILogService _logService;
 
-        public FavoriteProductService(IFavoriteProductRepository departmentRepository, ILoggerFactory logger)
+        public FavoriteProductService(IFavoriteProductRepository departmentRepository, Microsoft.Extensions.Logging.ILoggerFactory logger, ILogService logService)
         {
             _favoriteProductRepository = departmentRepository;
             _logger = logger.CreateLogger("FavoriteProductService");
+            _logService = logService;
         }
 
         public async Task<IEnumerable<FavoriteProductDTO>> GetAsync(int userId, int selectedCategory, int selectedOption)
@@ -66,6 +68,7 @@ namespace Service.Implementations
             catch(Exception ex)
             {
                 _logger.LogError(MyLogEvents.DeleteItem, "Error while deleting item with id={ProductId} for user userId={UserId}, with error {error}", productDetails.ProductId, productDetails.UserId, ex.Message);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.DeleteItem, ex.Message, ex.StackTrace);
             }
             return _favoriteProductAdapter.Adapt(returnedProduct);
         }

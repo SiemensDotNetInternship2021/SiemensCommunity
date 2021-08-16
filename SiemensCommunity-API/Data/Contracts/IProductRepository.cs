@@ -15,5 +15,6 @@ namespace Data.Contracts
         public Task<List<ProductDTO>> GetUserAvailableProductsByCategoryAsync(int userId, int categoryId);
         public Task<List<ProductDTO>> GetUserLendProductsAsync(int userId);
         public Task<List<ProductDTO>> GetUserLendProductsByCategoryAsync(int userId, int categoryId);
+        public Task<bool> DeleteByIdAsync(int productId);
     }
 }

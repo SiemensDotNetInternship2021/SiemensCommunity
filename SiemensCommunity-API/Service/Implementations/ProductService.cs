@@ -17,6 +17,7 @@ namespace Service.Implementations
         private readonly IPhotoService _photoService;
         private readonly IPhotoRepository _photoRepository;
         private readonly ILogService _logService;
+        private readonly IFavoriteProductRepository _favoriteProductRepository;
         private readonly ProductAdapter _productAdapter = new ProductAdapter();
         private readonly ProductDTOAdapter _productDTOAdapter = new ProductDTOAdapter();
         private readonly PhotoAdapter _photoAdapter = new PhotoAdapter();
@@ -24,12 +25,13 @@ namespace Service.Implementations
         private readonly UpdateProductAdapter _updateProductAdapter = new UpdateProductAdapter();
         private readonly ILogger _logger;
 
-        public ProductService(IProductRepository productRepository, IPhotoService photoService, IPhotoRepository photoRepository, ILoggerFactory logger, ILogService logService)
+        public ProductService(IProductRepository productRepository, IPhotoService photoService, IPhotoRepository photoRepository, ILoggerFactory logger, ILogService logService, IFavoriteProductRepository favoriteProductRepository)
         {
             _productRepository = productRepository;
             _photoService = photoService;
             _photoRepository = photoRepository;
             _logService = logService;
+            _favoriteProductRepository = favoriteProductRepository;
             _logger = logger.CreateLogger("ProductService");
         }
 
@@ -128,12 +130,17 @@ namespace Service.Implementations
             var photoInDb = await _photoRepository.FindByURL(product.ImageURL);
 
             var oldPhotoId = photoInDb.Id;
-
-            var photo = _photoService.SavePhoto(product.File);
-            if(photo!= null)
+            var photoId = photoInDb.Id;
+            if(product.File != null)
             {
-                product.PhotoId = photoInDb.Id;
+                 var photo = await _photoService.SavePhoto(product.File);
+                if (photo != null)
+                {
+                    photoId = photo.Id;
+                }
             }
+            product.PhotoId = photoId;
+
             Product updatedProduct = new Product();
             try
             {

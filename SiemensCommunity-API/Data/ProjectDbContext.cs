@@ -50,6 +50,11 @@ namespace Data
                 .WithOne(x => x.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+
+            builder.Entity<FavoriteProduct>()
+            .HasOne(p => p.Product)
+            .WithMany(f => f.FavoriteProduct)
+            .OnDelete(DeleteBehavior.ClientCascade);
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }

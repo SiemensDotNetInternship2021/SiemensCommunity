@@ -50,7 +50,7 @@
               </div>
             </div>
       </div>
-      <div class="no-products" *ngIf="products.length <= 0">You have no products</div>
+      <div class="no-products" *ngIf="products.length <= 0">There are no products</div>
         <div *ngIf="products.length > 0" class="pagination">
           <pagination-controls class="my-pagination" (pageChange)="page = $event"></pagination-controls>
         </div>

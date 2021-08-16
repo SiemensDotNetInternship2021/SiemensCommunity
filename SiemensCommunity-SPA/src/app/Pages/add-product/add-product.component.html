@@ -1,6 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <form [formGroup] = "service.addProductModel" (submit)="addProduct()" enctype="multipart/form-data" autocomplete="off">
-    <p>{{titlePage}}</p>
+   <p class="title-page">{{titlePage}}</p>
         <input type="hidden" formControlName = "Id" value="0"/>
             <label>
                 <p class="label-txt">Product name</p>

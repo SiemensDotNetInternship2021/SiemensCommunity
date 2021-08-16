@@ -19,7 +19,7 @@ namespace Service.Implementations
         private readonly ILogger _logger;
         private readonly ILogService _logService;
         private readonly IPhotoRepository _photoRepository;
-        private PhotoAdapter _photoAdapter;
+        private PhotoAdapter _photoAdapter = new PhotoAdapter();
 
         public PhotoService(IOptions<Service.Helpers.CloudinaryConfiguration> config, ILoggerFactory logger, ILogService logService, IPhotoRepository photoRepository)
         {
@@ -82,7 +82,8 @@ namespace Service.Implementations
 
             try
             {
-                var photoInDb = await _photoRepository.AddAsync(_photoAdapter.Adapt(image));
+                var adaptedPhoto = _photoAdapter.Adapt(image);
+                var photoInDb = await _photoRepository.AddAsync(adaptedPhoto);
                 returnedPhoto = _photoAdapter.Adapt(photoInDb);
             }
             catch (Exception ex)

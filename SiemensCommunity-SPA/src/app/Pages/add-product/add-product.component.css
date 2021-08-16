@@ -103,3 +103,7 @@ body {
   min-width: 100px;
   max-width: 200px;
 }
+
+.title-page {
+  padding-bottom: 20px;
+}

@@ -285,6 +285,22 @@ namespace Data.Implementations
 
             return products;
         }
+
+        public async Task<bool> DeleteByIdAsync(int productId)
+        {
+            var listFavorites = await Context.FavoriteProducts.Where(f => f.ProductId == productId).ToListAsync();
+            Context.RemoveRange(listFavorites);
+
+            var entity = Context.Set<Product>().Find(productId);
+            Context.Set<Product>().Remove(entity);
+            var saveResult = await Context.SaveChangesAsync();
+            if (saveResult == 1)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }
                

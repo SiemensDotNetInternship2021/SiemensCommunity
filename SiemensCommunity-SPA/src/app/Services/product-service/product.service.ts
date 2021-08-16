@@ -83,6 +83,6 @@ export class ProductService {
 
 
   deleteProduct(productId: any){
-    return this.http.delete<boolean>(this.rootUrl + "/product/delete?id=" + productId);
+    return this.http.delete(this.rootUrl + "/product/delete?id=" + productId);
   }
 }

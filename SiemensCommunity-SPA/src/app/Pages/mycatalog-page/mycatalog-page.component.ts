@@ -97,11 +97,10 @@ export class MycatalogPageComponent implements OnInit {
   deleteProduct(productId: number){
     this.productService.deleteProduct(productId).subscribe((res : any) =>
     {
-      this.toastr.success("Product deleted successfully");
       this.getMyCatalogProducts(this.selectedOption, this.mySelectedCategory);
     },
     err=>{
-      this.toastr.error("The product could not be deleted");
+      this.getMyCatalogProducts(this.selectedOption, this.mySelectedCategory);
     })
   }
 
