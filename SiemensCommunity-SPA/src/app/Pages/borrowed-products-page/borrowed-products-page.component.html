@@ -21,6 +21,8 @@
                 <h5 class="card-title">{{borrowedProduct.name}}</h5>
                 <p class="card-text">Type: {{borrowedProduct.subCategoryName}}</p>
                 <p class="card-text">Owner: {{borrowedProduct.user}}</p>
+                <p class="card-text">Start date: {{borrowedProduct.startDate}}</p>
+                <p class="card-text">Start end: {{borrowedProduct.endDate}}</p>
                 <p class="card-text">Details: </p>
                 <div class="card-details">
                   <p  *ngFor="let productDetails of borrowedProduct.detailsList" class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
