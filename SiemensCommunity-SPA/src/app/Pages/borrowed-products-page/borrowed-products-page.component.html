@@ -26,7 +26,6 @@
                   <p  *ngFor="let productDetails of borrowedProduct.detailsList" class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
                 </div>
                 <p class="card-text">Rate: {{borrowedProduct.rating}}</p>
-                <p class="card-text">Available: {{borrowedProduct.isAvailable}}</p>
               </div>
               <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(borrowedProduct.id, $event)"></ngb-rating>
               <div class="card-body">

@@ -39,7 +39,8 @@
                 <p class="card-text">{{productDetails.name}} : {{ productDetails.description}}</p>
               </div>
               <p class="card-text">Rate: {{product.rating}}</p>
-              <p class="card-text">Available: {{product.isAvailable}}</p>
+              <p class="card-text" *ngIf="product.isAvailable == true, hidden">Product is available<mat-icon class="available-icon">check_circle</mat-icon></p>
+              <p class="card-text" *ngIf="product.isAvailable == false, hidden">Product is borrowed by an user<mat-icon color = "warn">unpublished</mat-icon></p>
             </div>
             <div class="card-body inline-btns-ctn">
               <a class="btn btn-info" routerLink="/addproduct/{{product.id}}">Update</a>

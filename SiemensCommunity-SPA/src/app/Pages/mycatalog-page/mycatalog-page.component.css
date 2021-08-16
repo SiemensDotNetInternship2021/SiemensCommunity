@@ -86,3 +86,8 @@ div.card{
         min-width: 300px;
     }
 }
+
+.available-icon {
+    color: green
+}
+
