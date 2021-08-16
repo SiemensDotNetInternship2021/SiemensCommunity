@@ -14,12 +14,14 @@ namespace Service.Implementations
     public class SubCategoryService : ISubCategoryService
     {
         private readonly ISubCategoryRepository _subCategoryRepository;
+        private readonly ILogService _logService;
         private readonly SubCategoyAdapter _subCategoyAdapter = new SubCategoyAdapter();
         private readonly ILogger _logger;
 
-        public SubCategoryService(ISubCategoryRepository subCategoryRepository, ILoggerFactory logger)
+        public SubCategoryService(ISubCategoryRepository subCategoryRepository,ILogService logService, ILoggerFactory logger)
         {
             _subCategoryRepository = subCategoryRepository;
+            _logService = logService;
             _logger = logger.CreateLogger("SubCategoryService");
         }
 
@@ -34,6 +36,7 @@ namespace Service.Implementations
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.ListItems, "Error while getting the list: {error}", ex.Message);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.ListItems, ex.Message, ex.StackTrace);
             }
             return subcategoriesReturned;
         }

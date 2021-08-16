@@ -13,11 +13,13 @@ namespace Service.Implementations
     {
         EmailConfiguration _emailConfiguration = null;
         private readonly ILogger _logger;
+        private readonly ILogService _logService;
 
-        public EmailService(IOptions<EmailConfiguration> options, ILoggerFactory logger)
+        public EmailService(IOptions<EmailConfiguration> options,ILogService logService, ILoggerFactory logger)
         {
             _emailConfiguration = options.Value;
             _logger = logger.CreateLogger("Email service");
+            _logService = logService;
         }
 
         public bool SendEmail(EmailData emailData)
@@ -46,12 +48,14 @@ namespace Service.Implementations
                 emailClient.Dispose();
 
                 _logger.LogInformation(MyLogEvents.EmailSent, "Email sent.");
+                _logService.SaveAsync(LogLevel.Information, MyLogEvents.EmailSent, "Email has been sent.", Environment.StackTrace);
 
                 return true;
             }
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.ErrorEmailSent, "Error sending email" + ex.Message);
+                _logService.SaveAsync(LogLevel.Error, MyLogEvents.EmailSent, ex.Message, ex.StackTrace);
                 return false;
             }
         }

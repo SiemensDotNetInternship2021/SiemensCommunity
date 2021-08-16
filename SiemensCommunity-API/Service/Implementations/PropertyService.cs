@@ -14,12 +14,14 @@ namespace Service.Implementations
     public class PropertyService : IPropertyService
     {
         private readonly IPropertyRepository _propertyRepository;
+        private readonly ILogService _logService;
         private readonly PropertyAdapter _propertyAdapter = new PropertyAdapter();
         private readonly ILogger _logger;
 
-        public PropertyService(IPropertyRepository propertyRepository, ILoggerFactory logger)
+        public PropertyService(IPropertyRepository propertyRepository,ILogService logService, ILoggerFactory logger)
         {
             _propertyRepository = propertyRepository;
+            _logService = logService;
             _logger = logger.CreateLogger("PropertyService");
         }
 
@@ -30,11 +32,11 @@ namespace Service.Implementations
             {
                 var returnedProperties = await _propertyRepository.GetCategoryProperties(categoryId);
                 adaptedProperties = _propertyAdapter.AdaptList(returnedProperties);
-                _logger.LogInformation(MyLogEvents.ListItems, "Got {count} properties", adaptedProperties.Count());
             }
             catch (Exception ex)
             {
                 _logger.LogError(MyLogEvents.ListItems, "Error while getting list of properties: {error}", ex.Message);
+                await _logService.SaveAsync(LogLevel.Error, MyLogEvents.ListItems, ex.Message, ex.StackTrace);
             }
             return adaptedProperties;
         }

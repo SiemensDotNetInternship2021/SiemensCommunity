@@ -53,6 +53,7 @@ namespace Service.Implementations
                 {
                     uploadResult = await _cloudinary.UploadAsync(uploadParams);
                     _logger.LogInformation(MyLogEvents.UpdateItem, "Image upload.");
+                    await _logService.SaveAsync(LogLevel.Information, MyLogEvents.UploadItem, "Image uploaded successfully.", Environment.StackTrace);
                 }
                 catch (Exception ex)
                 {
