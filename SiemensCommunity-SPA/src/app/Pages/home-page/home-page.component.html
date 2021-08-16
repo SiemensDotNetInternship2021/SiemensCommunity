@@ -42,8 +42,8 @@
                 <p class="card-text">Available: {{product.isAvailable}}</p>
               </div>
             </div>
-            <div class="card-bottom">
-              <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(product.id, $event)"></ngb-rating>
+            <div class="card-bottom"> 
+              <ngb-rating class="rating" [max]="5"  [(ngModel)]="product.rating" (click)="rateProduct(product.id, product.rating)"></ngb-rating>
               <div class="card-body">
                   <i *ngIf="favoriteProductsId.includes(product.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(product.id)"></i>
                   <i *ngIf="!favoriteProductsId.includes(product.id)" class="far fa-heart" (click)="addFavoriteProduct(product.id)"></i>
@@ -78,7 +78,8 @@
 
               <p class="card-text">Rate: {{favoriteProduct.rating}}</p>
               <p class="card-text">Available: {{favoriteProduct.isAvailable}}</p>
-              <ngb-rating  class="rating" [max]="5" (rateChange)="rateProduct(favoriteProduct.id, $event)"></ngb-rating>
+              
+              <ngb-rating  class="rating" [max]="5"  [(ngModel)]="favoriteProduct.rating" (click)="rateProduct(favoriteProduct.id, favoriteProduct.rating)"></ngb-rating>
             </div>
             <div class="card-body">
                 <i *ngIf="favoriteProductsId.includes(favoriteProduct.id)" class="fas fa-heart" (click)="deleteFavoriteProduct(favoriteProduct.id)"></i>

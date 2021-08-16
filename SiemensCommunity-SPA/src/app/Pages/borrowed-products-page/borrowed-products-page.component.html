@@ -5,7 +5,7 @@
     
       <div class="col-md-3" >
         <select class="form-control custom-select" [(ngModel)]="selectedCategory" (change)="getSelectedCategory()">
-          <option class="option-display" selected="selected" value=0>Select a category</option>
+          <option class="option-display" selected="selected" value=0>All categories</option>
           <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
         </select> 
        </div>
@@ -34,7 +34,7 @@
                   <p class="card-text">Available: {{borrowedProduct.isAvailable}}</p>
                 </div>
               </div>
-              <ngb-rating class="rating" [max]="5" (rateChange)="rateProduct(borrowedProduct.id, $event)"></ngb-rating>
+              <ngb-rating class="rating" [max]="5"   [(ngModel)]="borrowedProduct.rating" (click)="rateProduct(borrowedProduct.id, borrowedProduct.rating)"></ngb-rating>
               <div class="card-body">
                 <button class="btn btn-primary" (click) = "giveBackProduct(borrowedProduct.id)" >Give Back</button>
               </div>

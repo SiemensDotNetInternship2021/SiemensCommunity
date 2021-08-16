@@ -34,21 +34,21 @@ namespace Data.Implementations
         {
             var returnedBorrowedProducts = await Context.BorrowedProducts.Where(bp => bp.UserId == userId)
                     .Include(bp => bp.Product)
-                  .Select(x => new BorrowedProductDTO
-                  {
-                      Id = x.Product.Id,
-                      Details = x.Product.Details,
-                      Name = x.Product.Name,
-                      IsAvailable = x.Product.IsAvailable,
-                      Rating = Math.Round(x.Product.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
-                      User = x.User.UserName,
-                      CategoryName = x.Product.Category.Name,
-                      SubCategoryName = x.Product.SubCategory.Name,
-                      ImagePath = x.Product.Photo.Url,
-                      StartDate = x.StartDate,
-                      EndDate = x.EndDate
-                  }).ToListAsync();
-
+                    .ThenInclude(p => p.ProductRating)
+                    .Select(x => new BorrowedProductDTO
+                    {
+                        Id = x.Product.Id,
+                        Details = x.Product.Details,
+                        Name = x.Product.Name,
+                        IsAvailable = x.Product.IsAvailable,
+                        Rating = Math.Round(x.Product.ProductRating.Where(pr => pr.ProductId == x.Product.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
+                        User = x.User.UserName,
+                        CategoryName = x.Product.Category.Name,
+                        SubCategoryName = x.Product.SubCategory.Name,
+                        ImagePath = x.Product.Photo.Url,
+                        EndDate = x.EndDate,
+                        StartDate = x.StartDate
+                    }).ToListAsync();
             return returnedBorrowedProducts;
         }
 
@@ -62,7 +62,7 @@ namespace Data.Implementations
                           Details = x.Product.Details,
                           Name = x.Product.Name,
                           IsAvailable = x.Product.IsAvailable,
-                          Rating = Math.Round(x.Product.ProductRating.Where(pr => pr.ProductId == x.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
+                          Rating = Math.Round(x.Product.ProductRating.Where(pr => pr.ProductId == x.Product.Id).Select(pr => (int?)pr.Rate).Average() ?? 0.0, 2),
                           User = x.User.UserName,
                           CategoryName = x.Product.Category.Name,
                           SubCategoryName = x.Product.SubCategory.Name,

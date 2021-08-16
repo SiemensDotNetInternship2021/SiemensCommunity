@@ -59,11 +59,25 @@ export class BorrowedProductsPageComponent implements OnInit {
           prod.endDate = prod.endDate.split('T')[0];
           prod.detailsList = JSON.parse(prod.details);
           this.borrowedProducts.push(prod);
-          console.log(prod.detailsList);
+          console.log(prod);
         })
         this.totalLength = this.borrowedProducts.length;
       });
       console.log(this.borrowedProducts);
+  }
+
+  getBorrowedProductsByCategoryId(userId: number, categoryId: number){
+    this.borrowedProductsService.getBorrowedProductsByCategoryId(userId, categoryId).subscribe((prodsByCateg) => {
+      this.borrowedProducts = [];
+      prodsByCateg.forEach(prod =>{
+        prod.startDate =  prod.startDate.split('T')[0];
+        prod.endDate = prod.endDate.split('T')[0];
+        prod.detailsList = JSON.parse(prod.details);
+        this.borrowedProducts.push(prod);
+      })
+      this.totalLength = this.borrowedProducts.length;
+    });
+    console.log(this.borrowedProducts);
   }
 
   getSelectedCategory(){
@@ -86,17 +100,7 @@ export class BorrowedProductsPageComponent implements OnInit {
     })
   }
 
-  getBorrowedProductsByCategoryId(userId: number, categoryId: number){
-    this.borrowedProductsService.getBorrowedProductsByCategoryId(userId, categoryId).subscribe((prodsByCateg) => {
-      this.borrowedProducts = [];
-      prodsByCateg.forEach(prod =>{
-        prod.startDate =  prod.startDate.split('T')[0];
-        prod.endDate = prod.endDate.split('T')[0];
-        this.borrowedProducts.push(prod);
-      })
-      this.totalLength = this.borrowedProducts.length;
-    })
-  }
+
 
   giveBackProduct(productId: number){
     console.log(productId);
